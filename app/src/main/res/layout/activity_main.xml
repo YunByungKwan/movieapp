@@ -158,7 +158,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="3">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -207,10 +208,7 @@
 
             </LinearLayout>
 
-            <View
-                android:layout_width="2dp"
-                android:layout_height="match_parent"
-                android:background="@color/colorBackgroundDark" />
+            <View style="@style/mid_line_vertical"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -236,6 +234,8 @@
                     <RatingBar
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:rating="4.1"
+                        android:stepSize="0.1"
                         style="?android:ratingBarStyleSmall"
                         android:layout_marginEnd="@dimen/base_padding_size"/>
 
@@ -249,10 +249,7 @@
 
             </LinearLayout>
 
-            <View
-                android:layout_width="2dp"
-                android:layout_height="match_parent"
-                android:background="@color/colorBackgroundDark" />
+            <View style="@style/mid_line_vertical"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -319,10 +316,7 @@
 
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:background="@color/colorBackground" />
+        <View style="@style/mid_line_horizontal" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -383,10 +377,7 @@
 
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:background="@color/colorBackground" />
+        <View style="@style/mid_line_horizontal" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
@@ -412,9 +403,7 @@
                 android:text="@string/see_all"
                 android:textColor="#611F91"
                 android:padding="@dimen/base_double_padding_size"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/constraintLayout" />
+                app:layout_constraintBottom_toBottomOf="parent" />
 
             <LinearLayout
                 android:id="@+id/linearLayout"
@@ -444,10 +433,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:background="@color/colorBackground" />
+        <View style="@style/mid_line_horizontal" />
 
         <LinearLayout
             android:layout_width="match_parent"
