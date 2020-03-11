@@ -5,7 +5,7 @@
 
     <dimen name="text_size">15dp</dimen>
 
-
+    <!-- padding size -->
     <dimen name="base_padding_size">10dp</dimen>
 
     <dimen name="base_half_padding_size">5dp</dimen>

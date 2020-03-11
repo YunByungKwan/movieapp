@@ -42,4 +42,9 @@
     <string name="see_all">모두보기</string>
     <string name="write">작성하기</string>
     <string name="reservation">예매하기</string>
+    
+    <string name="recommend">추천</string>
+    <string name="separator">|</string>
+    <string name="report">신고하기</string>
+
 </resources>
