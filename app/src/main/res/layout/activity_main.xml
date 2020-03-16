@@ -221,7 +221,7 @@
 
                 </LinearLayout>
 
-                <View style="@style/mid_line_vertical"/>
+                <View style="@style/midLineVertical"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -262,7 +262,7 @@
 
                 </LinearLayout>
 
-                <View style="@style/mid_line_vertical"/>
+                <View style="@style/midLineVertical"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -329,7 +329,7 @@
 
             </LinearLayout>
 
-            <View style="@style/mid_line_horizontal" />
+            <View style="@style/midLineHorizontal" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -390,7 +390,7 @@
 
             </LinearLayout>
 
-            <View style="@style/mid_line_horizontal" />
+            <View style="@style/midLineHorizontal" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout"
@@ -457,7 +457,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <View style="@style/mid_line_horizontal" />
+            <View style="@style/midLineHorizontal" />
 
             <LinearLayout
                 android:layout_width="match_parent"

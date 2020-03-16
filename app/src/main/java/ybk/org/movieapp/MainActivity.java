@@ -58,51 +58,53 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickLikeButton() {
-        if(!likeState && !dislikeState) {
+        if(!likeState) {
             increaseLikeCount();
-        }else if(likeState && !dislikeState) {
+        }else {
             decreaseLikeCount();
-        }else if(!likeState && dislikeState) {
-            decreaseDisLikeCount();
         }
     }
 
     public void onClickDisLikeButton() {
-        if(!dislikeState && !likeState) {
+        if(!dislikeState) {
             increaseDisLikeCount();
-        }else if(!likeState && dislikeState) {
+        }else {
             decreaseDisLikeCount();
-        }else if(likeState && !dislikeState) {
-            decreaseLikeCount();
         }
     }
 
     public void increaseLikeCount() {
         likeCount += 1;
         binding.tvLikeCount.setText(String.valueOf(likeCount));
+        likeState = true;
         binding.btnLike.setBackgroundResource(R.drawable.ic_thumb_up_selected);
-        likeState = !likeState;
+        if(dislikeState) {
+            decreaseDisLikeCount();
+        }
     }
 
     public void decreaseLikeCount() {
         likeCount -= 1;
         binding.tvLikeCount.setText(String.valueOf(likeCount));
+        likeState = false;
         binding.btnLike.setBackgroundResource(R.drawable.thumbs_up_selector);
-        likeState = !likeState;
     }
 
     public void increaseDisLikeCount() {
         dislikeCount += 1;
         binding.tvDislikeCount.setText(String.valueOf(dislikeCount));
+        dislikeState = true;
         binding.btnDislike.setBackgroundResource(R.drawable.ic_thumb_down_selected);
-        dislikeState = !dislikeState;
+        if(likeState) {
+            decreaseLikeCount();
+        }
     }
 
     public void decreaseDisLikeCount() {
         dislikeCount -= 1;
         binding.tvDislikeCount.setText(String.valueOf(dislikeCount));
+        dislikeState = false;
         binding.btnDislike.setBackgroundResource(R.drawable.thumbs_down_selector);
-        dislikeState = !dislikeState;
     }
 
     class CommentAdapter extends BaseAdapter {
