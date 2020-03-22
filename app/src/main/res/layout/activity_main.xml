@@ -221,7 +221,7 @@
 
                 </LinearLayout>
 
-                <View style="@style/midLineVertical"/>
+                <View style="@style/MidLineVertical"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -245,24 +245,26 @@
                         android:gravity="center_vertical">
 
                         <RatingBar
+                            android:id="@+id/rating"
+                            style="?android:ratingBarStyleSmall"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/base_padding_size"
+                            android:numStars="5"
                             android:rating="4.1"
-                            android:stepSize="0.1"
-                            style="?android:ratingBarStyleSmall"
-                            android:layout_marginEnd="@dimen/base_padding_size"/>
+                            android:stepSize="0.1" />
 
                         <TextView
                             android:id="@+id/tv_grade"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:text="8.2" />
 
                     </LinearLayout>
 
                 </LinearLayout>
 
-                <View style="@style/midLineVertical"/>
+                <View style="@style/MidLineVertical"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -329,7 +331,7 @@
 
             </LinearLayout>
 
-            <View style="@style/midLineHorizontal" />
+            <View style="@style/MidLineHorizontal" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -390,7 +392,7 @@
 
             </LinearLayout>
 
-            <View style="@style/midLineHorizontal" />
+            <View style="@style/MidLineHorizontal" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout"
@@ -419,18 +421,20 @@
 
                     <ImageView
                         android:id="@+id/iv_write_comment"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:src="@drawable/ic_review_selected"
                         android:layout_marginEnd="@dimen/base_padding_size"/>
 
                     <TextView
+                        android:id="@+id/tv_write_comment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:text="@string/write"
                         android:textColor="#E44418"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:onClick="@{(v) -> activity.onClickWriteCommentButton()}"/>
 
                 </LinearLayout>
 
@@ -451,13 +455,14 @@
                     android:padding="@dimen/base_double_padding_size"
                     android:text="@string/see_all"
                     android:textColor="#611F91"
+                    android:onClick="@{(v) -> activity.onClickLoadAllButton()}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <View style="@style/midLineHorizontal" />
+            <View style="@style/MidLineHorizontal" />
 
             <LinearLayout
                 android:layout_width="match_parent"

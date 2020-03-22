@@ -12,9 +12,13 @@ import androidx.annotation.Nullable;
 public class CommentItemView extends LinearLayout {
 
     TextView tvUserId;
+
     TextView tvRegisterTime;
+
     RatingBar ratingBar;
+
     TextView tvComment;
+
     TextView tvRecommendCount;
 
     public CommentItemView(Context context) {

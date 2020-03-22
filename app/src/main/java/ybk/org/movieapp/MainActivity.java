@@ -1,24 +1,19 @@
 package ybk.org.movieapp;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
-
-import org.w3c.dom.Comment;
-
+import android.widget.Toast;
 import java.util.ArrayList;
-import java.util.List;
-
 import ybk.org.movieapp.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
+
+    static final int REQUEST_COMMENT_WRITE_CODE = 101;
+
+    static final int REQUEST_COMMENT_LIST_CODE = 102;
 
     ActivityMainBinding binding;
 
@@ -28,35 +23,63 @@ public class MainActivity extends AppCompatActivity {
     int likeCount = 15;
     int dislikeCount = 1;
 
+    CommentAdapter adapter;
+    ArrayList<CommentParcelable> commentList = new ArrayList<CommentParcelable>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        init();
+        initDataBinding();
+
+        initCommentAdapter();
     }
 
-    public void init() {
+    /**
+     * 레이아웃을 연결함(activity_main.xml)
+     */
+    private void initDataBinding() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.setActivity(this);
+    }
 
-        CommentAdapter adapter = new CommentAdapter();
-
-        adapter.addItem(new CommentItem(
+    /**
+     * 초기 리스트뷰 어뎁터를 설정함
+     */
+    private void initCommentAdapter() {
+        commentList.add(new CommentParcelable(
                 "kym71**",
                 "10분전",
                 5,
                 "적당히 재밌다. 오랜만에 잠 안오는 영화 봤네요.",
                 0));
-        adapter.addItem(new CommentItem(
+
+        commentList.add(new CommentParcelable(
                 "kym71**",
                 "10분전",
                 5,
                 "적당히 재밌다. 오랜만에 잠 안오는 영화 봤네요.",
                 0));
+
+        setCommentAdapter();
+    }
+
+    /**
+     * 리스트뷰 어뎁터를 설정함
+     */
+    private void setCommentAdapter() {
+        adapter = new CommentAdapter();
+
+        for(int idx = 0; idx < 2; idx++) {
+            adapter.addItem(commentList.get(idx));
+        }
 
         binding.lvComment.setAdapter(adapter);
     }
 
+    /**
+     * 좋아요 아이콘 클릭시 이벤트
+     */
     public void onClickLikeButton() {
         if(!likeState) {
             increaseLikeCount();
@@ -65,6 +88,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 싫어요 아이콘 클릭시 이벤트
+     */
     public void onClickDisLikeButton() {
         if(!dislikeState) {
             increaseDisLikeCount();
@@ -73,6 +99,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 좋아요 숫자 증가. 싫어요 아이콘이 선택되었을 경우, 싫어요 숫자 감소
+     */
     public void increaseLikeCount() {
         likeCount += 1;
         binding.tvLikeCount.setText(String.valueOf(likeCount));
@@ -83,6 +112,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 좋아요 숫자 감소
+     */
     public void decreaseLikeCount() {
         likeCount -= 1;
         binding.tvLikeCount.setText(String.valueOf(likeCount));
@@ -90,6 +122,9 @@ public class MainActivity extends AppCompatActivity {
         binding.btnLike.setBackgroundResource(R.drawable.thumbs_up_selector);
     }
 
+    /**
+     * 싫어요 숫자 증가. 좋아요 아이콘이 선택되었을 경우, 좋아요 숫자 감소
+     */
     public void increaseDisLikeCount() {
         dislikeCount += 1;
         binding.tvDislikeCount.setText(String.valueOf(dislikeCount));
@@ -100,6 +135,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 싫어요 숫자 감소
+     */
     public void decreaseDisLikeCount() {
         dislikeCount -= 1;
         binding.tvDislikeCount.setText(String.valueOf(dislikeCount));
@@ -107,42 +145,82 @@ public class MainActivity extends AppCompatActivity {
         binding.btnDislike.setBackgroundResource(R.drawable.thumbs_down_selector);
     }
 
-    class CommentAdapter extends BaseAdapter {
+    /**
+     * 작성하기 버튼 클릭시 이벤트
+     * - CommentWriteActivity로 이동 (REQUEST_COMMENT_WRITE_CODE)
+     */
+    public void onClickWriteCommentButton() {
+        Intent intent = new Intent(getApplicationContext(), CommentWriteActivity.class);
+        intent.putExtra(getString(R.string.movie_name_text), binding.tvMovieName.getText().toString());
+        startActivityForResult(intent, REQUEST_COMMENT_WRITE_CODE);
+    }
 
-        ArrayList<CommentItem> items = new ArrayList<CommentItem>();
+    /**
+     * 모두보기 버튼 클릭시 이벤트
+     * - CommentListActivity로 이동 (REQUEST_COMMENT_LIST_CODE)
+     */
+    public void onClickLoadAllButton() {
+        Intent intent = new Intent(getApplicationContext(), CommentListActivity.class);
+        intent.putExtra(getString(R.string.movie_name_text),
+                binding.tvMovieName.getText().toString());
+        intent.putExtra(getString(R.string.movie_rating_text),
+                binding.rating.getRating());
+        intent.putExtra(getString(R.string.movie_grade_text),
+                binding.tvGrade.getText().toString());
+        intent.putParcelableArrayListExtra(getString(R.string.comment_list_text),
+                commentList);
+        startActivityForResult(intent, REQUEST_COMMENT_LIST_CODE);
+    }
 
-        @Override
-        public int getCount() {
-            return items.size();
-        }
+    /**
+     * 1. CommentWriteActivity에서 돌아왔을 경우
+     * - RESULT_OK && REQUEST_COMMENT_WRITE_CODE: 한줄평을 목록에 추가
+     * - RESULT_CANCELED                        : Toast 메시지 출력
+     * 2. CommentListActivity에서 돌아왔을 경우
+     * - RESULT_CANCELED                        : Toast 메시지 출력, 한줄평 리스트 업데이트
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-        public void addItem(CommentItem item) {
-            items.add(item);
-        }
+        if(resultCode == RESULT_OK) {
+            if(requestCode == REQUEST_COMMENT_WRITE_CODE) {
+                if(data != null) {
+                    float rating =
+                            data.getFloatExtra(getString(R.string.movie_rating_text), 0);
+                    String contents = data.getStringExtra(getString(R.string.movie_contents_text));
 
-        @Override
-        public Object getItem(int position) {
-            return items.get(position);
-        }
+                    CommentParcelable newItem = new CommentParcelable(
+                            "kym71**",
+                            "10분전",
+                            rating,
+                            contents,
+                            0);
 
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
+                    commentList.add(newItem);
+                    adapter.addItem(newItem);
+                    binding.lvComment.setAdapter(adapter);
+                }
+            }
+        }else if(resultCode == RESULT_CANCELED) {
+            if(requestCode == REQUEST_COMMENT_WRITE_CODE) {
+                Toast.makeText(
+                        this,
+                        getString(R.string.comment_write_cancel_text),
+                        Toast.LENGTH_SHORT
+                ).show();
+            }else if(requestCode == REQUEST_COMMENT_LIST_CODE) {
+                Toast.makeText(
+                        this,
+                        getString(R.string.comment_list_cancel_text),
+                        Toast.LENGTH_SHORT
+                ).show();
 
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            CommentItemView view = new CommentItemView(getApplicationContext());
+                commentList =
+                        data.getParcelableArrayListExtra(getString(R.string.comment_list_text));
 
-            CommentItem item = items.get(position);
-
-            view.setUserId(item.getUserId());
-            view.setRegisterTime(item.getRegisterTime());
-            view.setRatingBar(item.getRatingCount());
-            view.setComment(item.getComment());
-            view.setRecommendCount(item.getRecommendCount());
-
-            return view;
+                setCommentAdapter();
+            }
         }
     }
 }

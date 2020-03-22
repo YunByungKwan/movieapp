@@ -2,6 +2,7 @@
 
     <string name="app_name">씨네마천국</string>
 
+    <!-- activity_main.xml -->
     <string name="movie_title">군도</string>
     <string name="movie_story">
         군도, 백성을 구하라\n
@@ -24,7 +25,6 @@
         시작하는데...
 
     </string>
-    
     <string name="open">개봉</string>
     <string name="slash">/</string>
     <string name="minute">분</string>
@@ -42,9 +42,29 @@
     <string name="see_all">모두보기</string>
     <string name="write">작성하기</string>
     <string name="reservation">예매하기</string>
-    
+
+    <!-- comment_item_view.xml -->
     <string name="recommend">추천</string>
     <string name="separator">|</string>
     <string name="report">신고하기</string>
 
+    <!-- activity_comment_write.xml -->
+    <string name="input_rating_text">평점을 입력해 주세요</string>
+    <string name="input_edit_text_hint">100자 이내로 작성해주세요.</string>
+    <string name="save">저장</string>
+    <string name="cancel">취소</string>
+    <string name="left_braket">(</string>
+    <string name="right_braket">명 참여)</string>
+
+    <!-- Intent key text -->
+    <string name="movie_name_text">movieName</string>
+    <string name="comment_list_text">commentList</string>
+    <string name="movie_rating_text">movieRating</string>
+    <string name="movie_contents_text">movieContents</string>
+    <string name="movie_grade_text">movieGrade</string>
+
+    <!-- Toast text -->
+    <string name="comment_write_cancel_text">한줄평작성 화면에서 돌아왔습니다.</string>
+    <string name="comment_list_cancel_text">한줄평목록 화면에서 돌아왔습니다.</string>
+    <string name="comment_empty_text">한줄평을 100자 이내로 작성해주세요</string>
 </resources>

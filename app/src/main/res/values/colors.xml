@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Default color -->
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#D81B60</color>
 
+    <!-- Background color -->
     <color name="colorBackground">#EEEEEE</color>
     <color name="colorBackgroundDark">#CCCCCC</color>
 
+    <!-- Text color -->
     <color name="colorThumbnailText">#FFFFFF</color>
     <color name="colorTitleText">#000000</color>
 
+    <!-- Small rating bar color -->
+    <color name="colorSmallRatingBar">#82C0B9</color>
 </resources>

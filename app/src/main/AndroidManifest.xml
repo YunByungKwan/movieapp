@@ -9,6 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".CommentListActivity"
+            android:label="한줄평목록"
+            android:theme="@style/AppNoActionBarTheme">
+        </activity>
+        <activity
+            android:name=".CommentWriteActivity"
+            android:label="한줄평작성"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
