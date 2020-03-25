@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_movie_list">
+
+    <fragment
+        android:id="@+id/nav_movie_list"
+        android:name="ybk.org.movieapp.ui.movielist.MovieListFragment"
+        android:label="@string/menu_movie_list"
+        tools:layout="@layout/fragment_movie_list" />
+
+    <fragment
+        android:id="@+id/nav_movie_api"
+        android:name="ybk.org.movieapp.ui.movieapi.MovieApiFragment"
+        android:label="@string/menu_movie_api"
+        tools:layout="@layout/fragment_movie_api" />
+
+    <fragment
+        android:id="@+id/nav_movie_book"
+        android:name="ybk.org.movieapp.ui.moviebook.MovieBookFragment"
+        android:label="@string/menu_movie_book"
+        tools:layout="@layout/fragment_movie_book" />
+
+    <fragment
+        android:id="@+id/nav_user_settings"
+        android:name="ybk.org.movieapp.ui.usersettings.UserSettingsFragment"
+        android:label="@string/menu_user_settings"
+        tools:layout="@layout/fragment_user_settings" />
+
+</navigation>

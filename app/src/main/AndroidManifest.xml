@@ -10,20 +10,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".CommentListActivity"
-            android:label="한줄평목록"
-            android:theme="@style/AppNoActionBarTheme">
-        </activity>
-        <activity
-            android:name=".CommentWriteActivity"
-            android:label="한줄평작성"/>
-        <activity android:name=".MainActivity">
+            android:name=".MovieListActivity"
+            android:label="@string/title_activity_movie_list"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".CommentListActivity"
+            android:label="한줄평목록"
+            android:theme="@style/AppNoActionBarTheme" />
+        <activity
+            android:name=".CommentWriteActivity"
+            android:label="한줄평작성" />
+        <activity android:name=".MainActivity" />
+
     </application>
 
 </manifest>
