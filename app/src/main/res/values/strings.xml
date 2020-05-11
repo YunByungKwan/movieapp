@@ -42,6 +42,8 @@
     <string name="see_all">모두보기</string>
     <string name="write">작성하기</string>
     <string name="reservation">예매하기</string>
+    <string name="watch_age">세 관람가</string>
+    <string name="d_day">D-</string>
 
     <!-- comment_item_view.xml -->
     <string name="recommend">추천</string>
@@ -82,4 +84,6 @@
     <string name="menu_movie_book">예매하기</string>
     <string name="menu_settings">설정</string>
     <string name="menu_user_settings">사용자 설정</string>
+
+    <string name="see_detail">상세보기</string>
 </resources>

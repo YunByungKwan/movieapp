@@ -20,6 +20,13 @@
         <item name="colorControlActivated">@color/colorSmallRatingBar</item>
     </style>
 
+    <!-- white Vertical view line. -->
+    <style name="MidLineVerticalWhite">
+        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">#FFFFFF</item>
+    </style>
+
     <!-- Vertical view line. -->
     <style name="MidLineVertical">
         <item name="android:layout_width">2dp</item>
