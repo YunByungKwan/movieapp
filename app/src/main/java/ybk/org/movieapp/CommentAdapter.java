@@ -6,7 +6,7 @@ import android.widget.BaseAdapter;
 
 import java.util.ArrayList;
 
-class CommentAdapter extends BaseAdapter {
+public class CommentAdapter extends BaseAdapter {
 
     ArrayList<CommentParcelable> items = new ArrayList<CommentParcelable>();
 

@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="activity"
-            type="ybk.org.movieapp.MainActivity" />
+            name="fragment"
+            type="ybk.org.movieapp.ui.moviedetail.MovieDetailFragment" />
 
     </data>
 
@@ -136,7 +136,7 @@
                             android:layout_height="25dp"
                             android:background="@drawable/thumbs_up_selector"
                             android:layout_marginEnd="@dimen/base_half_padding_size"
-                            android:onClick="@{(v) -> activity.onClickLikeButton()}"/>
+                            android:onClick="@{(v) -> fragment.onClickLikeButton()}"/>
 
                         <TextView
                             android:id="@+id/tv_like_count"
@@ -152,7 +152,7 @@
                             android:layout_height="25dp"
                             android:background="@drawable/thumbs_down_selector"
                             android:layout_marginEnd="@dimen/base_half_padding_size"
-                            android:onClick="@{(v) -> activity.onClickDisLikeButton()}"/>
+                            android:onClick="@{(v) -> fragment.onClickDisLikeButton()}"/>
 
 
                         <TextView
@@ -434,7 +434,7 @@
                         android:text="@string/write"
                         android:textColor="#E44418"
                         android:textStyle="bold"
-                        android:onClick="@{(v) -> activity.onClickWriteCommentButton()}"/>
+                        android:onClick="@{(v) -> fragment.onClickWriteCommentButton()}"/>
 
                 </LinearLayout>
 
@@ -455,7 +455,7 @@
                     android:padding="@dimen/base_double_padding_size"
                     android:text="@string/see_all"
                     android:textColor="#611F91"
-                    android:onClick="@{(v) -> activity.onClickLoadAllButton()}"
+                    android:onClick="@{(v) -> fragment.onClickLoadAllButton()}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />

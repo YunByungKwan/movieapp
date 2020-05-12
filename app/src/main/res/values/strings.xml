@@ -84,6 +84,7 @@
     <string name="menu_movie_book">예매하기</string>
     <string name="menu_settings">설정</string>
     <string name="menu_user_settings">사용자 설정</string>
+    <string name="menu_movie_detail">상세 영화</string>
 
     <string name="see_detail">상세보기</string>
 </resources>

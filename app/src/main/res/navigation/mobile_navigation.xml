@@ -9,7 +9,17 @@
         android:id="@+id/nav_movie_list"
         android:name="ybk.org.movieapp.ui.movielist.MovieListFragment"
         android:label="@string/menu_movie_list"
-        tools:layout="@layout/fragment_movie_list" />
+        tools:layout="@layout/fragment_movie_list" >
+        <action
+            android:id="@+id/action_nav_movie_list_to_nav_movie_detail"
+            app:destination="@id/nav_movie_detail" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_movie_detail"
+        android:name="ybk.org.movieapp.ui.moviedetail.MovieDetailFragment"
+        android:label="@string/menu_movie_detail"
+        tools:layout="@layout/fragment_movie_detail" />
 
     <fragment
         android:id="@+id/nav_movie_api"
