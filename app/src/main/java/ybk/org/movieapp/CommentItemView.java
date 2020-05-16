@@ -2,23 +2,21 @@ package ybk.org.movieapp;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
-
 import androidx.annotation.Nullable;
 
 public class CommentItemView extends LinearLayout {
 
+    private static final String TAG = "CommentItemView";
+
     TextView tvUserId;
-
     TextView tvRegisterTime;
-
     RatingBar ratingBar;
-
     TextView tvComment;
-
     TextView tvRecommendCount;
 
     public CommentItemView(Context context) {
@@ -36,13 +34,18 @@ public class CommentItemView extends LinearLayout {
     private void init(Context context) {
         LayoutInflater inflater =
                 (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.comment_item_view, this, true);
 
-        tvUserId = (TextView)findViewById(R.id.tv_user_id);
-        tvRegisterTime = (TextView)findViewById(R.id.tv_register_time);
-        ratingBar = (RatingBar)findViewById(R.id.rating);
-        tvComment = (TextView)findViewById(R.id.tv_comment);
-        tvRecommendCount = (TextView)findViewById(R.id.tv_recommend_count);
+        if (inflater != null) {
+            inflater.inflate(R.layout.comment_item_view, this, true);
+        } else {
+            Log.e(TAG, "Inflater is null.");
+        }
+
+        tvUserId = findViewById(R.id.tv_user_id);
+        tvRegisterTime = findViewById(R.id.tv_register_time);
+        ratingBar = findViewById(R.id.rating);
+        tvComment = findViewById(R.id.tv_comment);
+        tvRecommendCount = findViewById(R.id.tv_recommend_count);
     }
 
     public void setUserId(String userId) {

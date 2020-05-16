@@ -5,11 +5,14 @@ import androidx.databinding.DataBindingUtil;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import ybk.org.movieapp.databinding.ActivityCommentWriteBinding;
 
 public class CommentWriteActivity extends AppCompatActivity {
+
+    private static final String TAG = "CommentWriteActivity";
 
     ActivityCommentWriteBinding binding;
 
@@ -17,22 +20,26 @@ public class CommentWriteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        initDataBinding();
+        setDataBinding();
+
+        setMovieName();
     }
 
-    /**
-     * 레이아웃을 연결함(activity_comment_write.xml)
-     */
-    private void initDataBinding() {
+    /** 데이터바인딩 설정 */
+    private void setDataBinding() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_comment_write);
         binding.setActivity(this);
+    }
 
+    /** 영화 제목 설정 */
+    private void setMovieName() {
         Intent intent = getIntent();
         if(intent != null) {
             binding.tvMovieName.setText(intent.getStringExtra(getString(R.string.movie_name_text)));
+        } else {
+            Log.e(TAG, "getIntent() is null.");
         }
     }
-
     /**
      * 저장 버튼 클릭시 이벤트
      * - MainActivity or CommentListActivity 로 이동 (RESULT_OK)

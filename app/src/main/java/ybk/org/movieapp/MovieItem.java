@@ -1,6 +1,7 @@
 package ybk.org.movieapp;
 
 public class MovieItem {
+
     private int moviePoster_id;
     private String movieTitle;
     private double reservationRate;

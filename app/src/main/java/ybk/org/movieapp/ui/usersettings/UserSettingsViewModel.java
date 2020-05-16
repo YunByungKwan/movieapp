@@ -10,7 +10,7 @@ public class UserSettingsViewModel extends ViewModel {
 
     public UserSettingsViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is user settings fragment");
+        mText.setValue("서비스 준비중입니다.");
     }
 
     public LiveData<String> getText() {

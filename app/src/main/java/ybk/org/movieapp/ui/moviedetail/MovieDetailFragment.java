@@ -1,7 +1,6 @@
 package ybk.org.movieapp.ui.moviedetail;
 
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -21,11 +20,10 @@ import ybk.org.movieapp.databinding.FragmentMovieDetailBinding;
 
 public class MovieDetailFragment extends Fragment {
 
+    private static final String TAG = "MovieDetailFragment";
     private static final int REQUEST_COMMENT_WRITE_CODE = 101;
     private static final int REQUEST_COMMENT_LIST_CODE = 102;
-    private static final String TAG = "MovieDetailFragment";
 
-    private MovieDetailViewModel mViewModel;
     private FragmentMovieDetailBinding binding;
 
     private boolean likeState = false;
@@ -33,19 +31,20 @@ public class MovieDetailFragment extends Fragment {
     private int likeCount = 15;
     private int dislikeCount = 1;
 
-    private CommentAdapter adapter;
-    private ArrayList<CommentParcelable> commentList = new ArrayList<CommentParcelable>();
-
-    public static MovieDetailFragment newInstance() {
-        return new MovieDetailFragment();
-    }
+    private ArrayList<CommentParcelable> commentList = new ArrayList<>();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_movie_detail, container, false);
         binding = DataBindingUtil.bind(view);
-        binding.setFragment(this);
+        if(binding != null) {
+            binding.setFragment(this);
+        } else {
+            Log.e(TAG, "DataBinding is null.");
+        }
+
+        setInitLikeAndDisLikeCount();
 
         addInitDataToCommentList();
 
@@ -55,10 +54,14 @@ public class MovieDetailFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(MovieDetailViewModel.class);
     }
 
-    /** 리스트뷰 초기 데이터를 설정함 */
+    private void setInitLikeAndDisLikeCount() {
+        binding.tvLikeCount.setText(String.valueOf(likeCount));
+        binding.tvDislikeCount.setText(String.valueOf(dislikeCount));
+    }
+
+    /** 리스트뷰에 초기 데이터를 추가 */
     private void addInitDataToCommentList() {
         commentList.add(new CommentParcelable(
                 "kym71**",
@@ -74,12 +77,12 @@ public class MovieDetailFragment extends Fragment {
                 "적당히 재밌다. 오랜만에 잠 안오는 영화 봤네요.",
                 0));
 
-        setCommentAdapter();
+        setInitCommentAdapter();
     }
 
-    /** 리스트뷰 어뎁터를 설정함 */
-    private void setCommentAdapter() {
-        adapter = new CommentAdapter();
+    /** 리스트뷰 어뎁터를 설정 */
+    private void setInitCommentAdapter() {
+        CommentAdapter adapter = new CommentAdapter();
 
         for(int idx = 0; idx < 2; idx++) {
             adapter.addItem(commentList.get(idx));

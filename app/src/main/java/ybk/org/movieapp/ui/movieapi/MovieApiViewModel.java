@@ -10,7 +10,7 @@ public class MovieApiViewModel extends ViewModel {
 
     public MovieApiViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is movie api fragment");
+        mText.setValue("서비스 준비중입니다.");
     }
 
     public LiveData<String> getText() {

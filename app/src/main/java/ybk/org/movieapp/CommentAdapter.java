@@ -3,25 +3,24 @@ package ybk.org.movieapp;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-
 import java.util.ArrayList;
 
 public class CommentAdapter extends BaseAdapter {
 
-    ArrayList<CommentParcelable> items = new ArrayList<CommentParcelable>();
+    private ArrayList<CommentParcelable> comments = new ArrayList<>();
 
     @Override
     public int getCount() {
-        return items.size();
+        return comments.size();
     }
 
     public void addItem(CommentParcelable item) {
-        items.add(item);
+        comments.add(item);
     }
 
     @Override
     public Object getItem(int position) {
-        return items.get(position);
+        return comments.get(position);
     }
 
     @Override
@@ -33,13 +32,13 @@ public class CommentAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         CommentItemView view = new CommentItemView(parent.getContext());
 
-        CommentParcelable item = items.get(position);
+        CommentParcelable comment = comments.get(position);
 
-        view.setUserId(item.userId);
-        view.setRegisterTime(item.registerTime);
-        view.setRatingBar(item.ratingCount);
-        view.setComment(item.comment);
-        view.setRecommendCount(item.recommendCount);
+        view.setUserId(comment.userId);
+        view.setRegisterTime(comment.registerTime);
+        view.setRatingBar(comment.ratingCount);
+        view.setComment(comment.comment);
+        view.setRecommendCount(comment.recommendCount);
 
         return view;
     }

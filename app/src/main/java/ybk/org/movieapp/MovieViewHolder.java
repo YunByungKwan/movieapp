@@ -8,7 +8,7 @@ import android.widget.TextView;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MovieViewHolder extends RecyclerView.ViewHolder {
+class MovieViewHolder extends RecyclerView.ViewHolder {
 
     private ImageView iv_movie_poster;
     private TextView tv_movie_title;
@@ -16,8 +16,6 @@ public class MovieViewHolder extends RecyclerView.ViewHolder {
     private TextView tv_watch_age;
     private TextView tv_d_day;
     private Button btn_detail_see;
-
-    MovieItem data;
 
     MovieViewHolder(View itemView) {
         super(itemView);
@@ -30,9 +28,7 @@ public class MovieViewHolder extends RecyclerView.ViewHolder {
         btn_detail_see = itemView.findViewById(R.id.btn_detail_see);
     }
 
-    public void onBind(MovieItem data){
-        this.data = data;
-
+    void onBind(MovieItem data){
         iv_movie_poster.setImageResource(data.getMoviePoster_id());
         tv_movie_title.setText(data.getMovieTitle());
         tv_reservation_rate.setText(String.valueOf(data.getReservationRate()));

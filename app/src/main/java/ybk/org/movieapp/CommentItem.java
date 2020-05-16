@@ -1,15 +1,12 @@
 package ybk.org.movieapp;
 
+@Deprecated
 public class CommentItem {
 
     private String userId;
-
     private String registerTime;
-
     private float ratingCount;
-
     private String comment;
-
     private int recommendCount;
 
     public CommentItem(String userId,

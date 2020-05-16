@@ -22,14 +22,16 @@ public class MovieApiFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         movieApiViewModel =
                 ViewModelProviders.of(this).get(MovieApiViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_movie_api, container, false);
-        final TextView textView = root.findViewById(R.id.tv_movie_api);
+        View rootView = inflater.inflate(R.layout.fragment_movie_api, container, false);
+
+        final TextView textView = rootView.findViewById(R.id.tv_movie_api);
         movieApiViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
             }
         });
-        return root;
+
+        return rootView;
     }
 }

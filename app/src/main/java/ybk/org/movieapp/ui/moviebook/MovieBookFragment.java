@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -23,6 +22,7 @@ public class MovieBookFragment extends Fragment {
         movieBookViewModel =
                 ViewModelProviders.of(this).get(MovieBookViewModel.class);
         View root = inflater.inflate(R.layout.fragment_movie_book, container, false);
+
         final TextView textView = root.findViewById(R.id.tv_movie_book);
         movieBookViewModel.getText().observe(this, new Observer<String>() {
             @Override

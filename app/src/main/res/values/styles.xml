@@ -41,11 +41,18 @@
         <item name="android:background">@color/colorBackground</item>
     </style>
 
-    <!-- Horizontal view thin line. -->
+    <!-- Horizontal thin view line. -->
     <style name="MidThinLineHorizontal">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
         <item name="android:background">#E2E2E2</item>
+    </style>
+
+    <!-- Horizontal gradation view line. -->
+    <style name="MidThinGradationLineHorizontal">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@drawable/gradation</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

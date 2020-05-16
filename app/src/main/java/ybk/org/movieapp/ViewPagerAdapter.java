@@ -10,10 +10,10 @@ import java.util.ArrayList;
 
 public class ViewPagerAdapter extends RecyclerView.Adapter<MovieViewHolder> {
 
-    private ArrayList<MovieItem> mItems;
+    private ArrayList<MovieItem> movies;
 
     public ViewPagerAdapter(ArrayList<MovieItem> items) {
-        this.mItems = items;
+        this.movies = items;
     }
 
     @NonNull
@@ -25,15 +25,12 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<MovieViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(MovieViewHolder holder, int position) {
-        if(holder instanceof MovieViewHolder){
-            MovieViewHolder viewHolder = (MovieViewHolder) holder;
-            viewHolder.onBind(mItems.get(position));
-        }
+    public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
+        holder.onBind(movies.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return mItems.size();
+        return movies.size();
     }
 }

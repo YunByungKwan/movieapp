@@ -6,13 +6,9 @@ import android.os.Parcelable;
 public class CommentParcelable implements Parcelable {
 
     String userId;
-
     String registerTime;
-
     float ratingCount;
-
     String comment;
-
     int recommendCount;
 
     public CommentParcelable(String userId, String registerTime,
@@ -24,7 +20,7 @@ public class CommentParcelable implements Parcelable {
         this.recommendCount = recommendCount;
     }
 
-    public CommentParcelable(Parcel src) {
+    private CommentParcelable(Parcel src) {
         userId = src.readString();
         registerTime = src.readString();
         ratingCount = src.readFloat();

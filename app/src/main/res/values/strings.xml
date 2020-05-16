@@ -2,7 +2,6 @@
 
     <string name="app_name">씨네마천국</string>
 
-    <!-- activity_main.xml -->
     <string name="movie_title">군도</string>
     <string name="movie_story">
         군도, 백성을 구하라\n
@@ -25,6 +24,10 @@
         시작하는데...
 
     </string>
+    <string name="release_date">2014.07.23</string>
+    <string name="genre">액션</string>
+    <string name="running_time">137</string>
+
     <string name="open">개봉</string>
     <string name="slash">/</string>
     <string name="minute">분</string>
@@ -73,18 +76,20 @@
     <string name="title_activity_movie_list">MovieListActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+
+    <!-- Navigation drawer -->
+    <string name="nav_header_title">윤병관</string>
+    <string name="nav_header_subtitle">pk7955@naver.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
     <!-- Menu text -->
     <string name="menu_movie_list">영화 목록</string>
+    <string name="menu_movie_detail">영화 상세</string>
     <string name="menu_movie_api">영화 API</string>
     <string name="menu_movie_book">예매하기</string>
     <string name="menu_settings">설정</string>
     <string name="menu_user_settings">사용자 설정</string>
-    <string name="menu_movie_detail">상세 영화</string>
 
     <string name="see_detail">상세보기</string>
 </resources>
