@@ -11,18 +11,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import java.util.ArrayList;
-import ybk.org.movieapp.CommentAdapter;
-import ybk.org.movieapp.CommentListActivity;
-import ybk.org.movieapp.CommentParcelable;
-import ybk.org.movieapp.CommentWriteActivity;
+import ybk.org.movieapp.ui.comment.CommentAdapter;
+import ybk.org.movieapp.ui.comment.CommentListActivity;
+import ybk.org.movieapp.ui.comment.CommentParcelable;
+import ybk.org.movieapp.ui.comment.CommentWriteActivity;
 import ybk.org.movieapp.R;
 import ybk.org.movieapp.databinding.FragmentMovieDetailBinding;
 
 public class MovieDetailFragment extends Fragment {
 
     private static final String TAG = "MovieDetailFragment";
-    private static final int REQUEST_COMMENT_WRITE_CODE = 101;
-    private static final int REQUEST_COMMENT_LIST_CODE = 102;
+    public static final int REQUEST_COMMENT_WRITE_CODE = 101;
+    public static final int REQUEST_COMMENT_LIST_CODE = 102;
 
     private FragmentMovieDetailBinding binding;
 

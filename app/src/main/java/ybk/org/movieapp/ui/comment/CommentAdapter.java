@@ -1,4 +1,4 @@
-package ybk.org.movieapp;
+package ybk.org.movieapp.ui.comment;
 
 import android.view.View;
 import android.view.ViewGroup;

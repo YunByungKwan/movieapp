@@ -1,4 +1,4 @@
-package ybk.org.movieapp;
+package ybk.org.movieapp.ui.comment;
 
 @Deprecated
 public class CommentItem {

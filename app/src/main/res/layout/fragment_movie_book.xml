@@ -10,6 +10,6 @@
         android:id="@+id/tv_movie_book"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20dp" />
+        android:textSize="20sp" />
 
 </LinearLayout>

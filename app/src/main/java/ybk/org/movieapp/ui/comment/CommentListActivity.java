@@ -1,4 +1,4 @@
-package ybk.org.movieapp;
+package ybk.org.movieapp.ui.comment;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,12 +12,14 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import ybk.org.movieapp.R;
 import ybk.org.movieapp.databinding.ActivityCommentListBinding;
+
+import static ybk.org.movieapp.ui.moviedetail.MovieDetailFragment.REQUEST_COMMENT_WRITE_CODE;
 
 public class CommentListActivity extends AppCompatActivity {
 
     private static final String TAG = "CommentListActivity";
-    private static final int REQUEST_COMMENT_WRITE_CODE = 101;
 
     ActivityCommentListBinding binding;
 
@@ -69,9 +71,7 @@ public class CommentListActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * 초기 리스트뷰 어뎁터를 설정함
-     */
+    /** 초기 리스트뷰 어뎁터를 설정함 */
     private void initCommentAdapter() {
         adapter = new CommentAdapter();
 

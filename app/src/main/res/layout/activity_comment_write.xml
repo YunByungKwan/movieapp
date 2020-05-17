@@ -5,7 +5,7 @@
 
         <variable
             name="activity"
-            type="ybk.org.movieapp.CommentWriteActivity" />
+            type="ybk.org.movieapp.ui.comment.CommentWriteActivity" />
 
     </data>
 

@@ -1,13 +1,12 @@
-package ybk.org.movieapp;
+package ybk.org.movieapp.ui.comment;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
-
+import ybk.org.movieapp.R;
 import ybk.org.movieapp.databinding.ActivityCommentWriteBinding;
 
 public class CommentWriteActivity extends AppCompatActivity {

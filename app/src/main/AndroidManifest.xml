@@ -20,11 +20,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CommentListActivity"
+            android:name=".ui.comment.CommentListActivity"
             android:label="한줄평목록"
             android:theme="@style/AppNoActionBarTheme" />
         <activity
-            android:name=".CommentWriteActivity"
+            android:name=".ui.comment.CommentWriteActivity"
             android:label="한줄평작성" />
 
     </application>
