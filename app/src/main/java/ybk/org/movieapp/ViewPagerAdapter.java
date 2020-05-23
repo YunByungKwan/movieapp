@@ -20,7 +20,7 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<MovieViewHolder> {
     @Override
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
-        View view = LayoutInflater.from(context).inflate(R.layout.movie_item, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.fragment_movie, parent, false);
         return new MovieViewHolder(view);
     }
 

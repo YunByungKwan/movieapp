@@ -24,13 +24,6 @@ public class UserSettingsFragment extends Fragment {
                 ViewModelProviders.of(this).get(UserSettingsViewModel.class);
         View rootView = inflater.inflate(R.layout.fragment_user_settings, container, false);
 
-        final TextView textView = rootView.findViewById(R.id.tv_user_settings);
-        userSettingsViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
         return rootView;
     }
 }

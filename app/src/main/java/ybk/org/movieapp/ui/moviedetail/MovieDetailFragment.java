@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import java.util.ArrayList;
+import ybk.org.movieapp.Constants;
 import ybk.org.movieapp.ui.comment.CommentAdapter;
 import ybk.org.movieapp.ui.comment.CommentListActivity;
 import ybk.org.movieapp.ui.comment.CommentParcelable;
@@ -20,7 +21,6 @@ import ybk.org.movieapp.databinding.FragmentMovieDetailBinding;
 
 public class MovieDetailFragment extends Fragment {
 
-    private static final String TAG = "MovieDetailFragment";
     public static final int REQUEST_COMMENT_WRITE_CODE = 101;
     public static final int REQUEST_COMMENT_LIST_CODE = 102;
 
@@ -37,11 +37,14 @@ public class MovieDetailFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_movie_detail, container, false);
-        binding = DataBindingUtil.bind(view);
-        if(binding != null) {
-            binding.setFragment(this);
+        setDataBinding(view);
+
+        if(getArguments() != null) {
+
+            binding.ivMoviePoster.setImageResource(getArguments().getInt(Constants.BUNDLE_KEY_POSTER));
+            binding.tvMovieTitle.setText(getArguments().getString(Constants.BUNDLE_KEY_TITLE));
         } else {
-            Log.e(TAG, "DataBinding is null.");
+            Log.e(Constants.TAG_MOVIE_DETAIL_FRAGMENT, "getArguments() is null.");
         }
 
         setInitLikeAndDisLikeCount();
@@ -49,6 +52,16 @@ public class MovieDetailFragment extends Fragment {
         addInitDataToCommentList();
 
         return view;
+    }
+
+    private void setDataBinding(View view) {
+        binding = DataBindingUtil.bind(view);
+
+        if(binding != null) {
+            binding.setFragment(this);
+        } else {
+            Log.e(Constants.TAG_MOVIE_DETAIL_FRAGMENT, "DataBinding is null.");
+        }
     }
 
     @Override
@@ -93,7 +106,7 @@ public class MovieDetailFragment extends Fragment {
 
     /** 좋아요 아이콘 클릭시 이벤트 */
     public void onClickLikeButton() {
-        Log.e(TAG, "onClickLikeButton");
+        Log.e(Constants.TAG_MOVIE_DETAIL_FRAGMENT, "onClickLikeButton");
 
         if(!likeState) {
             increaseLikeCount();
@@ -104,7 +117,7 @@ public class MovieDetailFragment extends Fragment {
 
     /** 싫어요 아이콘 클릭시 이벤트 */
     public void onClickDisLikeButton() {
-        Log.e(TAG, "onClickDisLikeButton");
+        Log.e(Constants.TAG_MOVIE_DETAIL_FRAGMENT, "onClickDisLikeButton");
 
         if(!dislikeState) {
             increaseDisLikeCount();
@@ -115,7 +128,7 @@ public class MovieDetailFragment extends Fragment {
 
     /** 좋아요 숫자 증가. 싫어요 아이콘이 선택되었을 경우, 싫어요 숫자 감소 */
     public void increaseLikeCount() {
-        Log.e(TAG, "increaseLikeCount");
+        Log.e(Constants.TAG_MOVIE_DETAIL_FRAGMENT, "increaseLikeCount");
 
         likeCount += 1;
         binding.tvLikeCount.setText(String.valueOf(likeCount));
@@ -128,7 +141,7 @@ public class MovieDetailFragment extends Fragment {
 
     /** 좋아요 숫자 감소 */
     public void decreaseLikeCount() {
-        Log.e(TAG, "decreaseLikeCount");
+        Log.e(Constants.TAG_MOVIE_DETAIL_FRAGMENT, "decreaseLikeCount");
 
         likeCount -= 1;
         binding.tvLikeCount.setText(String.valueOf(likeCount));
@@ -138,7 +151,7 @@ public class MovieDetailFragment extends Fragment {
 
     /** 싫어요 숫자 증가. 좋아요 아이콘이 선택되었을 경우, 좋아요 숫자 감소 */
     public void increaseDisLikeCount() {
-        Log.e(TAG, "increaseDisLikeCount");
+        Log.e(Constants.TAG_MOVIE_DETAIL_FRAGMENT, "increaseDisLikeCount");
 
         dislikeCount += 1;
         binding.tvDislikeCount.setText(String.valueOf(dislikeCount));
@@ -151,7 +164,7 @@ public class MovieDetailFragment extends Fragment {
 
     /** 싫어요 숫자 감소 */
     public void decreaseDisLikeCount() {
-        Log.e(TAG, "decreaseDisLikeCount");
+        Log.e(Constants.TAG_MOVIE_DETAIL_FRAGMENT, "decreaseDisLikeCount");
 
         dislikeCount -= 1;
         binding.tvDislikeCount.setText(String.valueOf(dislikeCount));
@@ -164,10 +177,10 @@ public class MovieDetailFragment extends Fragment {
      * - CommentWriteActivity로 이동 (REQUEST_COMMENT_WRITE_CODE)
      */
     public void onClickWriteCommentButton() {
-        Log.e(TAG, "onClickWriteCommentButton");
+        Log.e(Constants.TAG_MOVIE_DETAIL_FRAGMENT, "onClickWriteCommentButton");
 
         Intent intent = new Intent(getActivity(), CommentWriteActivity.class);
-        intent.putExtra(getString(R.string.movie_name_text), binding.tvMovieName.getText().toString());
+        intent.putExtra(getString(R.string.movie_name_text), binding.tvMovieTitle.getText().toString());
         startActivityForResult(intent, REQUEST_COMMENT_WRITE_CODE);
     }
 
@@ -176,11 +189,11 @@ public class MovieDetailFragment extends Fragment {
      * - CommentListActivity로 이동 (REQUEST_COMMENT_LIST_CODE)
      */
     public void onClickLoadAllButton() {
-        Log.e(TAG, "onClickLoadAllButton");
+        Log.e(Constants.TAG_MOVIE_DETAIL_FRAGMENT, "onClickLoadAllButton");
 
         Intent intent = new Intent(getActivity(), CommentListActivity.class);
         intent.putExtra(getString(R.string.movie_name_text),
-                binding.tvMovieName.getText().toString());
+                binding.tvMovieTitle.getText().toString());
         intent.putExtra(getString(R.string.movie_rating_text),
                 binding.rating.getRating());
         intent.putExtra(getString(R.string.movie_grade_text),

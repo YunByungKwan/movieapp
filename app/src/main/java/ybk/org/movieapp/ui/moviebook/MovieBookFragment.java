@@ -24,7 +24,7 @@ public class MovieBookFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_movie_book, container, false);
 
         final TextView textView = root.findViewById(R.id.tv_movie_book);
-        movieBookViewModel.getText().observe(this, new Observer<String>() {
+        movieBookViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
