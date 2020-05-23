@@ -12,14 +12,12 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import ybk.org.movieapp.util.Constants;
 import ybk.org.movieapp.R;
 import ybk.org.movieapp.databinding.ActivityCommentListBinding;
 
-import static ybk.org.movieapp.ui.moviedetail.MovieDetailFragment.REQUEST_COMMENT_WRITE_CODE;
 
 public class CommentListActivity extends AppCompatActivity {
-
-    private static final String TAG = "CommentListActivity";
 
     ActivityCommentListBinding binding;
 
@@ -67,7 +65,7 @@ public class CommentListActivity extends AppCompatActivity {
             binding.rating.setRating(movieRating);
             binding.tvRating.setText(movieGrade);
         } else {
-            Log.e(TAG, "getIntent() is null.");
+            Log.e(Constants.TAG_COMMENT_LIST_ACTIVITY, "getIntent() is null.");
         }
     }
 
@@ -91,7 +89,7 @@ public class CommentListActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), CommentWriteActivity.class);
         intent.putExtra(getString(R.string.movie_name_text),
                 binding.tvMovieName.getText().toString());
-        startActivityForResult(intent, REQUEST_COMMENT_WRITE_CODE);
+        startActivityForResult(intent, Constants.REQUEST_COMMENT_WRITE_CODE);
     }
 
     /**
@@ -122,7 +120,7 @@ public class CommentListActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == REQUEST_COMMENT_WRITE_CODE && resultCode == RESULT_OK) {
+        if(requestCode == Constants.REQUEST_COMMENT_WRITE_CODE && resultCode == RESULT_OK) {
             if(data != null) {
                 float rating = data.getFloatExtra(getString(R.string.movie_rating_text), 0);
                 String contents = data.getStringExtra(getString(R.string.movie_contents_text));
@@ -139,11 +137,11 @@ public class CommentListActivity extends AppCompatActivity {
 
                 comments.add(newComment);
             } else {
-                Log.e(TAG, "Data is null.");
+                Log.e(Constants.TAG_COMMENT_LIST_ACTIVITY, "Data is null.");
             }
 
         }else {
-            Log.e(TAG, "ActivityResult is failed.");
+            Log.e(Constants.TAG_COMMENT_LIST_ACTIVITY, "ActivityResult is failed.");
         }
     }
 }

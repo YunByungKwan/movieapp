@@ -9,11 +9,10 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
 
+import ybk.org.movieapp.util.Constants;
 import ybk.org.movieapp.R;
 
 public class CommentItemView extends LinearLayout {
-
-    private static final String TAG = "CommentItemView";
 
     TextView tvUserId;
     TextView tvRegisterTime;
@@ -40,7 +39,7 @@ public class CommentItemView extends LinearLayout {
         if (inflater != null) {
             inflater.inflate(R.layout.comment_item_view, this, true);
         } else {
-            Log.e(TAG, "Inflater is null.");
+            Log.e(Constants.TAG_COMMENT_ITEM_VIEW, "Inflater is null.");
         }
 
         tvUserId = findViewById(R.id.tv_user_id);

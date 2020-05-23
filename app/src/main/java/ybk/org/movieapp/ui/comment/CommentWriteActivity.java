@@ -8,10 +8,9 @@ import android.util.Log;
 import android.widget.Toast;
 import ybk.org.movieapp.R;
 import ybk.org.movieapp.databinding.ActivityCommentWriteBinding;
+import ybk.org.movieapp.util.Constants;
 
 public class CommentWriteActivity extends AppCompatActivity {
-
-    private static final String TAG = "CommentWriteActivity";
 
     ActivityCommentWriteBinding binding;
 
@@ -36,7 +35,7 @@ public class CommentWriteActivity extends AppCompatActivity {
         if(intent != null) {
             binding.tvMovieName.setText(intent.getStringExtra(getString(R.string.movie_name_text)));
         } else {
-            Log.e(TAG, "getIntent() is null.");
+            Log.e(Constants.TAG_COMMENT_WRITE_ACTIVITY, "getIntent() is null.");
         }
     }
     /**

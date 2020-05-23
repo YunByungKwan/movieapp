@@ -10,7 +10,9 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+
 import ybk.org.movieapp.databinding.FragmentMovieBinding;
+import ybk.org.movieapp.util.Constants;
 
 public class MovieFragment extends Fragment {
 
@@ -20,17 +22,20 @@ public class MovieFragment extends Fragment {
         // Nothing.
     }
 
-    public static MovieFragment newInstance(int poster, String title, double reservationRate,
-                                            int watchingAge, int dDay) {
+    public static MovieFragment newInstance(int bigPoster, int smallPoster, String title,
+                                            double reservationRate, int watchingAge, int dDay,
+                                            int pos) {
 
         MovieFragment movieFragment = new MovieFragment();
 
         Bundle bundle = new Bundle();
-        bundle.putInt(Constants.BUNDLE_KEY_POSTER, poster);
+        bundle.putInt(Constants.BUNDLE_KEY_BIG_POSTER, bigPoster);
+        bundle.putInt(Constants.BUNDLE_KEY_SMALL_POSTER, smallPoster);
         bundle.putString(Constants.BUNDLE_KEY_TITLE, title);
         bundle.putDouble(Constants.BUNDLE_KEY_RESERVATION_RATE, reservationRate);
         bundle.putInt(Constants.BUNDLE_KEY_WATCHING_AGE, watchingAge);
         bundle.putInt(Constants.BUNDLE_KEY_D_DAY, dDay);
+        bundle.putInt(Constants.BUNDLE_KEY_POSITION, pos);
 
         movieFragment.setArguments(bundle);
 
@@ -46,11 +51,20 @@ public class MovieFragment extends Fragment {
         setDataBinding(view);
 
         if(getArguments() != null) {
-            binding.ivMoviePoster.setImageResource(getArguments().getInt(Constants.BUNDLE_KEY_POSTER));
-            binding.tvMovieTitle.setText(getArguments().getString(Constants.BUNDLE_KEY_TITLE));
-            binding.tvReservationRate.setText(String.valueOf(getArguments().getDouble(Constants.BUNDLE_KEY_RESERVATION_RATE)));
-            binding.tvWatchAge.setText(String.valueOf(getArguments().getInt(Constants.BUNDLE_KEY_WATCHING_AGE)));
-            binding.tvDDay.setText(String.valueOf(getArguments().getInt(Constants.BUNDLE_KEY_D_DAY)));
+            int poster_id = getArguments().getInt(Constants.BUNDLE_KEY_BIG_POSTER);
+            String title = getArguments().getString(Constants.BUNDLE_KEY_TITLE);
+            double reservationRate = getArguments().getDouble(Constants.BUNDLE_KEY_RESERVATION_RATE);
+            int watchingAge = getArguments().getInt(Constants.BUNDLE_KEY_WATCHING_AGE);
+            int dDay = getArguments().getInt(Constants.BUNDLE_KEY_D_DAY);
+            int position = getArguments().getInt(Constants.BUNDLE_KEY_POSITION);
+            StringBuilder sb = new StringBuilder();
+            sb.append(position + 1).append(". ").append(title);
+
+            binding.ivMoviePoster.setImageResource(poster_id);
+            binding.tvMovieTitle.setText(sb);
+            binding.tvReservationRate.setText(String.valueOf(reservationRate));
+            binding.tvWatchAge.setText(String.valueOf(watchingAge));
+            binding.tvDDay.setText(String.valueOf(dDay));
         } else {
             Log.e(Constants.TAG_MOVIE_FRAGMENT, "getArguments() is null.");
         }
@@ -58,13 +72,15 @@ public class MovieFragment extends Fragment {
         binding.btnDetailSee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_nav_movie_list_to_nav_movie_detail, getArguments());
+                Navigation.findNavController(v)
+                        .navigate(R.id.action_nav_movie_list_to_nav_movie_detail, getArguments());
             }
         });
 
         return view;
     }
 
+    /** 데이터바인딩 설정 */
     private void setDataBinding(View view) {
         binding = DataBindingUtil.bind(view);
 

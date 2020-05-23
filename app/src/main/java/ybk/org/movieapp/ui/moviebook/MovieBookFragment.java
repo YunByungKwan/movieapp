@@ -21,15 +21,16 @@ public class MovieBookFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         movieBookViewModel =
                 ViewModelProviders.of(this).get(MovieBookViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_movie_book, container, false);
 
-        final TextView textView = root.findViewById(R.id.tv_movie_book);
+        View view = inflater.inflate(R.layout.fragment_movie_book, container, false);
+
+        final TextView textView = view.findViewById(R.id.tv_movie_book);
         movieBookViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
             }
         });
-        return root;
+        return view;
     }
 }
