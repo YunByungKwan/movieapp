@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-
+import com.bumptech.glide.Glide;
 import ybk.org.movieapp.databinding.FragmentMovieBinding;
 import ybk.org.movieapp.util.Constants;
 
@@ -22,15 +22,18 @@ public class MovieFragment extends Fragment {
         // Nothing.
     }
 
-    public static MovieFragment newInstance(int bigPoster, int smallPoster, String title,
+    public static MovieFragment newInstance(int id, String bigPoster, String smallPoster, String title,
                                             double reservationRate, int watchingAge, int dDay,
                                             int pos) {
+
+        Constants.loge("Call newInstance in MovieFragment, id is " + id);
 
         MovieFragment movieFragment = new MovieFragment();
 
         Bundle bundle = new Bundle();
-        bundle.putInt(Constants.BUNDLE_KEY_BIG_POSTER, bigPoster);
-        bundle.putInt(Constants.BUNDLE_KEY_SMALL_POSTER, smallPoster);
+        bundle.putInt(Constants.BUNDLE_KEY_ID, id);
+        bundle.putString(Constants.BUNDLE_KEY_BIG_POSTER, bigPoster);
+        bundle.putString(Constants.BUNDLE_KEY_SMALL_POSTER, smallPoster);
         bundle.putString(Constants.BUNDLE_KEY_TITLE, title);
         bundle.putDouble(Constants.BUNDLE_KEY_RESERVATION_RATE, reservationRate);
         bundle.putInt(Constants.BUNDLE_KEY_WATCHING_AGE, watchingAge);
@@ -51,7 +54,8 @@ public class MovieFragment extends Fragment {
         setDataBinding(view);
 
         if(getArguments() != null) {
-            int poster_id = getArguments().getInt(Constants.BUNDLE_KEY_BIG_POSTER);
+            String bigPoster = getArguments().getString(Constants.BUNDLE_KEY_BIG_POSTER);
+            String smallPoster = getArguments().getString(Constants.BUNDLE_KEY_SMALL_POSTER);
             String title = getArguments().getString(Constants.BUNDLE_KEY_TITLE);
             double reservationRate = getArguments().getDouble(Constants.BUNDLE_KEY_RESERVATION_RATE);
             int watchingAge = getArguments().getInt(Constants.BUNDLE_KEY_WATCHING_AGE);
@@ -60,7 +64,7 @@ public class MovieFragment extends Fragment {
             StringBuilder sb = new StringBuilder();
             sb.append(position + 1).append(". ").append(title);
 
-            binding.ivMoviePoster.setImageResource(poster_id);
+            Glide.with(getContext()).load(bigPoster).into(binding.ivMoviePoster);
             binding.tvMovieTitle.setText(sb);
             binding.tvReservationRate.setText(String.valueOf(reservationRate));
             binding.tvWatchAge.setText(String.valueOf(watchingAge));
@@ -72,6 +76,8 @@ public class MovieFragment extends Fragment {
         binding.btnDetailSee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Constants.loge("Press Detail See Button!!");
+                Constants.loge("getArguments() id: " + getArguments().getInt(Constants.BUNDLE_KEY_ID));
                 Navigation.findNavController(v)
                         .navigate(R.id.action_nav_movie_list_to_nav_movie_detail, getArguments());
             }

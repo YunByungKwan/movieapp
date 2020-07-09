@@ -6,11 +6,15 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import java.util.ArrayList;
+import java.util.List;
+import ybk.org.movieapp.data.DetailMovieItem;
 import ybk.org.movieapp.util.Constants;
 import ybk.org.movieapp.databinding.FragmentMovieDetailBinding;
 import ybk.org.movieapp.ui.comment.CommentAdapter;
@@ -23,6 +27,10 @@ public class MovieDetailFragment extends Fragment {
 
     private FragmentMovieDetailBinding binding;
 
+    private MovieDetailViewModel viewModel;
+
+    private List<DetailMovieItem> movieItem;
+
     private boolean likeState = false;
     private boolean dislikeState = false;
     private int likeCount = 15;
@@ -33,13 +41,29 @@ public class MovieDetailFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        Log.e(Constants.TAG_MOVIE_DETAIL_FRAGMENT, "call onCreateView()");
+        Constants.loge("call onCreateView()");
+        Constants.loge("영화상세화면으로 넘어온 id값: " + getArguments().getInt(Constants.BUNDLE_KEY_ID));
+        int id = getArguments().getInt(Constants.BUNDLE_KEY_ID);
 
         View view = inflater.inflate(R.layout.fragment_movie_detail, container, false);
 
-        setDataBinding(view);
+        viewModel = ViewModelProviders.of(this).get(MovieDetailViewModel.class);
 
-        setSelectedMovieData();
+        Constants.loge("setValue전");
+        viewModel._movieId.setValue(id);
+        Constants.loge("setValue후");
+
+        viewModel.init();
+
+        viewModel.getDetailMovie().observe(getViewLifecycleOwner(), new Observer<List<DetailMovieItem>>() {
+            @Override
+            public void onChanged(List<DetailMovieItem> items) {
+                movieItem = items;
+                setSelectedMovieData();
+            }
+        });
+
+        setDataBinding(view);
 
         setInitLikeAndDisLikeCount();
 
@@ -61,10 +85,45 @@ public class MovieDetailFragment extends Fragment {
 
     /** 영화목록에서 선택한 영화에 대한 데이터를 받음 */
     private void setSelectedMovieData() {
+        Constants.loge("call setSelectedMovieData");
+
         if(getArguments() != null) {
+            Constants.logd("Arguments is not null.");
+
+            binding.tvMovieTitle.setText(movieItem.get(0).getTitle());
             binding.ivMoviePoster
                     .setImageResource(getArguments().getInt(Constants.BUNDLE_KEY_SMALL_POSTER));
-            binding.tvMovieTitle.setText(getArguments().getString(Constants.BUNDLE_KEY_TITLE));
+           // binding.tvLikeCount.setText(movieItem.get(0).getLike());
+
+            binding.tvReleaseDate.setText( movieItem.get(0).getDate());
+            binding.tvGenre.setText(movieItem.get(0).getGenre());
+            binding.tvRunningTime.setText(String.valueOf(movieItem.get(0).getDuration()));
+            binding.tvLikeCount.setText(String.valueOf(movieItem.get(0).getLike()));
+            binding.tvDislikeCount.setText(String.valueOf(movieItem.get(0).getDislike()));
+            binding.tvReservationRateRanking.setText(String.valueOf(movieItem.get(0).getReservationGrade()));
+            binding.tvReservationRate.setText(String.valueOf(movieItem.get(0).getAudienceRating()));
+            binding.tvGrade.setText(String.valueOf(movieItem.get(0).getReviewerRating()));
+            binding.tvCumulativeAudience.setText(String.valueOf(movieItem.get(0).getAudience()));
+            binding.tvStory.setText(movieItem.get(0).getSynopsis());
+            binding.tvDirectorName.setText(movieItem.get(0).getDirector());
+            binding.tvCasting.setText(movieItem.get(0).getActor());
+
+//            binding.tvCumulativeAudience.setText(movieItem.get(0).getAudience());
+//            binding.tvGrade.setText(String.valueOf(movieItem.get(0).getAudienceRating()));
+//            binding.tvReservationRate.setText(String.valueOf(movieItem.get(0).getReservationRate()));
+//
+//            binding.tvStory.setText(movieItem.get(0).getSynopsis());
+//            binding.tvDirectorName.setText(movieItem.get(0).getDirector());
+//            binding.tvCasting.setText(movieItem.get(0).getActor());
+//            movieItem.get(0).getAudience();
+//            movieItem.get(0).getAudienceRating();
+            /**
+            movieItem.getDirector();
+            movieItem.getDuration();
+            movieItem.getGenre();
+            movieItem.getGrade();
+            movieItem.getOutlinks();
+            */
         } else {
             Log.e(Constants.TAG_MOVIE_DETAIL_FRAGMENT, "getArguments() is null.");
         }
