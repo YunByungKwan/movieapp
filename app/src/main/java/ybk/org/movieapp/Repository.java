@@ -3,10 +3,11 @@ package ybk.org.movieapp;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import ybk.org.movieapp.data.CommentItem;
+import ybk.org.movieapp.data.CommentResult;
 import ybk.org.movieapp.data.DetailMovieItem;
 import ybk.org.movieapp.data.DetailMovieResult;
 import ybk.org.movieapp.data.MovieItem;
@@ -77,6 +78,58 @@ public class Repository {
 
             @Override
             public void onFailure(Call<DetailMovieResult> call, Throwable t) {
+                Constants.logd("Call onFailure()");
+                item.setValue(null);
+            }
+        });
+        return item;
+    }
+
+    public MutableLiveData<List<CommentItem>> getCommentAllList(int id) {
+        final MutableLiveData<List<CommentItem>> item = new MutableLiveData<>();
+
+        apiService.getCommentAllList(id).enqueue(new Callback<CommentResult>() {
+            @Override
+            public void onResponse(Call<CommentResult> call, Response<CommentResult> response) {
+                Constants.logd("111111111111111111111111111Call onResponse()");
+
+                if (response.isSuccessful()){
+                    Constants.logd("Response is successful11");
+                    item.setValue(response.body().getResult());
+
+                } else {
+                    Constants.loge("Response is fail");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CommentResult> call, Throwable t) {
+                Constants.logd("Call onFailure()");
+                item.setValue(null);
+            }
+        });
+        return item;
+    }
+
+    public MutableLiveData<List<CommentItem>> getCommentList(int id, int limit) {
+        final MutableLiveData<List<CommentItem>> item = new MutableLiveData<>();
+
+        apiService.getCommentList(id, limit).enqueue(new Callback<CommentResult>() {
+            @Override
+            public void onResponse(Call<CommentResult> call, Response<CommentResult> response) {
+                Constants.logd("111111111111111111111111111Call onResponse()");
+
+                if (response.isSuccessful()){
+                    Constants.logd("Response is successful11");
+                    item.setValue(response.body().getResult());
+
+                } else {
+                    Constants.loge("Response is fail");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CommentResult> call, Throwable t) {
                 Constants.logd("Call onFailure()");
                 item.setValue(null);
             }

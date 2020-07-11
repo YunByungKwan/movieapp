@@ -31,7 +31,6 @@
                     android:id="@+id/iv_movie_poster"
                     android:layout_width="140dp"
                     android:layout_height="200dp"
-                    android:src="@drawable/img_poster"
                     android:layout_marginEnd="@dimen/base_padding_size"/>
 
                 <LinearLayout

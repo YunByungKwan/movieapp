@@ -12,8 +12,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import java.util.ArrayList;
 import java.util.List;
+
+import ybk.org.movieapp.data.CommentItem;
 import ybk.org.movieapp.data.DetailMovieItem;
 import ybk.org.movieapp.util.Constants;
 import ybk.org.movieapp.databinding.FragmentMovieDetailBinding;
@@ -30,20 +34,22 @@ public class MovieDetailFragment extends Fragment {
     private MovieDetailViewModel viewModel;
 
     private List<DetailMovieItem> movieItem;
+    private List<CommentItem> comments;
+    private int id;
 
     private boolean likeState = false;
     private boolean dislikeState = false;
     private int likeCount = 15;
     private int dislikeCount = 1;
 
-    private ArrayList<CommentParcelable> comments = new ArrayList<>();
+    //private ArrayList<CommentParcelable> comments = new ArrayList<>();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         Constants.loge("call onCreateView()");
         Constants.loge("영화상세화면으로 넘어온 id값: " + getArguments().getInt(Constants.BUNDLE_KEY_ID));
-        int id = getArguments().getInt(Constants.BUNDLE_KEY_ID);
+        id = getArguments().getInt(Constants.BUNDLE_KEY_ID);
 
         View view = inflater.inflate(R.layout.fragment_movie_detail, container, false);
 
@@ -51,6 +57,7 @@ public class MovieDetailFragment extends Fragment {
 
         Constants.loge("setValue전");
         viewModel._movieId.setValue(id);
+        viewModel._limit.setValue(2);
         Constants.loge("setValue후");
 
         viewModel.init();
@@ -62,12 +69,19 @@ public class MovieDetailFragment extends Fragment {
                 setSelectedMovieData();
             }
         });
+        viewModel.getCommnetList().observe(getViewLifecycleOwner(), new Observer<List<CommentItem>>() {
+            @Override
+            public void onChanged(List<CommentItem> items) {
+                comments = items;
+                setInitCommentAdapter();
+            }
+        });
 
         setDataBinding(view);
 
         setInitLikeAndDisLikeCount();
 
-        addInitDataToCommentList();
+        // addInitDataToCommentList();
 
         return view;
     }
@@ -90,40 +104,29 @@ public class MovieDetailFragment extends Fragment {
         if(getArguments() != null) {
             Constants.logd("Arguments is not null.");
 
-            binding.tvMovieTitle.setText(movieItem.get(0).getTitle());
-            binding.ivMoviePoster
-                    .setImageResource(getArguments().getInt(Constants.BUNDLE_KEY_SMALL_POSTER));
-           // binding.tvLikeCount.setText(movieItem.get(0).getLike());
+            Constants.loge("Image path: " + movieItem.get(0).getImage());
 
+            Glide.with(getContext())
+                    .load(movieItem.get(0).getThumb())
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .into(binding.ivMoviePoster);
+            binding.tvMovieTitle.setText(movieItem.get(0).getTitle());
+//            binding.ivMoviePoster.setImageResource(
+//                    getArguments().getInt(Constants.BUNDLE_KEY_SMALL_POSTER));
             binding.tvReleaseDate.setText( movieItem.get(0).getDate());
             binding.tvGenre.setText(movieItem.get(0).getGenre());
             binding.tvRunningTime.setText(String.valueOf(movieItem.get(0).getDuration()));
             binding.tvLikeCount.setText(String.valueOf(movieItem.get(0).getLike()));
             binding.tvDislikeCount.setText(String.valueOf(movieItem.get(0).getDislike()));
-            binding.tvReservationRateRanking.setText(String.valueOf(movieItem.get(0).getReservationGrade()));
+            binding.tvReservationRateRanking.setText(
+                    String.valueOf(movieItem.get(0).getReservationGrade()));
             binding.tvReservationRate.setText(String.valueOf(movieItem.get(0).getAudienceRating()));
             binding.tvGrade.setText(String.valueOf(movieItem.get(0).getReviewerRating()));
             binding.tvCumulativeAudience.setText(String.valueOf(movieItem.get(0).getAudience()));
             binding.tvStory.setText(movieItem.get(0).getSynopsis());
             binding.tvDirectorName.setText(movieItem.get(0).getDirector());
             binding.tvCasting.setText(movieItem.get(0).getActor());
-
-//            binding.tvCumulativeAudience.setText(movieItem.get(0).getAudience());
-//            binding.tvGrade.setText(String.valueOf(movieItem.get(0).getAudienceRating()));
-//            binding.tvReservationRate.setText(String.valueOf(movieItem.get(0).getReservationRate()));
-//
-//            binding.tvStory.setText(movieItem.get(0).getSynopsis());
-//            binding.tvDirectorName.setText(movieItem.get(0).getDirector());
-//            binding.tvCasting.setText(movieItem.get(0).getActor());
-//            movieItem.get(0).getAudience();
-//            movieItem.get(0).getAudienceRating();
-            /**
-            movieItem.getDirector();
-            movieItem.getDuration();
-            movieItem.getGenre();
-            movieItem.getGrade();
-            movieItem.getOutlinks();
-            */
         } else {
             Log.e(Constants.TAG_MOVIE_DETAIL_FRAGMENT, "getArguments() is null.");
         }
@@ -136,21 +139,22 @@ public class MovieDetailFragment extends Fragment {
     }
 
     /** 초기 댓글 데이터를 댓글 ArrayList에 추가 */
-    private void addInitDataToCommentList() {
-        comments.add(new CommentParcelable("kym71**", "10분전", 5,
-                "적당히 재밌다. 오랜만에 잠 안오는 영화 봤네요.", 0));
-
-        comments.add(new CommentParcelable("kym71**", "10분전", 5,
-                "적당히 재밌다. 오랜만에 잠 안오는 영화 봤네요.", 0));
-
-        setInitCommentAdapter();
-    }
+//    private void addInitDataToCommentList() {
+//
+//        comments.add(new CommentParcelable("kym71**", "10분전", 5,
+//                "적당히 재밌다. 오랜만에 잠 안오는 영화 봤네요.", 0));
+//
+//        comments.add(new CommentParcelable("kym71**", "10분전", 5,
+//                "적당히 재밌다. 오랜만에 잠 안오는 영화 봤네요.", 0));
+//
+//        setInitCommentAdapter();
+//    }
 
     /** Recyclerview Adapter를 설정 */
     private void setInitCommentAdapter() {
         CommentAdapter adapter = new CommentAdapter();
 
-        for(int idx = 0; idx < 2; idx++) {
+        for(int idx = 0; idx < comments.size(); idx++) {
             adapter.addItem(comments.get(idx));
         }
 
@@ -245,14 +249,15 @@ public class MovieDetailFragment extends Fragment {
         Log.e(Constants.TAG_MOVIE_DETAIL_FRAGMENT, "call onClickLoadAllButton()");
 
         Intent intent = new Intent(getActivity(), CommentListActivity.class);
+        intent.putExtra("movie_id", id);
         intent.putExtra(getString(R.string.movie_name_text),
                 binding.tvMovieTitle.getText().toString());
         intent.putExtra(getString(R.string.movie_rating_text),
                 binding.rating.getRating());
         intent.putExtra(getString(R.string.movie_grade_text),
                 binding.tvGrade.getText().toString());
-        intent.putParcelableArrayListExtra(getString(R.string.comment_list_text),
-                comments);
+//        intent.putParcelableArrayListExtra(getString(R.string.comment_list_text),
+//                comments);
         startActivityForResult(intent, Constants.REQUEST_COMMENT_LIST_CODE);
     }
 

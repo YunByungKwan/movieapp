@@ -11,15 +11,16 @@ import android.util.Log;
 import android.view.MenuItem;
 import java.util.ArrayList;
 import java.util.Objects;
-
+import ybk.org.movieapp.Repository;
 import ybk.org.movieapp.util.Constants;
 import ybk.org.movieapp.R;
 import ybk.org.movieapp.databinding.ActivityCommentListBinding;
 
-
 public class CommentListActivity extends AppCompatActivity {
 
     ActivityCommentListBinding binding;
+
+    private Repository repo;
 
     CommentAdapter adapter;
     ArrayList<CommentParcelable> comments = new ArrayList<>();
@@ -55,6 +56,9 @@ public class CommentListActivity extends AppCompatActivity {
     private void setMovieInfoAndComments() {
         Intent intent = getIntent();
         if(intent != null) {
+            int id = intent.getIntExtra("movie_id", -1);
+
+
             String movieName = intent.getStringExtra(getString(R.string.movie_name_text));
             float movieRating =
                     intent.getFloatExtra(getString(R.string.movie_rating_text), 0);
@@ -74,7 +78,7 @@ public class CommentListActivity extends AppCompatActivity {
         adapter = new CommentAdapter();
 
         for(CommentParcelable comment : comments) {
-            adapter.addItem(comment);
+            //adapter.addItem(comment);
         }
 
         binding.lvComment.setAdapter(adapter);
@@ -132,7 +136,7 @@ public class CommentListActivity extends AppCompatActivity {
                         contents,
                         0);
 
-                adapter.addItem(newComment);
+                //adapter.addItem(newComment);
                 binding.lvComment.setAdapter(adapter);
 
                 comments.add(newComment);
