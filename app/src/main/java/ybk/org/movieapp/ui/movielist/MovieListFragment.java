@@ -15,32 +15,26 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import java.util.ArrayList;
 import java.util.List;
-import ybk.org.movieapp.data.MovieItem;
+import ybk.org.movieapp.data.Movie;
 import ybk.org.movieapp.util.Constants;
-import ybk.org.movieapp.MovieFragment;
 import ybk.org.movieapp.R;
 import ybk.org.movieapp.databinding.FragmentMovieListBinding;
 
 public class MovieListFragment extends Fragment {
 
     private FragmentMovieListBinding binding;
-
     private MovieListViewModel viewModel;
-
-    private List<MovieItem> movieList = new ArrayList<>();
+    private List<Movie> movieList = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        Log.e(Constants.TAG_MOVIE_LIST_FRAGMENT, "Call onCreateView().");
-
-
         View view = inflater.inflate(R.layout.fragment_movie_list, container, false);
 
         viewModel = ViewModelProviders.of(this).get(MovieListViewModel.class);
         viewModel.init();
-        viewModel.getMovieList().observe(getViewLifecycleOwner(), new Observer<List<MovieItem>>() {
+        viewModel.getMovieList().observe(getViewLifecycleOwner(), new Observer<List<Movie>>() {
             @Override
-            public void onChanged(List<MovieItem> movieItems) {
+            public void onChanged(List<Movie> movieItems) {
                 movieList = movieItems;
 
                 setPagerAdapter();
@@ -88,24 +82,6 @@ public class MovieListFragment extends Fragment {
                         adapter.getItemCount()));
             }
         }
-//        adapter.addItem(MovieFragment.newInstance(R.drawable.image1, R.drawable.image11,
-//                "군도", 61.6,
-//                15, 1, adapter.getItemCount()));
-//        adapter.addItem(MovieFragment.newInstance(R.drawable.image2, R.drawable.image22,
-//                "공조", 61.6,
-//                15, 1, adapter.getItemCount()));
-//        adapter.addItem(MovieFragment.newInstance(R.drawable.image3, R.drawable.image33,
-//                "더킹", 61.6,
-//                15, 1, adapter.getItemCount()));
-//        adapter.addItem(MovieFragment.newInstance(R.drawable.image4, R.drawable.image44,
-//                "레지던트 이불", 61.6,
-//                15, 1, adapter.getItemCount()));
-//        adapter.addItem(MovieFragment.newInstance(R.drawable.image5, R.drawable.image55,
-//                "럭키", 61.6,
-//                15, 1, adapter.getItemCount()));
-//        adapter.addItem(MovieFragment.newInstance(R.drawable.image6, R.drawable.image66,
-//                "아수라", 61.6,
-//                15, 1, adapter.getItemCount()));
     }
 
     private static class MoviePagerAdapter extends FragmentStateAdapter {

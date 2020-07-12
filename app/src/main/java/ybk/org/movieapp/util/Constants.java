@@ -7,6 +7,8 @@ import androidx.annotation.StringDef;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
+import ybk.org.movieapp.R;
+
 public class Constants {
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({REQUEST_COMMENT_WRITE_CODE, REQUEST_COMMENT_LIST_CODE})
@@ -35,6 +37,34 @@ public class Constants {
     public static final String TAG_MOVIE_FRAGMENT = "MOVIE_FRAGMENT";
     public static final String TAG_MOVIE_LIST_FRAGMENT = "MOVIE_LST_FRAGMENT";
     public static final String TAG_MOVIE_DETAIL_FRAGMENT = "MOVIE_DETAIL_FRAGMENT";
+
+    /**
+     *
+     *     <string name="movie_name_text">movieName</string>
+     *     <string name="comment_list_text">commentList</string>
+     *     <string name="movie_rating_text">movieRating</string>
+     *     <string name="movie_contents_text">movieContents</string>
+     *     <string name="movie_grade_text">movieGrade</string>
+     * */
+    public static final String KEY_ID = "movie_id";
+    public static final String KEY_TITLE = "movieName";
+    public static final String KEY_COMMENT_LIST = "commentList";
+    public static final String KEY_RATING = "movieRating";
+    public static final String KEY_CONTENTS = "movieContents";
+    public static final String KEY_GRADE = "movieGrade";
+
+    public static int convertGradeToResId(int grade) {
+        switch (grade) {
+            case 12:
+                return R.drawable.ic_12;
+            case 15:
+                return R.drawable.ic_15;
+            case 19:
+                return R.drawable.ic_19;
+            default:
+                return R.drawable.ic_all;
+        }
+    }
 
     public static void logd(String msg) {
         Log.d(TAG, msg);

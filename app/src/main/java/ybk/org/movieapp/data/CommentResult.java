@@ -21,7 +21,7 @@ public class CommentResult {
     private Integer totalCount;
     @SerializedName("result")
     @Expose
-    private List<CommentItem> result = null;
+    private List<Comment> result = null;
 
     public String getMessage() {
         return message;
@@ -55,11 +55,11 @@ public class CommentResult {
         this.totalCount = totalCount;
     }
 
-    public List<CommentItem> getResult() {
+    public List<Comment> getResult() {
         return result;
     }
 
-    public void setResult(List<CommentItem> result) {
+    public void setResult(List<Comment> result) {
         this.result = result;
     }
 

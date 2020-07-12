@@ -3,7 +3,7 @@ package ybk.org.movieapp.data;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class MovieItem {
+public class Movie {
 
     @SerializedName("id")
     @Expose

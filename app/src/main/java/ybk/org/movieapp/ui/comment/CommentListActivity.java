@@ -4,81 +4,89 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import ybk.org.movieapp.Repository;
+import ybk.org.movieapp.data.Comment;
 import ybk.org.movieapp.util.Constants;
 import ybk.org.movieapp.R;
 import ybk.org.movieapp.databinding.ActivityCommentListBinding;
 
 public class CommentListActivity extends AppCompatActivity {
 
-    ActivityCommentListBinding binding;
-
-    private Repository repo;
-
+    private ActivityCommentListBinding binding;
+    private CommentListViewModel viewModel;
     CommentAdapter adapter;
-    ArrayList<CommentParcelable> comments = new ArrayList<>();
+    private int id;
+    private String title;
+    private List<Comment> commentList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setDataBinding();
-
-        setToolbar();
-
-        setMovieInfoAndComments();
-
-        initCommentAdapter();
+        dataBinding();
+        initializeToolbar();
+        initializeViewModelAndMovie();
+        updateCommentList();
     }
 
-    /** 데이터바인딩 설정 */
-    private void setDataBinding() {
+    private void dataBinding() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_comment_list);
         binding.setActivity(this);
     }
 
-    /** 툴바 연결 */
-    private void setToolbar() {
+    private void initializeToolbar() {
         Toolbar mToolbar = findViewById(R.id.tb_back);
         mToolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(mToolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
 
-    /** 영화 정보(이름, 별점) 및 한줄평목록을 연결함 */
-    private void setMovieInfoAndComments() {
+    private void initializeViewModelAndMovie() {
         Intent intent = getIntent();
         if(intent != null) {
-            int id = intent.getIntExtra("movie_id", -1);
-
-
-            String movieName = intent.getStringExtra(getString(R.string.movie_name_text));
-            float movieRating =
-                    intent.getFloatExtra(getString(R.string.movie_rating_text), 0);
-            String movieGrade = intent.getStringExtra(getString(R.string.movie_grade_text));
-
-            comments = intent.getParcelableArrayListExtra(getString(R.string.comment_list_text));
-            binding.tvMovieName.setText(movieName);
-            binding.rating.setRating(movieRating);
-            binding.tvRating.setText(movieGrade);
-        } else {
-            Log.e(Constants.TAG_COMMENT_LIST_ACTIVITY, "getIntent() is null.");
+            initializeViewModel(intent);
+            initializeMovie(intent);
         }
     }
 
-    /** 초기 리스트뷰 어뎁터를 설정함 */
-    private void initCommentAdapter() {
+    private void initializeViewModel(Intent intent) {
+        viewModel = ViewModelProviders.of(this).get(CommentListViewModel.class);
+        id = intent.getIntExtra(Constants.KEY_ID, -1);
+        viewModel._movieId.setValue(id);
+        viewModel.init();
+    }
+
+    private void initializeMovie(Intent intent) {
+        title = intent.getStringExtra(Constants.KEY_TITLE);
+        binding.tvMovieName.setText(title);
+        binding.rating.setRating(intent.getFloatExtra(Constants.KEY_RATING, 0));
+        binding.tvRating.setText(intent.getStringExtra(Constants.KEY_GRADE));
+        binding.ivMovieRating.setImageResource(Constants.convertGradeToResId(intent.getIntExtra(Constants.KEY_GRADE, 0)));
+    }
+
+    private void updateCommentList() {
+        viewModel.getCommentAllList().observe(this, new Observer<List<Comment>>() {
+            @Override
+            public void onChanged(List<Comment> comments) {
+                commentList = comments;
+                setCommentListAdapter();
+            }
+        });
+    }
+
+    private void setCommentListAdapter() {
         adapter = new CommentAdapter();
 
-        for(CommentParcelable comment : comments) {
-            //adapter.addItem(comment);
+        for(Comment comment : commentList) {
+            adapter.addItem(comment);
         }
 
         binding.lvComment.setAdapter(adapter);
@@ -91,8 +99,8 @@ public class CommentListActivity extends AppCompatActivity {
      */
     public void onClickWriteCommentButton() {
         Intent intent = new Intent(getApplicationContext(), CommentWriteActivity.class);
-        intent.putExtra(getString(R.string.movie_name_text),
-                binding.tvMovieName.getText().toString());
+        intent.putExtra(Constants.KEY_ID, id);
+        intent.putExtra(Constants.KEY_TITLE, title);
         startActivityForResult(intent, Constants.REQUEST_COMMENT_WRITE_CODE);
     }
 
@@ -104,10 +112,10 @@ public class CommentListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             Intent intent = new Intent();
-            intent.putParcelableArrayListExtra(
-                    getString(R.string.comment_list_text),
-                    comments
-            );
+//            intent.putParcelableArrayListExtra(
+//                    getString(R.string.comment_list_text),
+//                    comments
+//            );
             setResult(RESULT_CANCELED, intent);
             finish();
 
@@ -139,7 +147,7 @@ public class CommentListActivity extends AppCompatActivity {
                 //adapter.addItem(newComment);
                 binding.lvComment.setAdapter(adapter);
 
-                comments.add(newComment);
+                // comments.add(newComment);
             } else {
                 Log.e(Constants.TAG_COMMENT_LIST_ACTIVITY, "Data is null.");
             }

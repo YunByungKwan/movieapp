@@ -5,18 +5,18 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import java.util.ArrayList;
 
-import ybk.org.movieapp.data.CommentItem;
+import ybk.org.movieapp.data.Comment;
 
 public class CommentAdapter extends BaseAdapter {
 
-    private ArrayList<CommentItem> comments = new ArrayList<>();
+    private ArrayList<Comment> comments = new ArrayList<>();
 
     @Override
     public int getCount() {
         return comments.size();
     }
 
-    public void addItem(CommentItem item) {
+    public void addItem(Comment item) {
         comments.add(item);
     }
 
@@ -34,7 +34,7 @@ public class CommentAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         CommentItemView view = new CommentItemView(parent.getContext());
 
-        CommentItem comment = comments.get(position);
+        Comment comment = comments.get(position);
 
         view.setUserId(comment.getWriter());
         view.setRegisterTime(comment.getTime());

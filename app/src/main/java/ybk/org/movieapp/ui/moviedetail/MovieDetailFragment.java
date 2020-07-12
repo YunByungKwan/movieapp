@@ -14,42 +14,34 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import java.util.ArrayList;
 import java.util.List;
-
-import ybk.org.movieapp.data.CommentItem;
-import ybk.org.movieapp.data.DetailMovieItem;
+import ybk.org.movieapp.data.Comment;
+import ybk.org.movieapp.data.DetailMovie;
 import ybk.org.movieapp.util.Constants;
 import ybk.org.movieapp.databinding.FragmentMovieDetailBinding;
 import ybk.org.movieapp.ui.comment.CommentAdapter;
 import ybk.org.movieapp.ui.comment.CommentListActivity;
-import ybk.org.movieapp.ui.comment.CommentParcelable;
 import ybk.org.movieapp.ui.comment.CommentWriteActivity;
 import ybk.org.movieapp.R;
 
 public class MovieDetailFragment extends Fragment {
 
     private FragmentMovieDetailBinding binding;
-
     private MovieDetailViewModel viewModel;
-
-    private List<DetailMovieItem> movieItem;
-    private List<CommentItem> comments;
+    private List<DetailMovie> movieItem;
+    private List<Comment> comments;
     private int id;
-
+    private int grade;
     private boolean likeState = false;
     private boolean dislikeState = false;
     private int likeCount = 15;
     private int dislikeCount = 1;
 
-    //private ArrayList<CommentParcelable> comments = new ArrayList<>();
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        Constants.loge("call onCreateView()");
-        Constants.loge("영화상세화면으로 넘어온 id값: " + getArguments().getInt(Constants.BUNDLE_KEY_ID));
         id = getArguments().getInt(Constants.BUNDLE_KEY_ID);
+        grade = getArguments().getInt(Constants.BUNDLE_KEY_WATCHING_AGE);
 
         View view = inflater.inflate(R.layout.fragment_movie_detail, container, false);
 
@@ -62,26 +54,23 @@ public class MovieDetailFragment extends Fragment {
 
         viewModel.init();
 
-        viewModel.getDetailMovie().observe(getViewLifecycleOwner(), new Observer<List<DetailMovieItem>>() {
+        viewModel.getDetailMovie().observe(getViewLifecycleOwner(), new Observer<List<DetailMovie>>() {
             @Override
-            public void onChanged(List<DetailMovieItem> items) {
+            public void onChanged(List<DetailMovie> items) {
                 movieItem = items;
                 setSelectedMovieData();
             }
         });
-        viewModel.getCommnetList().observe(getViewLifecycleOwner(), new Observer<List<CommentItem>>() {
+        viewModel.getCommentList().observe(getViewLifecycleOwner(), new Observer<List<Comment>>() {
             @Override
-            public void onChanged(List<CommentItem> items) {
+            public void onChanged(List<Comment> items) {
                 comments = items;
                 setInitCommentAdapter();
             }
         });
 
         setDataBinding(view);
-
         setInitLikeAndDisLikeCount();
-
-        // addInitDataToCommentList();
 
         return view;
     }
@@ -105,7 +94,6 @@ public class MovieDetailFragment extends Fragment {
             Constants.logd("Arguments is not null.");
 
             Constants.loge("Image path: " + movieItem.get(0).getImage());
-
             Glide.with(getContext())
                     .load(movieItem.get(0).getThumb())
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
@@ -114,6 +102,7 @@ public class MovieDetailFragment extends Fragment {
             binding.tvMovieTitle.setText(movieItem.get(0).getTitle());
 //            binding.ivMoviePoster.setImageResource(
 //                    getArguments().getInt(Constants.BUNDLE_KEY_SMALL_POSTER));
+            binding.ivMovieRating.setImageResource(Constants.convertGradeToResId(movieItem.get(0).getGrade()));
             binding.tvReleaseDate.setText( movieItem.get(0).getDate());
             binding.tvGenre.setText(movieItem.get(0).getGenre());
             binding.tvRunningTime.setText(String.valueOf(movieItem.get(0).getDuration()));
@@ -137,18 +126,6 @@ public class MovieDetailFragment extends Fragment {
         binding.tvLikeCount.setText(String.valueOf(likeCount));
         binding.tvDislikeCount.setText(String.valueOf(dislikeCount));
     }
-
-    /** 초기 댓글 데이터를 댓글 ArrayList에 추가 */
-//    private void addInitDataToCommentList() {
-//
-//        comments.add(new CommentParcelable("kym71**", "10분전", 5,
-//                "적당히 재밌다. 오랜만에 잠 안오는 영화 봤네요.", 0));
-//
-//        comments.add(new CommentParcelable("kym71**", "10분전", 5,
-//                "적당히 재밌다. 오랜만에 잠 안오는 영화 봤네요.", 0));
-//
-//        setInitCommentAdapter();
-//    }
 
     /** Recyclerview Adapter를 설정 */
     private void setInitCommentAdapter() {
@@ -237,7 +214,8 @@ public class MovieDetailFragment extends Fragment {
         Log.e(Constants.TAG_MOVIE_DETAIL_FRAGMENT, "call onClickWriteCommentButton()");
 
         Intent intent = new Intent(getActivity(), CommentWriteActivity.class);
-        intent.putExtra(getString(R.string.movie_name_text), binding.tvMovieTitle.getText().toString());
+        intent.putExtra(Constants.KEY_TITLE, binding.tvMovieTitle.getText().toString());
+        intent.putExtra(Constants.KEY_GRADE, grade);
         startActivityForResult(intent, Constants.REQUEST_COMMENT_WRITE_CODE);
     }
 
@@ -249,15 +227,10 @@ public class MovieDetailFragment extends Fragment {
         Log.e(Constants.TAG_MOVIE_DETAIL_FRAGMENT, "call onClickLoadAllButton()");
 
         Intent intent = new Intent(getActivity(), CommentListActivity.class);
-        intent.putExtra("movie_id", id);
-        intent.putExtra(getString(R.string.movie_name_text),
-                binding.tvMovieTitle.getText().toString());
-        intent.putExtra(getString(R.string.movie_rating_text),
-                binding.rating.getRating());
-        intent.putExtra(getString(R.string.movie_grade_text),
-                binding.tvGrade.getText().toString());
-//        intent.putParcelableArrayListExtra(getString(R.string.comment_list_text),
-//                comments);
+        intent.putExtra(Constants.KEY_ID, id);
+        intent.putExtra(Constants.KEY_TITLE, binding.tvMovieTitle.getText().toString());
+        intent.putExtra(Constants.KEY_RATING, binding.rating.getRating());
+        intent.putExtra(Constants.KEY_GRADE, binding.tvGrade.getText().toString());
         startActivityForResult(intent, Constants.REQUEST_COMMENT_LIST_CODE);
     }
 

@@ -6,25 +6,26 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
+import java.util.HashMap;
 import ybk.org.movieapp.R;
+import ybk.org.movieapp.repository.Repository;
 import ybk.org.movieapp.databinding.ActivityCommentWriteBinding;
 import ybk.org.movieapp.util.Constants;
 
 public class CommentWriteActivity extends AppCompatActivity {
 
-    ActivityCommentWriteBinding binding;
+    private ActivityCommentWriteBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setDataBinding();
+        dataBinding();
 
         setMovieName();
     }
 
-    /** 데이터바인딩 설정 */
-    private void setDataBinding() {
+    private void dataBinding() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_comment_write);
         binding.setActivity(this);
     }
@@ -45,6 +46,23 @@ public class CommentWriteActivity extends AppCompatActivity {
     public void onClickSaveButton() {
         float rating = binding.rating.getRating();
         String contents = binding.etContents.getText().toString();
+
+        // 데이터 서버로 전송
+        Repository repo = Repository.getInstance();
+        HashMap<String, Object> comment = new HashMap<>();
+        /**
+         * private String id;
+         *     private String writer;
+         *     private String time;
+         *     private float rating;
+         *     private String contents;*/
+        comment.put("id", "asd");
+        comment.put("writer", "asd");
+        comment.put("time", "213123123");
+        comment.put("rating", rating);
+        comment.put("contents", contents);
+
+        repo.postComment(comment);
 
         if(contents.equals("")) { // 본문을 입력하지 않았을 경우
             Toast.makeText(

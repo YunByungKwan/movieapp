@@ -1,4 +1,4 @@
-package ybk.org.movieapp;
+package ybk.org.movieapp.repository;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class MovieListResult
+public class MovieResult
 {
     @SerializedName("message")
     @Expose
@@ -21,7 +21,7 @@ public class MovieListResult
 
     @SerializedName("result")
     @Expose
-    private List<MovieItem> result = null;
+    private List<Movie> result = null;
 
     public String getMessage() {
         return message;
@@ -47,11 +47,11 @@ public class MovieListResult
         this.resultType = resultType;
     }
 
-    public List<MovieItem> getResult() {
+    public List<Movie> getResult() {
         return result;
     }
 
-    public void setResult(List<MovieItem> result) {
+    public void setResult(List<Movie> result) {
         this.result = result;
     }
 }

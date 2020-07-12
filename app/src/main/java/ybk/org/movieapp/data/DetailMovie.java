@@ -3,7 +3,7 @@ package ybk.org.movieapp.data;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class DetailMovieItem {
+public class DetailMovie {
     @SerializedName("title")
     @Expose
     private String title;

@@ -5,7 +5,7 @@
 
         <variable
             name="fragment"
-            type="ybk.org.movieapp.MovieFragment" />
+            type="ybk.org.movieapp.ui.movielist.MovieFragment" />
 
     </data>
 
@@ -111,7 +111,8 @@
                 android:text="@string/see_detail"
                 android:textColor="#FFFFFF"
                 android:textSize="@dimen/title_text_size"
-                android:background="@drawable/rect_shape_carrot_round"/>
+                android:background="@drawable/rect_shape_carrot_round"
+                android:onClick="@{(v) -> fragment.onClickDetailSeeButton(v)}"/>
 
         </LinearLayout>
 

@@ -18,7 +18,7 @@ public class DetailMovieResult {
     private String resultType;
     @SerializedName("result")
     @Expose
-    private List<DetailMovieItem> result = null;
+    private List<DetailMovie> result = null;
 
     public String getMessage() {
         return message;
@@ -44,11 +44,11 @@ public class DetailMovieResult {
         this.resultType = resultType;
     }
 
-    public List<DetailMovieItem> getResult() {
+    public List<DetailMovie> getResult() {
         return result;
     }
 
-    public void setResult(List<DetailMovieItem> result) {
+    public void setResult(List<DetailMovie> result) {
         this.result = result;
     }
 }
