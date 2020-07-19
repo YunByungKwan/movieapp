@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import java.util.HashMap;
 import java.util.List;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -14,7 +15,6 @@ import ybk.org.movieapp.data.DetailMovie;
 import ybk.org.movieapp.data.DetailMovieResult;
 import ybk.org.movieapp.data.Movie;
 import ybk.org.movieapp.data.MovieResult;
-import ybk.org.movieapp.ui.comment.NewComment;
 import ybk.org.movieapp.util.Constants;
 
 public class Repository {
@@ -64,6 +64,7 @@ public class Repository {
             @Override
             public void onResponse(Call<DetailMovieResult> call, Response<DetailMovieResult> response) {
                 if (response.isSuccessful()){
+                    Constants.logd("repo getDetailMovie: Success");
                     movie.setValue(response.body().getResult());
 
                 }
@@ -85,7 +86,6 @@ public class Repository {
             public void onResponse(Call<CommentResult> call, Response<CommentResult> response) {
                 if (response.isSuccessful()){
                     commentList.setValue(response.body().getResult());
-
                 }
             }
 
@@ -116,21 +116,53 @@ public class Repository {
         return commentList;
     }
 
-    public void postComment(HashMap<String, Object> comment) {
-        apiService.postComment(comment).enqueue(new Callback<NewComment>() {
+    public void addComment(HashMap<String, Object> comment) {
+        apiService.addComment(comment).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(@NonNull Call<NewComment> call, @NonNull Response<NewComment> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-                    NewComment body = response.body();
-                    if (body != null) {
-
-                    }
+                    Constants.loge("StatusCode: " + response.code());
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<NewComment> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                Constants.loge(t.getMessage());
+            }
+        });
+    }
 
+    public void addLikeDisLike(HashMap<String, Object> count) {
+        apiService.addLikeDisLike(count).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    Constants.loge("StatusCode: " + response.code());
+                } else {
+                    Constants.loge("StatusCode: " + response.code());
+                    Constants.loge(response.errorBody().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                Constants.loge(t.getMessage());
+            }
+        });
+    }
+
+    public void recommendComment(HashMap<String, Object> recommend) {
+        apiService.recommendComment(recommend).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    Constants.loge("StatusCode: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                Constants.loge(t.getMessage());
             }
         });
     }

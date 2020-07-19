@@ -1,7 +1,6 @@
 package ybk.org.movieapp.ui.movielist;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import java.util.ArrayList;
 import java.util.List;
 import ybk.org.movieapp.data.Movie;
-import ybk.org.movieapp.util.Constants;
 import ybk.org.movieapp.R;
 import ybk.org.movieapp.databinding.FragmentMovieListBinding;
 
@@ -29,34 +27,17 @@ public class MovieListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_movie_list, container, false);
-
         viewModel = ViewModelProviders.of(this).get(MovieListViewModel.class);
         viewModel.init();
         viewModel.getMovieList().observe(getViewLifecycleOwner(), new Observer<List<Movie>>() {
             @Override
-            public void onChanged(List<Movie> movieItems) {
-                movieList = movieItems;
-
+            public void onChanged(List<Movie> _movieList) {
+                movieList = _movieList;
                 setPagerAdapter();
             }
         });
-
-        setDataBinding(view);
-
-        // setPagerAdapter();
-
+        dataBinding(view);
         return view;
-    }
-
-    /** 데이터바인딩 설정 */
-    private void setDataBinding(View view) {
-        binding = DataBindingUtil.bind(view);
-
-        if(binding != null) {
-            binding.setFragment(this);
-        } else {
-            Log.e(Constants.TAG_MOVIE_LIST_FRAGMENT, "DataBinding is null.");
-        }
     }
 
     /** ViewPager에 어뎁터를 설정함 */
@@ -69,18 +50,22 @@ public class MovieListFragment extends Fragment {
     /** 영화를 추가함 */
     private void addMoviesToAdapter(MoviePagerAdapter adapter) {
         if(movieList != null) {
-            Log.e("TAG", "size:"+ movieList.size());
-            for(int i = 0; i < movieList.size(); i++) {
+            for(Movie movie: movieList) {
                 adapter.addItem(MovieFragment.newInstance(
-                        movieList.get(i).getId(),
-                        movieList.get(i).getImage(),
-                        movieList.get(i).getThumb(),
-                        movieList.get(i).getTitle(),
-                        movieList.get(i).getReservationRate(),
-                        movieList.get(i).getGrade(),
-                        1,
+                        movie.getId(),
+                        movie.getImage(),
+                        movie.getTitle(),
+                        movie.getReservationRate(),
+                        movie.getGrade(),
                         adapter.getItemCount()));
             }
+        }
+    }
+
+    private void dataBinding(View view) {
+        binding = DataBindingUtil.bind(view);
+        if(binding != null) {
+            binding.setFragment(this);
         }
     }
 

@@ -86,22 +86,6 @@
                     android:text="@string/watch_age"
                     android:textColor="#FFFFFF"/>
 
-                <View style="@style/MidLineVertical"
-                    android:layout_marginRight="@dimen/base_padding_size"
-                    android:layout_marginLeft="@dimen/base_padding_size"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/d_day"
-                    android:textColor="#FFFFFF"/>
-
-                <TextView
-                    android:id="@+id/tv_d_day"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#FFFFFF"/>
-
             </LinearLayout>
 
             <Button

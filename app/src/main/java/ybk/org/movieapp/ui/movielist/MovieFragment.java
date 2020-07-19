@@ -1,7 +1,6 @@
 package ybk.org.movieapp.ui.movielist;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,25 +18,19 @@ public class MovieFragment extends Fragment {
 
     private FragmentMovieBinding binding;
 
-    public MovieFragment() {
-        // Nothing.
-    }
+    public MovieFragment() { }
 
-    public static MovieFragment newInstance(int id, String bigPoster, String smallPoster, String title,
-                                            double reservationRate, int watchingAge, int dDay,
-                                            int pos) {
+    public static MovieFragment newInstance(int id, String img, String title, double reservationRate,
+                                            int grade, int pos) {
         MovieFragment movieFragment = new MovieFragment();
 
         Bundle bundle = new Bundle();
-        bundle.putInt(Constants.BUNDLE_KEY_ID, id);
-        bundle.putString(Constants.BUNDLE_KEY_BIG_POSTER, bigPoster);
-        bundle.putString(Constants.BUNDLE_KEY_SMALL_POSTER, smallPoster);
-        bundle.putString(Constants.BUNDLE_KEY_TITLE, title);
-        bundle.putDouble(Constants.BUNDLE_KEY_RESERVATION_RATE, reservationRate);
-        bundle.putInt(Constants.BUNDLE_KEY_WATCHING_AGE, watchingAge);
-        bundle.putInt(Constants.BUNDLE_KEY_D_DAY, dDay);
-        bundle.putInt(Constants.BUNDLE_KEY_POSITION, pos);
-
+        bundle.putInt(Constants.BUN_ID, id);
+        bundle.putString(Constants.BUN_IMG, img);
+        bundle.putString(Constants.BUN_TITLE, title);
+        bundle.putDouble(Constants.BUN_RESERV_RATE, reservationRate);
+        bundle.putInt(Constants.BUN_GRADE, grade);
+        bundle.putInt(Constants.BUN_POS, pos);
         movieFragment.setArguments(bundle);
 
         return movieFragment;
@@ -45,11 +38,11 @@ public class MovieFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_movie, container, false);
         dataBinding(view);
-        initializeMovie();
-
+        setMovieInfo();
         return view;
     }
 
@@ -60,27 +53,27 @@ public class MovieFragment extends Fragment {
         }
     }
 
-    private void initializeMovie() {
+    private void setMovieInfo() {
         if(getArguments() != null) {
-            String bigPoster = getArguments().getString(Constants.BUNDLE_KEY_BIG_POSTER);
-            String smallPoster = getArguments().getString(Constants.BUNDLE_KEY_SMALL_POSTER);
-            String title = getArguments().getString(Constants.BUNDLE_KEY_TITLE);
-            double reservationRate = getArguments().getDouble(Constants.BUNDLE_KEY_RESERVATION_RATE);
-            int watchingAge = getArguments().getInt(Constants.BUNDLE_KEY_WATCHING_AGE);
-            int dDay = getArguments().getInt(Constants.BUNDLE_KEY_D_DAY);
-            int position = getArguments().getInt(Constants.BUNDLE_KEY_POSITION);
+            String img = getArguments().getString(Constants.BUN_IMG);
+            String title = getArguments().getString(Constants.BUN_TITLE);
+            String reservationRate = String.valueOf(getArguments().getDouble(Constants.BUN_RESERV_RATE));
+            String grade = String.valueOf(getArguments().getInt(Constants.BUN_GRADE));
+            String day = String.valueOf(getArguments().getInt(Constants.BUN_DAY));
+            int pos = getArguments().getInt(Constants.BUN_POS);
 
-            StringBuilder sb = new StringBuilder();
-            sb.append(position + 1).append(". ").append(title);
-
-            Glide.with(getContext()).load(bigPoster).into(binding.ivMoviePoster);
-            binding.tvMovieTitle.setText(sb);
-            binding.tvReservationRate.setText(String.valueOf(reservationRate));
-            binding.tvWatchAge.setText(String.valueOf(watchingAge));
-            binding.tvDDay.setText(String.valueOf(dDay));
-        } else {
-            Log.e(Constants.TAG_MOVIE_FRAGMENT, "getArguments() is null.");
+            Glide.with(getContext()).load(img).into(binding.ivMoviePoster);
+            binding.tvMovieTitle.setText(addNumberToTitle(pos, title));
+            binding.tvReservationRate.setText(reservationRate);
+            binding.tvWatchAge.setText(grade);
         }
+    }
+
+    /** 영화 제목에 숫자를 붙임 */
+    private StringBuilder addNumberToTitle(int pos, String title) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(pos + 1).append(". ").append(title);
+        return sb;
     }
 
     public void onClickDetailSeeButton(View v) {

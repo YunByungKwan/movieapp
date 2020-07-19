@@ -3,56 +3,49 @@ package ybk.org.movieapp.ui.moviedetail;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
+import java.util.HashMap;
 import java.util.List;
-
 import ybk.org.movieapp.data.Comment;
 import ybk.org.movieapp.data.DetailMovie;
 import ybk.org.movieapp.repository.Repository;
 import ybk.org.movieapp.util.Constants;
 
 public class MovieDetailViewModel extends ViewModel {
-    /**
-     * private MutableLiveData<List<MovieItem>> items;
-     *     private Repository repo;
-     *
-     *     public void init() {
-     *         if (items != null){
-     *             return;
-     *         }
-     *         repo = Repository.getInstance();
-     *         items = repo.getMovieList();
-     *
-     *     }
-     *
-     *     public LiveData<List<MovieItem>> getMovieList() {
-     *         return items;
-     *     }
-     * */
 
-    private MutableLiveData<List<DetailMovie>> item;
-    private MutableLiveData<List<Comment>> comments;
     private Repository repo;
-    public MutableLiveData<Integer> _movieId = new MutableLiveData<>();
-    public LiveData<Integer> movieId = _movieId;
-    public MutableLiveData<Integer> _limit = new MutableLiveData<>();
-    public LiveData<Integer> limit = _limit;
+    private MutableLiveData<List<DetailMovie>> movieInfo;
+    public MutableLiveData<List<Comment>> commentList = new MutableLiveData<>();
+    public MutableLiveData<Integer> movieId = new MutableLiveData<>();
+    public MutableLiveData<Integer> limit = new MutableLiveData<>();
 
     public void init() {
-        Constants.loge("Call init()");
-        if(item != null) {
+        if(movieInfo != null) {
             return;
         }
-        Constants.loge("상세 영화정보 가져오기 직전 movieId: " + movieId.getValue());
         repo = Repository.getInstance();
-        item = repo.getDetailMovie(movieId.getValue());
-        comments = repo.getCommentListByLimit(movieId.getValue(), limit.getValue());
+        movieInfo = repo.getDetailMovie(movieId.getValue());
+        commentList = repo.getCommentListByLimit(movieId.getValue(), limit.getValue());
     }
 
     public LiveData<List<DetailMovie>> getDetailMovie() {
-        return item;
+        return movieInfo;
     }
-    public LiveData<List<Comment>> getCommentList() {
-        return comments;
+
+    public MutableLiveData<List<Comment>> getCommentList() {
+        return commentList;
+    }
+
+    public void addComment(HashMap<String, Object> comment) {
+        repo.addComment(comment);
+    }
+
+    public void recommendComment(HashMap<String, Object> param) {
+        repo.recommendComment(param);
+    }
+
+    public void addLikeDisLike(HashMap<String, Object> param) {
+        Constants.loge("좋아요 id: " + param.get(Constants.COMM_ID) + ", like: " + param.get(Constants.POST_LIKE)
+         + ", dislike: " + param.get(Constants.POST_DISLIKE));
+        repo.addLikeDisLike(param);
     }
 }

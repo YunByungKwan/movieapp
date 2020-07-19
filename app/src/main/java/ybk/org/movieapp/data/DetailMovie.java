@@ -21,7 +21,7 @@ public class DetailMovie {
     private Double audienceRating;
     @SerializedName("reviewer_rating")
     @Expose
-    private Double reviewerRating;
+    private Float reviewerRating;
     @SerializedName("reservation_rate")
     @Expose
     private Double reservationRate;
@@ -111,11 +111,11 @@ public class DetailMovie {
         this.audienceRating = audienceRating;
     }
 
-    public Double getReviewerRating() {
+    public Float getReviewerRating() {
         return reviewerRating;
     }
 
-    public void setReviewerRating(Double reviewerRating) {
+    public void setReviewerRating(Float reviewerRating) {
         this.reviewerRating = reviewerRating;
     }
 

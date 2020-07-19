@@ -1,14 +1,20 @@
 package ybk.org.movieapp;
 
+import android.content.Intent;
 import android.os.Bundle;
+import androidx.annotation.Nullable;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.navigation.NavigationView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import java.util.HashMap;
+import ybk.org.movieapp.ui.moviedetail.MovieDetailFragment;
+import ybk.org.movieapp.util.Constants;
 
 public class MovieListActivity extends AppCompatActivity {
 
@@ -41,5 +47,30 @@ public class MovieListActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == RESULT_OK && requestCode == Constants.REQUEST_COMMENT_WRITE_CODE) {
+            if(data != null) {
+                NavHostFragment hostFragment = (NavHostFragment) getSupportFragmentManager()
+                        .findFragmentById(R.id.nav_host_fragment);
+
+                if(hostFragment != null) {
+                    MovieDetailFragment detailFragment = (MovieDetailFragment) hostFragment
+                            .getChildFragmentManager().getFragments().get(0);
+
+                    HashMap<String, Object> comment = new HashMap<>();
+                    comment.put(Constants.COMM_ID, data.getIntExtra(Constants.COMM_ID, 0));
+                    comment.put(Constants.COMM_WRITER, data.getStringExtra(Constants.COMM_WRITER));
+                    comment.put(Constants.COMM_TIME,  data.getStringExtra(Constants.COMM_TIME));
+                    comment.put(Constants.COMM_RATING, data.getFloatExtra(Constants.COMM_RATING, 0));
+                    comment.put(Constants.COMM_CONT, data.getStringExtra(Constants.COMM_CONT));
+                    detailFragment.addComment(comment);
+                }
+            }
+        }
     }
 }

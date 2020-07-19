@@ -8,17 +8,16 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
-
 import ybk.org.movieapp.util.Constants;
 import ybk.org.movieapp.R;
 
 public class CommentItemView extends LinearLayout {
 
-    TextView tvUserId;
-    TextView tvRegisterTime;
-    RatingBar ratingBar;
-    TextView tvComment;
-    TextView tvRecommendCount;
+    private TextView tvUserId;
+    private TextView tvRegisterTime;
+    private RatingBar ratingBar;
+    private TextView tvComment;
+    private TextView tvRecommendCount;
 
     public CommentItemView(Context context) {
         super(context);

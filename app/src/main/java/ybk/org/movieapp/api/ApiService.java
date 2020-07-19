@@ -1,7 +1,7 @@
 package ybk.org.movieapp.api;
 
 import java.util.HashMap;
-
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
@@ -11,7 +11,6 @@ import retrofit2.http.Query;
 import ybk.org.movieapp.data.CommentResult;
 import ybk.org.movieapp.data.DetailMovieResult;
 import ybk.org.movieapp.data.MovieResult;
-import ybk.org.movieapp.ui.comment.NewComment;
 
 public interface ApiService {
 
@@ -22,12 +21,20 @@ public interface ApiService {
     Call<DetailMovieResult> getDetailMovie(@Query("id") int id);
 
     @GET("/movie/readCommentList")
-    Call<CommentResult> getCommentListByLimit(@Query("id") int id, @Query("limit") int limit);
+    Call<CommentResult> getCommentList(@Query("id") int id);
 
     @GET("/movie/readCommentList")
-    Call<CommentResult> getCommentList(@Query("id") int id);
+    Call<CommentResult> getCommentListByLimit(@Query("id") int id, @Query("limit") int limit);
 
     @FormUrlEncoded
     @POST("/movie/createComment")
-    Call<NewComment> postComment(@FieldMap HashMap<String, Object> param);
+    Call<ResponseBody> addComment(@FieldMap HashMap<String, Object> param);
+
+    @FormUrlEncoded
+    @POST("/movie/increaseLikeDisLike")
+    Call<ResponseBody> addLikeDisLike(@FieldMap HashMap<String, Object> param);
+
+    @FormUrlEncoded
+    @POST("/movie/increaseRecommend")
+    Call<ResponseBody> recommendComment(@FieldMap HashMap<String, Object> param);
 }

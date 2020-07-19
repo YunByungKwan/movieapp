@@ -9,19 +9,17 @@ import ybk.org.movieapp.data.Movie;
 
 public class MovieListViewModel extends ViewModel {
 
-    private MutableLiveData<List<Movie>> items;
-    private Repository repo;
+    private MutableLiveData<List<Movie>> movieList;
 
     public void init() {
-        if (items != null){
+        if (movieList != null){
             return;
         }
-        repo = Repository.getInstance();
-        items = repo.getMovieList();
-
+        Repository repo = Repository.getInstance();
+        movieList = repo.getMovieList();
     }
 
     public LiveData<List<Movie>> getMovieList() {
-        return items;
+        return movieList;
     }
 }

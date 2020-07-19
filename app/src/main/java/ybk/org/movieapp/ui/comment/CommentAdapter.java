@@ -4,7 +4,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import java.util.ArrayList;
-
 import ybk.org.movieapp.data.Comment;
 
 public class CommentAdapter extends BaseAdapter {
@@ -41,7 +40,7 @@ public class CommentAdapter extends BaseAdapter {
         view.setRatingBar(comment.getRating());
         view.setComment(comment.getContents());
         view.setRecommendCount(comment.getRecommend());
-
+        notifyDataSetChanged();
         return view;
     }
 }
