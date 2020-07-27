@@ -34,7 +34,7 @@ public class Repository {
 
     private ApiService apiService;
 
-    public Repository() {
+    private Repository() {
         apiService = RetrofitClient.cteateService(ApiService.class);
     }
 
