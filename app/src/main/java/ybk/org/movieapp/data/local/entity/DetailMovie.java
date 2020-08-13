@@ -1,72 +1,100 @@
-package ybk.org.movieapp.data;
+package ybk.org.movieapp.data.local.entity;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import org.jetbrains.annotations.NotNull;
 
+@Entity(tableName = "detail_movie")
 public class DetailMovie {
-    @SerializedName("title")
-    @Expose
-    private String title;
+
+    @PrimaryKey
+    @NotNull
     @SerializedName("id")
     @Expose
     private Integer id;
+
+    @SerializedName("title")
+    @Expose
+    private String title;
+
     @SerializedName("date")
     @Expose
     private String date;
+
     @SerializedName("user_rating")
     @Expose
     private Double userRating;
+
     @SerializedName("audience_rating")
     @Expose
     private Double audienceRating;
+
     @SerializedName("reviewer_rating")
     @Expose
     private Float reviewerRating;
+
     @SerializedName("reservation_rate")
     @Expose
     private Double reservationRate;
+
     @SerializedName("reservation_grade")
     @Expose
     private Integer reservationGrade;
+
     @SerializedName("grade")
     @Expose
     private Integer grade;
+
     @SerializedName("thumb")
     @Expose
     private String thumb;
+
     @SerializedName("image")
     @Expose
     private String image;
+
     @SerializedName("photos")
     @Expose
-    private Object photos;
+    private String photos;
+
     @SerializedName("videos")
     @Expose
-    private Object videos;
+    private String videos;
+
     @SerializedName("outlinks")
     @Expose
-    private Object outlinks;
+    private String outlinks;
+
     @SerializedName("genre")
     @Expose
     private String genre;
+
     @SerializedName("duration")
     @Expose
     private Integer duration;
+
     @SerializedName("audience")
     @Expose
     private Integer audience;
+
     @SerializedName("synopsis")
     @Expose
     private String synopsis;
+
     @SerializedName("director")
     @Expose
     private String director;
+
     @SerializedName("actor")
     @Expose
     private String actor;
+
     @SerializedName("like")
     @Expose
     private Integer like;
+
     @SerializedName("dislike")
     @Expose
     private Integer dislike;
@@ -159,27 +187,27 @@ public class DetailMovie {
         this.image = image;
     }
 
-    public Object getPhotos() {
+    public String getPhotos() {
         return photos;
     }
 
-    public void setPhotos(Object photos) {
+    public void setPhotos(String photos) {
         this.photos = photos;
     }
 
-    public Object getVideos() {
+    public String getVideos() {
         return videos;
     }
 
-    public void setVideos(Object videos) {
+    public void setVideos(String videos) {
         this.videos = videos;
     }
 
-    public Object getOutlinks() {
+    public String getOutlinks() {
         return outlinks;
     }
 
-    public void setOutlinks(Object outlinks) {
+    public void setOutlinks(String outlinks) {
         this.outlinks = outlinks;
     }
 

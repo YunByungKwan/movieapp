@@ -12,14 +12,16 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
-import ybk.org.movieapp.data.Comment;
+import ybk.org.movieapp.data.local.entity.Comment;
 import ybk.org.movieapp.util.Constants;
 import ybk.org.movieapp.R;
 import ybk.org.movieapp.databinding.ActivityCommentListBinding;
+import ybk.org.movieapp.util.Network;
 
 public class CommentListActivity extends AppCompatActivity {
 
@@ -113,11 +115,15 @@ public class CommentListActivity extends AppCompatActivity {
 
     /** 작성하기 버튼 클릭시 이벤트 */
     public void onClickWriteCommentButton() {
-        Intent intent = new Intent(this, CommentWriteActivity.class);
-        intent.putExtra(Constants.MOV_ID, id);
-        intent.putExtra(Constants.MOV_TITLE, title);
-        intent.putExtra(Constants.MOV_GRADE, grade);
-        startActivityForResult(intent, Constants.REQUEST_COMMENT_WRITE_CODE);
+        if(Network.isConnected()) {
+            Intent intent = new Intent(this, CommentWriteActivity.class);
+            intent.putExtra(Constants.MOV_ID, id);
+            intent.putExtra(Constants.MOV_TITLE, title);
+            intent.putExtra(Constants.MOV_GRADE, grade);
+            startActivityForResult(intent, Constants.REQUEST_COMMENT_WRITE_CODE);
+        } else {
+            Toast.makeText(this, Constants.MSG_REQ_NET, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

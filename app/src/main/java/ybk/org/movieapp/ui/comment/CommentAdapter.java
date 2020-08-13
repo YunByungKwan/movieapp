@@ -4,7 +4,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import java.util.ArrayList;
-import ybk.org.movieapp.data.Comment;
+import ybk.org.movieapp.data.local.entity.Comment;
 
 public class CommentAdapter extends BaseAdapter {
 

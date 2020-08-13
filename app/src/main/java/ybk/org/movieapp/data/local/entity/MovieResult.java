@@ -1,27 +1,29 @@
-package ybk.org.movieapp.data;
+package ybk.org.movieapp.data.local.entity;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class CommentResult {
+import ybk.org.movieapp.data.local.entity.Movie;
 
+public class MovieResult
+{
     @SerializedName("message")
     @Expose
     private String message;
+
     @SerializedName("code")
     @Expose
     private Integer code;
+
     @SerializedName("resultType")
     @Expose
     private String resultType;
-    @SerializedName("totalCount")
-    @Expose
-    private Integer totalCount;
+
     @SerializedName("result")
     @Expose
-    private List<Comment> result = null;
+    private List<Movie> result = null;
 
     public String getMessage() {
         return message;
@@ -47,20 +49,11 @@ public class CommentResult {
         this.resultType = resultType;
     }
 
-    public Integer getTotalCount() {
-        return totalCount;
-    }
-
-    public void setTotalCount(Integer totalCount) {
-        this.totalCount = totalCount;
-    }
-
-    public List<Comment> getResult() {
+    public List<Movie> getResult() {
         return result;
     }
 
-    public void setResult(List<Comment> result) {
+    public void setResult(List<Movie> result) {
         this.result = result;
     }
-
 }

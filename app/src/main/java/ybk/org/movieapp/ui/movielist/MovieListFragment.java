@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -14,9 +16,11 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import java.util.ArrayList;
 import java.util.List;
-import ybk.org.movieapp.data.Movie;
+import ybk.org.movieapp.data.local.entity.Movie;
 import ybk.org.movieapp.R;
 import ybk.org.movieapp.databinding.FragmentMovieListBinding;
+import ybk.org.movieapp.util.Constants;
+import ybk.org.movieapp.util.Network;
 
 public class MovieListFragment extends Fragment {
 
@@ -34,6 +38,8 @@ public class MovieListFragment extends Fragment {
             public void onChanged(List<Movie> _movieList) {
                 movieList = _movieList;
                 setPagerAdapter();
+
+                Network.showToast(getActivity());
             }
         });
         dataBinding(view);

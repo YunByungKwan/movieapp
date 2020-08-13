@@ -1,6 +1,8 @@
 package ybk.org.movieapp.ui.moviedetail;
 
 import androidx.databinding.DataBindingUtil;
+
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -12,19 +14,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
-import ybk.org.movieapp.data.Comment;
-import ybk.org.movieapp.data.DetailMovie;
+import ybk.org.movieapp.data.local.entity.Comment;
+import ybk.org.movieapp.data.local.entity.DetailMovie;
 import ybk.org.movieapp.util.Constants;
 import ybk.org.movieapp.databinding.FragmentMovieDetailBinding;
 import ybk.org.movieapp.ui.comment.CommentAdapter;
 import ybk.org.movieapp.ui.comment.CommentListActivity;
 import ybk.org.movieapp.ui.comment.CommentWriteActivity;
 import ybk.org.movieapp.R;
+import ybk.org.movieapp.util.Network;
 
 public class MovieDetailFragment extends Fragment {
 
@@ -44,11 +49,8 @@ public class MovieDetailFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        if(getArguments() != null) {
-            id = getArguments().getInt(Constants.BUN_ID);
-            title = getArguments().getString(Constants.BUN_TITLE);
-            grade = getArguments().getInt(Constants.BUN_GRADE);
-        }
+
+        setBasicMovieInfoFromBundle();
 
         View view = inflater.inflate(R.layout.fragment_movie_detail, container, false);
         viewModel = ViewModelProviders.of(this).get(MovieDetailViewModel.class);
@@ -60,6 +62,8 @@ public class MovieDetailFragment extends Fragment {
             public void onChanged(List<DetailMovie> _movieInfo) {
                 movieItem = _movieInfo;
                 setMovieInfo();
+
+                Network.showToast(getActivity());
             }
         });
         viewModel.getCommentList().observe(getViewLifecycleOwner(), new Observer<List<Comment>>() {
@@ -67,8 +71,11 @@ public class MovieDetailFragment extends Fragment {
             public void onChanged(List<Comment> _commentList) {
                 commentList = _commentList;
                 updateCommentList();
+
+                Network.showToast(getActivity());
             }
         });
+
         dataBinding(view);
 
         // 댓글 리스트 아이템 클릭 이벤트
@@ -88,6 +95,18 @@ public class MovieDetailFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void setBasicMovieInfoFromBundle() {
+        if(getArguments() != null) {
+            Constants.loge("getArguments() is not null!!");
+
+            id = getArguments().getInt(Constants.BUN_ID);
+            title = getArguments().getString(Constants.BUN_TITLE);
+            grade = getArguments().getInt(Constants.BUN_GRADE);
+
+            Constants.loge("id:" + id + " title: " + title + "grade: " + grade);
+        }
     }
 
     private void setMovieInfo() {
@@ -229,13 +248,14 @@ public class MovieDetailFragment extends Fragment {
 
     /** 작성하기 버튼 클릭시 이벤트 */
     public void onClickWriteCommentButton() {
-        Intent intent = new Intent(getActivity(), CommentWriteActivity.class);
-        intent.putExtra(Constants.MOV_ID, id);
-        intent.putExtra(Constants.MOV_TITLE, title);
-        intent.putExtra(Constants.MOV_GRADE, grade);
-
-        if(getActivity() != null) {
+        if(getActivity() != null && Network.isConnected()) {
+            Intent intent = new Intent(getActivity(), CommentWriteActivity.class);
+            intent.putExtra(Constants.MOV_ID, id);
+            intent.putExtra(Constants.MOV_TITLE, title);
+            intent.putExtra(Constants.MOV_GRADE, grade);
             getActivity().startActivityForResult(intent, Constants.REQUEST_COMMENT_WRITE_CODE);
+        } else {
+            Toast.makeText(getActivity(), Constants.MSG_REQ_NET, Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -1,20 +1,25 @@
-package ybk.org.movieapp.data;
+package ybk.org.movieapp.data.local.entity;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
+
+import ybk.org.movieapp.data.local.entity.DetailMovie;
 
 public class DetailMovieResult {
 
     @SerializedName("message")
     @Expose
     private String message;
+
     @SerializedName("code")
     @Expose
     private Integer code;
+
     @SerializedName("resultType")
     @Expose
     private String resultType;
+
     @SerializedName("result")
     @Expose
     private List<DetailMovie> result = null;

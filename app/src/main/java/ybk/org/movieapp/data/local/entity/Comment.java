@@ -1,34 +1,48 @@
-package ybk.org.movieapp.data;
+package ybk.org.movieapp.data.local.entity;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import org.jetbrains.annotations.NotNull;
 
+@Entity(tableName = "comment")
 public class Comment {
 
+    @PrimaryKey
+    @NotNull
     @SerializedName("id")
     @Expose
     private Integer id;
+
     @SerializedName("writer")
     @Expose
     private String writer;
+
     @SerializedName("movieId")
     @Expose
     private Integer movieId;
+
     @SerializedName("writer_image")
     @Expose
-    private Object writerImage;
+    private String writerImage;
+
     @SerializedName("time")
     @Expose
     private String time;
+
     @SerializedName("timestamp")
     @Expose
     private Integer timestamp;
+
     @SerializedName("rating")
     @Expose
     private float rating;
+
     @SerializedName("contents")
     @Expose
     private String contents;
+
     @SerializedName("recommend")
     @Expose
     private Integer recommend;
@@ -57,11 +71,11 @@ public class Comment {
         this.movieId = movieId;
     }
 
-    public Object getWriterImage() {
+    public String getWriterImage() {
         return writerImage;
     }
 
-    public void setWriterImage(Object writerImage) {
+    public void setWriterImage(String writerImage) {
         this.writerImage = writerImage;
     }
 

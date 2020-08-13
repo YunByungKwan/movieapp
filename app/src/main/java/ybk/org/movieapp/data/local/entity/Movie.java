@@ -1,10 +1,16 @@
-package ybk.org.movieapp.data;
+package ybk.org.movieapp.data.local.entity;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import org.jetbrains.annotations.NotNull;
 
+@Entity(tableName = "movie")
 public class Movie {
 
+    @PrimaryKey
+    @NotNull
     @SerializedName("id")
     @Expose
     private Integer id;

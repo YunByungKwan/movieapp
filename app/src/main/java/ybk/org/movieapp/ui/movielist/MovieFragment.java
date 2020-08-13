@@ -59,7 +59,6 @@ public class MovieFragment extends Fragment {
             String title = getArguments().getString(Constants.BUN_TITLE);
             String reservationRate = String.valueOf(getArguments().getDouble(Constants.BUN_RESERV_RATE));
             String grade = String.valueOf(getArguments().getInt(Constants.BUN_GRADE));
-            String day = String.valueOf(getArguments().getInt(Constants.BUN_DAY));
             int pos = getArguments().getInt(Constants.BUN_POS);
 
             Glide.with(getContext()).load(img).into(binding.ivMoviePoster);
@@ -73,9 +72,11 @@ public class MovieFragment extends Fragment {
     private StringBuilder addNumberToTitle(int pos, String title) {
         StringBuilder sb = new StringBuilder();
         sb.append(pos + 1).append(". ").append(title);
+
         return sb;
     }
 
+    /** 상세보기 버튼 클릭시 이벤트 */
     public void onClickDetailSeeButton(View v) {
         Navigation.findNavController(v).navigate(R.id.act_nav_movie_list_to_detail, getArguments());
     }

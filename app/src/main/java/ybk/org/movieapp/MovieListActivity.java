@@ -12,11 +12,10 @@ import com.google.android.material.navigation.NavigationView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.room.Room;
 
 import java.util.HashMap;
 
-import ybk.org.movieapp.local.MovieDatabase;
+import ybk.org.movieapp.data.local.db.MovieDatabase;
 import ybk.org.movieapp.ui.moviedetail.MovieDetailFragment;
 import ybk.org.movieapp.util.Constants;
 
@@ -44,9 +43,6 @@ public class MovieListActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-
-        // 데이터베이스 생성
-        MovieDatabase dataBase = MovieDatabase.getInstance(this);
     }
 
     @Override
