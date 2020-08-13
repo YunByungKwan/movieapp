@@ -37,9 +37,13 @@ public class MovieListFragment extends Fragment {
             @Override
             public void onChanged(List<Movie> _movieList) {
                 movieList = _movieList;
-                setPagerAdapter();
 
-                Network.showToast(getActivity());
+                if(movieList.size() != 0) {
+                    setPagerAdapter();
+                    Network.showToast(getActivity());
+                } else {
+                    Toast.makeText(getActivity(), Constants.MSG_NO_DATA, Toast.LENGTH_SHORT).show();
+                }
             }
         });
         dataBinding(view);

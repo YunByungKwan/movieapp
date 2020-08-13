@@ -1,8 +1,6 @@
 package ybk.org.movieapp.ui.moviedetail;
 
 import androidx.databinding.DataBindingUtil;
-
-import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -15,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import java.text.DecimalFormat;
@@ -61,18 +58,24 @@ public class MovieDetailFragment extends Fragment {
             @Override
             public void onChanged(List<DetailMovie> _movieInfo) {
                 movieItem = _movieInfo;
-                setMovieInfo();
-
-                Network.showToast(getActivity());
+                if(movieItem.size() != 0) {
+                    setMovieInfo();
+                    Network.showToast(getActivity());
+                } else {
+                    Toast.makeText(getActivity(), Constants.MSG_NO_DATA, Toast.LENGTH_SHORT).show();
+                }
             }
         });
         viewModel.getCommentList().observe(getViewLifecycleOwner(), new Observer<List<Comment>>() {
             @Override
             public void onChanged(List<Comment> _commentList) {
                 commentList = _commentList;
-                updateCommentList();
-
-                Network.showToast(getActivity());
+                if(commentList.size() != 0) {
+                    updateCommentList();
+                    Network.showToast(getActivity());
+                } else {
+                    Toast.makeText(getActivity(), Constants.MSG_NO_DATA, Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

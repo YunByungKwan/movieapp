@@ -45,6 +45,7 @@ public class Constants {
     public static final String MSG_NET_OK = "인터넷이 연결되어 있습니다.\n데이터베이스에 저장함";
     public static final String MSG_NET_FAIL = "인터넷이 연결되어 있지 않습니다.\n데이터베이스로부터 로딩함";
     public static final String MSG_REQ_NET = "인터넷이 연결되어 있지 않습니다\n인터넷 연결 후 작성해주세요.";
+    public static final String MSG_NO_DATA = "데이터가 존재하지 않습니다.";
 
     /** Grade를 이미지 id로 변환 */
     public static int convertGradeToResId(int grade) {
