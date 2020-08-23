@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class MovieListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_movie_list, container, false);
-        viewModel = ViewModelProviders.of(this).get(MovieListViewModel.class);
+        viewModel = new ViewModelProvider(this).get(MovieListViewModel.class);
         viewModel.init();
         viewModel.getMovieList().observe(getViewLifecycleOwner(), new Observer<List<Movie>>() {
             @Override
@@ -42,7 +43,7 @@ public class MovieListFragment extends Fragment {
                     setPagerAdapter();
                     Network.showToast(getActivity());
                 } else {
-                    Toast.makeText(getActivity(), Constants.MSG_NO_DATA, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.msg_no_data), Toast.LENGTH_SHORT).show();
                 }
             }
         });

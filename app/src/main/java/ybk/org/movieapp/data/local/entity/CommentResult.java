@@ -2,10 +2,7 @@ package ybk.org.movieapp.data.local.entity;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
-
-import ybk.org.movieapp.data.local.entity.Comment;
 
 public class CommentResult {
 

@@ -6,6 +6,7 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.widget.Toast;
+import ybk.org.movieapp.R;
 
 public class Network {
 
@@ -72,9 +73,9 @@ public class Network {
     /** 네트워크 상태를 보여주는 토스트 메시지 */
     public static void showToast(Context context) {
         if(isConnected()) {
-            Toast.makeText(context, Constants.MSG_NET_OK, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, App.getInstance().getString(R.string.msg_net_ok), Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(context, Constants.MSG_NET_FAIL, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, App.getInstance().getString(R.string.msg_net_fail), Toast.LENGTH_SHORT).show();
         }
     }
 

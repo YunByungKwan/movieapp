@@ -66,11 +66,11 @@ public class MovieListActivity extends AppCompatActivity {
                             .getChildFragmentManager().getFragments().get(0);
 
                     HashMap<String, Object> comment = new HashMap<>();
-                    comment.put(Constants.COMM_ID, data.getIntExtra(Constants.COMM_ID, 0));
-                    comment.put(Constants.COMM_WRITER, data.getStringExtra(Constants.COMM_WRITER));
-                    comment.put(Constants.COMM_TIME,  data.getStringExtra(Constants.COMM_TIME));
-                    comment.put(Constants.COMM_RATING, data.getFloatExtra(Constants.COMM_RATING, 0));
-                    comment.put(Constants.COMM_CONT, data.getStringExtra(Constants.COMM_CONT));
+                    comment.put(getString(R.string.comm_id), data.getIntExtra(getString(R.string.comm_id), 0));
+                    comment.put(getString(R.string.comm_writer), data.getStringExtra(getString(R.string.comm_writer)));
+                    comment.put(getString(R.string.comm_time),  data.getStringExtra(getString(R.string.comm_time)));
+                    comment.put(getString(R.string.comm_rating), data.getFloatExtra(getString(R.string.comm_rating), 0));
+                    comment.put(getString(R.string.comm_cont), data.getStringExtra(getString(R.string.comm_cont)));
                     detailFragment.addComment(comment);
                 }
             }

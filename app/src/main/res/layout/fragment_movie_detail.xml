@@ -391,6 +391,29 @@
 
             <View style="@style/MidLineHorizontal" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/base_padding_size">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gallery"
+                    android:textColor="@color/colorTitleText"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="@dimen/base_padding_size"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_gallery"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <View style="@style/MidLineHorizontal" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout"
                 android:layout_width="match_parent"
@@ -435,8 +458,8 @@
 
                 </LinearLayout>
 
-                <ListView
-                    android:id="@+id/lv_comment"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_comment"
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
                     app:layout_constraintBottom_toTopOf="@+id/btn_load_all"

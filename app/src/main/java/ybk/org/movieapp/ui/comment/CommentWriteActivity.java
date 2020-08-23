@@ -8,6 +8,7 @@ import android.widget.Toast;
 import ybk.org.movieapp.R;
 import ybk.org.movieapp.databinding.ActivityCommentWriteBinding;
 import ybk.org.movieapp.util.Constants;
+import ybk.org.movieapp.util.Utils;
 
 public class CommentWriteActivity extends AppCompatActivity {
 
@@ -18,7 +19,7 @@ public class CommentWriteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dataBinding();
-        setMovieInfo();
+        initializeMovie();
     }
 
     private void dataBinding() {
@@ -26,12 +27,12 @@ public class CommentWriteActivity extends AppCompatActivity {
         binding.setActivity(this);
     }
 
-    private void setMovieInfo() {
+    private void initializeMovie() {
         Intent intent = getIntent();
         if(intent != null) {
-            id = intent.getIntExtra(Constants.MOV_ID, 0);
-            setTitle(intent.getStringExtra(Constants.MOV_TITLE));
-            setGrade(intent.getIntExtra(Constants.MOV_GRADE, 0));
+            id = intent.getIntExtra(getString(R.string.mov_id), 0);
+            setTitle(intent.getStringExtra(getString(R.string.mov_title)));
+            setGrade(intent.getIntExtra(getString(R.string.mov_grade), 0));
         }
     }
 
@@ -40,28 +41,28 @@ public class CommentWriteActivity extends AppCompatActivity {
     }
 
     private void setGrade(int grade) {
-        int resId = Constants.convertGradeToResId(grade);
+        int resId = Utils.convertGradeToResId(grade);
         binding.ivMovieRating.setImageResource(resId);
     }
 
     /** 저장 버튼 클릭시 이벤트 */
     public void onClickSaveButton() {
         if(isEmptyContents()) {
-            Toast.makeText(this, Constants.MSG_EMPTY, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.msg_empty), Toast.LENGTH_SHORT).show();
         } else {
             Intent intent = new Intent();
-            intent.putExtra(Constants.COMM_ID, id);
-            intent.putExtra(Constants.COMM_WRITER, "ByungKwan");
-            intent.putExtra(Constants.COMM_TIME, Constants.getCurrentTime());
-            intent.putExtra(Constants.COMM_RATING, binding.rating.getRating());
-            intent.putExtra(Constants.COMM_CONT, binding.etContents.getText().toString());
+            intent.putExtra(getString(R.string.comm_id), id);
+            intent.putExtra(getString(R.string.comm_writer), "ByungKwan");
+            intent.putExtra(getString(R.string.comm_time), Utils.getCurrentTime());
+            intent.putExtra(getString(R.string.comm_rating), binding.rating.getRating());
+            intent.putExtra(getString(R.string.comm_cont), binding.etContents.getText().toString());
             setResult(RESULT_OK, intent);
             finish();
         }
     }
 
     /** 본문이 비어있는지 판별 */
-    boolean isEmptyContents() {
+    private boolean isEmptyContents() {
         String contents = binding.etContents.getText().toString();
         return contents.equals("");
     }

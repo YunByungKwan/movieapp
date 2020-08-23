@@ -2,10 +2,12 @@ package ybk.org.movieapp.data.remote;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import ybk.org.movieapp.R;
+import ybk.org.movieapp.util.App;
 
 public class RetrofitClient {
 
-    private static final String BASE_URL = "http://boostcourse-appapi.connect.or.kr:10000";
+    private static final String BASE_URL = App.getInstance().getString(R.string.base_url);
 
     private static Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(BASE_URL)

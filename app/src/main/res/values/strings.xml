@@ -41,6 +41,7 @@
     <string name="director_and_casting">감독/출연</string>
     <string name="director">감독</string>
     <string name="casting">출연</string>
+    <string name="gallery">갤러리</string>
     <string name="comment">한줄평</string>
     <string name="see_all">모두보기</string>
     <string name="write">작성하기</string>
@@ -92,5 +93,52 @@
     <string name="menu_user_settings">사용자 설정</string>
 
     <string name="see_detail">상세보기</string>
+    
+    <!-- Bundle text -->
+    <string name="bun_id">ID</string>
+    <string name="bun_img">BIG_POSTER</string>
+    <string name="bun_title">TITLE</string>
+    <string name="bun_reserv_rate">RESERVATION_RATE</string>
+    <string name="bun_grade">WATCHING_AGE</string>
+    <string name="bun_day">D_DAY</string>
+    <string name="bun_pos">POSITION</string>
+
+    <!-- Tag text -->
+    <string name="tag">MovieApp</string>
+    <string name="tag_comment_item_view">COMMENT_ITEM_VIEW</string>
+
+    <string name="mov_id">movie_id</string>
+    <string name="mov_title">movieName</string>
+    <string name="mov_rating">movieRating</string>
+    <string name="mov_grade">movieGrade</string>
+
+    <!-- Comment text -->
+    <string name="comm_id">id</string>
+    <string name="comm_review_id">review_id</string>
+    <string name="comm_writer">writer</string>
+    <string name="comm_time">time</string>
+    <string name="comm_rating">rating</string>
+    <string name="comm_cont">contents</string>
+
+    <!-- Like/dislike text -->
+    <string name="post_like">likeyn</string>
+    <string name="post_dislike">dislikeyn</string>
+
+    <!-- Message -->
+    <string name="msg_empty">한줄평을 100자 이내로 작성해주세요</string>
+    <string name="msg_net_ok">인터넷이 연결되어 있습니다.\n데이터베이스에 저장함</string>
+    <string name="msg_net_fail">인터넷이 연결되어 있지 않습니다.\n데이터베이스로부터 로딩함</string>
+    <string name="msg_req_net">인터넷이 연결되어 있지 않습니다\n인터넷 연결 후 작성해주세요.</string>
+    <string name="msg_no_data">데이터가 존재하지 않습니다.</string>
+    <string name="msg_service_not_ready">서비스 준비중입니다.</string>
+
+    <!-- Gallery url text -->
+    <string name="gallery_url">galleryUrl</string>
+
+    <!-- Retrofit -->
+    <string name="base_url">http://boostcourse-appapi.connect.or.kr:10000</string>
+
+    <!-- Database -->
+    <string name="db_name">movie-db</string>
 
 </resources>

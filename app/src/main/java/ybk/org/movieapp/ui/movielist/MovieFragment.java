@@ -12,6 +12,7 @@ import androidx.navigation.Navigation;
 import com.bumptech.glide.Glide;
 import ybk.org.movieapp.R;
 import ybk.org.movieapp.databinding.FragmentMovieBinding;
+import ybk.org.movieapp.util.App;
 import ybk.org.movieapp.util.Constants;
 
 public class MovieFragment extends Fragment {
@@ -25,12 +26,12 @@ public class MovieFragment extends Fragment {
         MovieFragment movieFragment = new MovieFragment();
 
         Bundle bundle = new Bundle();
-        bundle.putInt(Constants.BUN_ID, id);
-        bundle.putString(Constants.BUN_IMG, img);
-        bundle.putString(Constants.BUN_TITLE, title);
-        bundle.putDouble(Constants.BUN_RESERV_RATE, reservationRate);
-        bundle.putInt(Constants.BUN_GRADE, grade);
-        bundle.putInt(Constants.BUN_POS, pos);
+        bundle.putInt(App.getInstance().getString(R.string.bun_id), id);
+        bundle.putString(App.getInstance().getString(R.string.bun_img), img);
+        bundle.putString(App.getInstance().getString(R.string.bun_title), title);
+        bundle.putDouble(App.getInstance().getString(R.string.bun_reserv_rate), reservationRate);
+        bundle.putInt(App.getInstance().getString(R.string.bun_grade), grade);
+        bundle.putInt(App.getInstance().getString(R.string.bun_pos), pos);
         movieFragment.setArguments(bundle);
 
         return movieFragment;
@@ -55,11 +56,11 @@ public class MovieFragment extends Fragment {
 
     private void setMovieInfo() {
         if(getArguments() != null) {
-            String img = getArguments().getString(Constants.BUN_IMG);
-            String title = getArguments().getString(Constants.BUN_TITLE);
-            String reservationRate = String.valueOf(getArguments().getDouble(Constants.BUN_RESERV_RATE));
-            String grade = String.valueOf(getArguments().getInt(Constants.BUN_GRADE));
-            int pos = getArguments().getInt(Constants.BUN_POS);
+            String img = getArguments().getString(getString(R.string.bun_img));
+            String title = getArguments().getString(getString(R.string.bun_title));
+            String reservationRate = String.valueOf(getArguments().getDouble(getString(R.string.bun_reserv_rate)));
+            String grade = String.valueOf(getArguments().getInt(getString(R.string.bun_grade)));
+            int pos = getArguments().getInt(getString(R.string.bun_pos));
 
             Glide.with(getContext()).load(img).into(binding.ivMoviePoster);
             binding.tvMovieTitle.setText(addNumberToTitle(pos, title));

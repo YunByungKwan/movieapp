@@ -4,8 +4,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
-import ybk.org.movieapp.data.local.entity.DetailMovie;
-
 public class DetailMovieResult {
 
     @SerializedName("message")

@@ -5,10 +5,12 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import java.util.HashMap;
 import java.util.List;
+import ybk.org.movieapp.R;
 import ybk.org.movieapp.data.local.entity.Comment;
 import ybk.org.movieapp.data.local.entity.DetailMovie;
 import ybk.org.movieapp.data.Repository;
-import ybk.org.movieapp.util.Constants;
+import ybk.org.movieapp.util.App;
+import ybk.org.movieapp.util.Utils;
 
 public class MovieDetailViewModel extends ViewModel {
 
@@ -18,10 +20,7 @@ public class MovieDetailViewModel extends ViewModel {
     public MutableLiveData<Integer> movieId = new MutableLiveData<>();
     public MutableLiveData<Integer> limit = new MutableLiveData<>();
 
-
     public void init() {
-        Constants.loge("Call MovieDetailViewModel");
-        Constants.loge("movie id: " + movieId.getValue());
         if(movieInfo != null) {
             return;
         }
@@ -47,8 +46,6 @@ public class MovieDetailViewModel extends ViewModel {
     }
 
     public void addLikeDisLike(HashMap<String, Object> param) {
-        Constants.loge("좋아요 id: " + param.get(Constants.COMM_ID) + ", like: " + param.get(Constants.POST_LIKE)
-         + ", dislike: " + param.get(Constants.POST_DISLIKE));
         repo.addLikeDisLike(param);
     }
 }

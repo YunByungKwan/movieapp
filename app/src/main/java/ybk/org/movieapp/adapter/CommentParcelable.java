@@ -1,4 +1,4 @@
-package ybk.org.movieapp.ui.comment;
+package ybk.org.movieapp.adapter;
 
 import android.os.Parcel;
 import android.os.Parcelable;

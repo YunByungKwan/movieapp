@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import ybk.org.movieapp.R;
@@ -20,8 +21,7 @@ public class MovieApiFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        movieApiViewModel =
-                ViewModelProviders.of(this).get(MovieApiViewModel.class);
+        movieApiViewModel = new ViewModelProvider(this).get(MovieApiViewModel.class);
 
         View view = inflater.inflate(R.layout.fragment_movie_api, container, false);
 

@@ -2,10 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ybk.org.movieapp">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-
-    <!-- Network -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- Network -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".util.App"
@@ -16,6 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".ui.moviegallery.MovieGalleryActivity"
+            android:label="사진 보기"></activity>
         <activity
             android:name=".MovieListActivity"
             android:label="@string/title_activity_movie_list"
@@ -33,7 +33,6 @@
         <activity
             android:name=".ui.comment.CommentWriteActivity"
             android:label="한줄평작성" />
-
     </application>
 
 </manifest>

@@ -3,6 +3,8 @@ package ybk.org.movieapp.ui.moviebook;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import ybk.org.movieapp.R;
+import ybk.org.movieapp.util.App;
 
 public class MovieBookViewModel extends ViewModel {
 
@@ -10,7 +12,7 @@ public class MovieBookViewModel extends ViewModel {
 
     public MovieBookViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("서비스 준비중입니다.");
+        mText.setValue(App.getInstance().getString(R.string.msg_service_not_ready));
     }
 
     public LiveData<String> getText() {
