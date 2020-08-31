@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_order"
+        android:icon="@drawable/order_small"
+        android:title="@string/menu_order_text"
+        app:showAsAction="always|withText">
+        <menu>
+            <item
+                android:id="@+id/menu_order1"
+                android:icon="@drawable/order_small"
+                android:title="@string/menu_order1_text"/>
+            <item
+                android:id="@+id/menu_order2"
+                android:icon="@drawable/order_small"
+                android:title="@string/menu_order2_text"/>
+
+            <item
+                android:id="@+id/menu_order3"
+                android:icon="@drawable/order_small"
+                android:title="@string/menu_order3_text"/>
+        </menu>
+    </item>
+
+
+
+</menu>

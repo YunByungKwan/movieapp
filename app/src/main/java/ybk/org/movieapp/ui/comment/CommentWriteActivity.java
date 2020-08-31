@@ -64,7 +64,7 @@ public class CommentWriteActivity extends AppCompatActivity {
     /** 본문이 비어있는지 판별 */
     private boolean isEmptyContents() {
         String contents = binding.etContents.getText().toString();
-        return contents.equals("");
+        return "".equals(contents);
     }
 
     /** 취소 버튼 클릭시 이벤트 */

@@ -82,7 +82,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                 public void onClick(View view) {
                     int position = getAdapterPosition();
                     if(listener != null) {
-                        Utils.loge("Call onClick in ViewHolder");
+                        Utils.logd("Call onClick in ViewHolder");
                         listener.OnItemClick(ViewHolder.this, view, position);
                     }
                 }

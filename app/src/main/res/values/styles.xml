@@ -1,10 +1,16 @@
 <resources>
 
+    <!-- Splash theme. -->
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+    </style>
+
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:itemBackground">@color/colorPrimary</item>
     </style>
 
     <!-- Custom no action bar theme. -->
@@ -12,7 +18,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorControlNormal">#FFFFFF</item>
+        <item name="colorControlNormal">@color/colorBackground</item>
     </style>
 
     <!-- Custom rating bar theme. -->
@@ -22,14 +28,14 @@
 
     <!-- white Vertical view line. -->
     <style name="MidLineVerticalWhite">
-        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_width">@dimen/dim_one</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:background">#FFFFFF</item>
+        <item name="android:background">@color/colorBackground</item>
     </style>
 
     <!-- Vertical view line. -->
     <style name="MidLineVertical">
-        <item name="android:layout_width">2dp</item>
+        <item name="android:layout_width">@dimen/dim_two</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:background">@color/colorBackgroundDark</item>
     </style>
@@ -37,21 +43,21 @@
     <!-- Horizontal view line. -->
     <style name="MidLineHorizontal">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">10dp</item>
+        <item name="android:layout_height">@dimen/base_padding_size</item>
         <item name="android:background">@color/colorBackground</item>
     </style>
 
     <!-- Horizontal thin view line. -->
     <style name="MidThinLineHorizontal">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">1dp</item>
-        <item name="android:background">#E2E2E2</item>
+        <item name="android:layout_height">@dimen/dim_one</item>
+        <item name="android:background">@color/horizontalBackground</item>
     </style>
 
     <!-- Horizontal gradation view line. -->
     <style name="MidThinGradationLineHorizontal">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_height">@dimen/dim_one</item>
         <item name="android:background">@drawable/gradation</item>
     </style>
 
@@ -62,6 +68,6 @@
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
 
 </resources>

@@ -63,18 +63,19 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView imageView;
-        OnItemClickListener listener;
+        private ImageView imageView;
+        private ImageView playIcon;
+        private OnItemClickListener listener;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             imageView = (ImageView) itemView.findViewById(R.id.iv_gallery_item);
-
+            playIcon = (ImageView) itemView.findViewById(R.id.iv_play);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Utils.loge("Call onClick in GalleryAdapter");
+                    Utils.logd("Call onClick in GalleryAdapter");
                     int position = getAdapterPosition();
                     if(listener != null) {
                          listener.OnItemClick(ViewHolder.this, view, position);
@@ -85,7 +86,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 
         /** 갤러리의 이미지를 설정함 */
         public void setItem(GalleryItem item) {
-            Utils.loge("Call setItem in GalleryAdapter");
+            Utils.logd("Call setItem in GalleryAdapter");
             StringBuilder sb = new StringBuilder();
 
             if(Utils.isVideo(item.getUrl())) {
@@ -93,11 +94,15 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
                 sb.append("https://img.youtube.com/vi/");
                 sb.append(id);
                 sb.append("/0.jpg");
+
+                playIcon.setVisibility(View.VISIBLE);
+                playIcon.bringToFront();
             } else {
                 sb.append(item.getUrl());
             }
 
             Glide.with(App.getInstance()).load(sb.toString()).into(imageView);
+
         }
 
         /** Url에서 id를 추출 */

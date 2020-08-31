@@ -10,6 +10,7 @@
     <color name="colorBackground">#EEEEEE</color>
     <color name="colorBackgroundDark">#CCCCCC</color>
 
+    <color name="horizontalBackground">#E2E2E2</color>
     <!-- Text color -->
     <color name="colorThumbnailText">#FFFFFF</color>
     <color name="colorTitleText">#000000</color>

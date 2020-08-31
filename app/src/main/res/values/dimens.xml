@@ -10,6 +10,10 @@
     <dimen name="base_half_padding_size">5dp</dimen>
     <dimen name="base_double_padding_size">20dp</dimen>
 
+    <!-- Etc -->
+    <dimen name="dim_one">1dp</dimen>
+    <dimen name="dim_two">2dp</dimen>
+
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
