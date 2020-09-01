@@ -2,15 +2,17 @@ package ybk.org.movieapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
@@ -20,16 +22,14 @@ import com.google.android.material.navigation.NavigationView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import java.util.HashMap;
-
-import ybk.org.movieapp.data.local.db.MovieDatabase;
 import ybk.org.movieapp.ui.moviedetail.MovieDetailFragment;
 import ybk.org.movieapp.util.Constants;
 
 public class MovieListActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    private Toolbar toolbar;
     private Menu menu;
 
     @Override
@@ -37,8 +37,10 @@ public class MovieListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_list);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setOverflowIcon(ContextCompat.getDrawable(this, R.drawable.order11));
+
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -89,36 +91,26 @@ public class MovieListActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu, menu);
-        this.menu = menu;
 
+        menu.findItem(R.id.menu_order).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+
+                return false;
+            }
+        });
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        Animation transDown = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.translate_down);
-        final Animation transUp = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.translate_up);
+        final Animation transDown = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.translate_down);
+        Animation transUp = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.translate_up);
 
-        switch (item.getItemId()) {
-            case R.id.menu_order:
-                //item.getActionView().startAnimation(transDown);
-                return true;
-            case R.id.menu_order1:
-                //item.getActionView().startAnimation(transUp);
-                Toast.makeText(this, getString(R.string.menu_click_text1), Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.menu_order2:
-                //item.getActionView().startAnimation(transUp);
-                Toast.makeText(this, getString(R.string.menu_click_text2), Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.menu_order3:
-                //item.getActionView().startAnimation(transUp);
-                Toast.makeText(this, getString(R.string.menu_click_text3), Toast.LENGTH_SHORT).show();
-                return true;
-        }
+
         return super.onOptionsItemSelected(item);
     }
 }
