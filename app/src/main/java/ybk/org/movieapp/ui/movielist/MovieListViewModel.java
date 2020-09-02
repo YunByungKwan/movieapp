@@ -27,17 +27,4 @@ public class MovieListViewModel extends ViewModel {
         return movieList;
     }
 
-    public void sortMovieListByReservationRate() {
-        Collections.sort(movieList.getValue(), new Comparator<Movie>() {
-            @Override
-            public int compare(Movie movie, Movie t1) {
-                if(movie.getReservationRate() > t1.getReservationRate()) {
-                    return -1;
-                } else if(movie.getReservationRate() < t1.getReservationRate()) {
-                    return 1;
-                }
-                return 0;
-            }
-        });
-    }
 }

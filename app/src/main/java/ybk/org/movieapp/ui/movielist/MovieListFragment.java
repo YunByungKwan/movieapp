@@ -21,6 +21,7 @@ import java.util.List;
 import ybk.org.movieapp.data.local.entity.Movie;
 import ybk.org.movieapp.R;
 import ybk.org.movieapp.databinding.FragmentMovieListBinding;
+import ybk.org.movieapp.util.Constants;
 import ybk.org.movieapp.util.Network;
 import ybk.org.movieapp.util.Utils;
 
@@ -84,16 +85,18 @@ public class MovieListFragment extends Fragment {
         }
     }
 
-    public void sortMovieListByReservationRate() {
+    public void sortMovieListBy(final int type) {
         Collections.sort(movieList, new Comparator<Movie>() {
             @Override
             public int compare(Movie movie, Movie t1) {
-                if(movie.getReservationRate() > t1.getReservationRate()) {
-                    return 1;
-                } else if(movie.getReservationRate() < t1.getReservationRate()) {
-                    return -1;
+                if(type == Constants.SORT_RESERVATION_RATE) {
+                    return compareAwithB(movie.getReservationRate(), t1.getReservationRate());
+                } else if(type == Constants.SORT_REVIEWER_RATING) {
+                    return compareAwithB(movie.getReviewerRating(), t1.getReviewerRating());
+                } else {
+                    return compareAwithB(movie.getDate(), t1.getDate());
                 }
-                return 0;
+
             }
         });
 
@@ -102,6 +105,14 @@ public class MovieListFragment extends Fragment {
         }
 
         setPagerAdapter();
+    }
+
+    private int compareAwithB(Double a, Double b) {
+        return b.compareTo(a);
+    }
+
+    private int compareAwithB(String a, String b) {
+        return b.compareTo(a);
     }
 
     private static class MoviePagerAdapter extends FragmentStateAdapter {
