@@ -11,6 +11,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -18,6 +20,8 @@ import com.bumptech.glide.Glide;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
+
+import ybk.org.movieapp.MovieListActivity;
 import ybk.org.movieapp.adapter.CommentAdapter;
 import ybk.org.movieapp.adapter.CommentItem;
 import ybk.org.movieapp.adapter.GalleryAdapter;
@@ -53,8 +57,10 @@ public class MovieDetailFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-
         setBasicMovieInfoFromBundle();
+
+        MovieListActivity activity = (MovieListActivity) getActivity();
+        activity.hideMenu();
 
         View view = inflater.inflate(R.layout.fragment_movie_detail, container, false);
         viewModel = new ViewModelProvider(this).get(MovieDetailViewModel.class);

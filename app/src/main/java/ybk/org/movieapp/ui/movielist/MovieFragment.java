@@ -10,6 +10,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import com.bumptech.glide.Glide;
+
+import ybk.org.movieapp.MovieListActivity;
 import ybk.org.movieapp.R;
 import ybk.org.movieapp.databinding.FragmentMovieBinding;
 import ybk.org.movieapp.util.App;
@@ -44,6 +46,10 @@ public class MovieFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_movie, container, false);
         dataBinding(view);
         setMovieInfo();
+
+        MovieListActivity activity = (MovieListActivity) getActivity();
+        activity.showMenu();
+
         return view;
     }
 
@@ -79,6 +85,8 @@ public class MovieFragment extends Fragment {
 
     /** 상세보기 버튼 클릭시 이벤트 */
     public void onClickDetailSeeButton(View v) {
+
         Navigation.findNavController(v).navigate(R.id.act_nav_movie_list_to_detail, getArguments());
+
     }
 }

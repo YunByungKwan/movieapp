@@ -11,4 +11,6 @@ public class Constants {
     public static final int NET_CELLULAR = 1;
     public static final int NET_WIFI = 2;
 
+    public static int sortOrder = -1;
+
 }

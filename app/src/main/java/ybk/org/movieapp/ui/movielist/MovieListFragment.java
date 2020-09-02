@@ -5,28 +5,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import ybk.org.movieapp.data.local.entity.Movie;
 import ybk.org.movieapp.R;
 import ybk.org.movieapp.databinding.FragmentMovieListBinding;
-import ybk.org.movieapp.util.Constants;
 import ybk.org.movieapp.util.Network;
+import ybk.org.movieapp.util.Utils;
 
 public class MovieListFragment extends Fragment {
 
     private FragmentMovieListBinding binding;
-    private MovieListViewModel viewModel;
+    public MovieListViewModel viewModel;
     private List<Movie> movieList = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -37,8 +38,11 @@ public class MovieListFragment extends Fragment {
         viewModel.getMovieList().observe(getViewLifecycleOwner(), new Observer<List<Movie>>() {
             @Override
             public void onChanged(List<Movie> _movieList) {
+                Utils.loge("onChanged");
                 movieList = _movieList;
-
+                for(int i = 0; i < movieList.size(); i++) {
+                    Utils.loge(movieList.get(i).getTitle() + ", " + movieList.get(i).getReservationRate());
+                }
                 if(movieList.size() != 0) {
                     setPagerAdapter();
                     Network.showToast(getActivity());
@@ -78,6 +82,26 @@ public class MovieListFragment extends Fragment {
         if(binding != null) {
             binding.setFragment(this);
         }
+    }
+
+    public void sortMovieListByReservationRate() {
+        Collections.sort(movieList, new Comparator<Movie>() {
+            @Override
+            public int compare(Movie movie, Movie t1) {
+                if(movie.getReservationRate() > t1.getReservationRate()) {
+                    return 1;
+                } else if(movie.getReservationRate() < t1.getReservationRate()) {
+                    return -1;
+                }
+                return 0;
+            }
+        });
+
+        for(int i = 0; i < movieList.size(); i++) {
+            Utils.loge(movieList.get(i).getTitle() + ", " + movieList.get(i).getReservationRate());
+        }
+
+        setPagerAdapter();
     }
 
     private static class MoviePagerAdapter extends FragmentStateAdapter {

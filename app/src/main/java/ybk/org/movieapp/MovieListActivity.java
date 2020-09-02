@@ -9,10 +9,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
@@ -24,23 +27,34 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import java.util.HashMap;
 import ybk.org.movieapp.ui.moviedetail.MovieDetailFragment;
+import ybk.org.movieapp.ui.movielist.MovieListFragment;
 import ybk.org.movieapp.util.Constants;
+import ybk.org.movieapp.util.Utils;
 
 public class MovieListActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-    private Toolbar toolbar;
-    private Menu menu;
+    public Menu menu;
+    private LinearLayout ll;
+    private ImageButton orderBtn1;
+    private ImageButton orderBtn2;
+    private ImageButton orderBtn3;
+    private MovieListFragment movieListFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_list);
 
-        toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setOverflowIcon(ContextCompat.getDrawable(this, R.drawable.order11));
 
+        ll = findViewById(R.id.linearLayout);
+        orderBtn1 = (ImageButton) findViewById(R.id.ib_order_1);
+        orderBtn2 = (ImageButton) findViewById(R.id.ib_order_2);
+        orderBtn3 = (ImageButton) findViewById(R.id.ib_order_3);
+        movieListFragment = (MovieListFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.nav_movie_list);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -54,6 +68,7 @@ public class MovieListActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+        onMenuItemSelected();
     }
 
     @Override
@@ -93,24 +108,62 @@ public class MovieListActivity extends AppCompatActivity {
         super.onCreateOptionsMenu(menu);
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu, menu);
-
-        menu.findItem(R.id.menu_order).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+        this.menu = menu;
+        this.menu.findItem(R.id.menu_order).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-
+                Animation transDown = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.translate_down);
+                ll.startAnimation(transDown);
+                ll.setVisibility(View.VISIBLE);
                 return false;
             }
         });
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        final Animation transDown = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.translate_down);
-        Animation transUp = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.translate_up);
+    public void onMenuItemSelected() {
+        final Animation transUp = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.translate_up);
 
+        orderBtn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                menu.findItem(R.id.menu_order).setIcon(R.drawable.order11);
+                ll.startAnimation(transUp);
+                ll.setVisibility(View.GONE);
+                Constants.sortOrder = 1;
+                Toast.makeText(getApplicationContext(),
+                        getString(R.string.menu_click_text1), Toast.LENGTH_SHORT).show();
+            }
+        });
+        orderBtn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ll.startAnimation(transUp);
+                menu.findItem(R.id.menu_order).setIcon(R.drawable.order22);
+                ll.setVisibility(View.GONE);
+                Constants.sortOrder = 2;
+                Toast.makeText(getApplicationContext(),
+                        getString(R.string.menu_click_text2), Toast.LENGTH_SHORT).show();
+            }
+        });
+        orderBtn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ll.startAnimation(transUp);
+                menu.findItem(R.id.menu_order).setIcon(R.drawable.order33);
+                ll.setVisibility(View.GONE);
+                Constants.sortOrder = 3;
+                Toast.makeText(getApplicationContext(),
+                        getString(R.string.menu_click_text3), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
-        return super.onOptionsItemSelected(item);
+    public void showMenu() {
+        menu.findItem(R.id.menu_order).setVisible(true);
+    }
+
+    public void hideMenu() {
+        menu.findItem(R.id.menu_order).setVisible(false);
     }
 }
