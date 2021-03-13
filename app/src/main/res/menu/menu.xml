@@ -2,11 +2,29 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/menu_order"
-        android:icon="@drawable/order_small"
-        android:title="@string/menu_order_text"
-        app:showAsAction="always">
-    </item>
+    <group android:id="@+id/menu_group">
+        <item
+            android:id="@+id/menu"
+            android:title="@string/menu_order1_text"
+            android:icon="@drawable/order_small"
+            app:showAsAction="always|withText">
 
+            <menu>
+                <item
+                    android:id="@+id/menu1"
+                    android:icon="@drawable/order_small"
+                    android:title="@string/menu_order1_text"/>
+
+                <item
+                    android:id="@+id/menu2"
+                    android:icon="@drawable/order_small"
+                    android:title="@string/menu_order2_text"/>
+
+                <item
+                    android:id="@+id/menu3"
+                    android:icon="@drawable/order_small"
+                    android:title="@string/menu_order3_text"/>
+            </menu>
+        </item>
+    </group>
 </menu>

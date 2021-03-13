@@ -60,7 +60,7 @@ public class MovieDetailFragment extends Fragment {
         setBasicMovieInfoFromBundle();
 
         MovieListActivity activity = (MovieListActivity) getActivity();
-        activity.hideMenu();
+        //activity.hideMenu();
 
         View view = inflater.inflate(R.layout.fragment_movie_detail, container, false);
         viewModel = new ViewModelProvider(this).get(MovieDetailViewModel.class);
@@ -97,6 +97,12 @@ public class MovieDetailFragment extends Fragment {
         dataBinding(view);
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((MovieListActivity)requireActivity()).showOptionMenu(false);
     }
 
     private void setBasicMovieInfoFromBundle() {

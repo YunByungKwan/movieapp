@@ -2,6 +2,7 @@ package ybk.org.movieapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -39,15 +40,8 @@ public class MovieListActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     public Menu menu;
-    private LinearLayout ll;
-    private ImageButton orderBtn1;
-    private ImageButton orderBtn2;
-    private ImageButton orderBtn3;
     private NavController navController;
     private NavHostFragment hostFragment;
-    private boolean isMenuOpen = false;
-    private Animation transDown;
-    private Animation transUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,16 +51,10 @@ public class MovieListActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ll = findViewById(R.id.linearLayout);
-        orderBtn1 = (ImageButton) findViewById(R.id.ib_order_1);
-        orderBtn2 = (ImageButton) findViewById(R.id.ib_order_2);
-        orderBtn3 = (ImageButton) findViewById(R.id.ib_order_3);
         hostFragment = (NavHostFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.nav_host_fragment);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        transDown = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.translate_down);
-        transUp = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.translate_up);
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_movie_list, R.id.nav_movie_detail, R.id.nav_movie_api,
@@ -77,7 +65,6 @@ public class MovieListActivity extends AppCompatActivity {
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-        onMenuItemSelected();
     }
 
     @Override
@@ -109,72 +96,33 @@ public class MovieListActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
+        this.menu = menu;
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu, menu);
-        this.menu = menu;
-        this.menu.findItem(R.id.menu_order).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                if(!isMenuOpen) {
-                    ll.startAnimation(transDown);
-                    ll.setVisibility(View.VISIBLE);
-                    isMenuOpen = true;
-                } else {
-                    ll.startAnimation(transUp);
-                    ll.setVisibility(View.GONE);
-                    isMenuOpen = false;
-
-                }
-                return false;
-            }
-        });
         return true;
     }
 
-    public void onMenuItemSelected() {
-        orderBtn1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sortBy(Constants.SORT_RESERVATION_RATE);
-            }
-        });
-        orderBtn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sortBy(Constants.SORT_REVIEWER_RATING);
-            }
-        });
-        orderBtn3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sortBy(Constants.SORT_DATE);
-            }
-        });
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.menu1) {
+            sortBy(Constants.SORT_RESERVATION_RATE);
+            return true;
+        } else if(id == R.id.menu2) {
+            sortBy(Constants.SORT_REVIEWER_RATING);
+            return true;
+        } else if(id == R.id.menu3) {
+            sortBy(Constants.SORT_DATE);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void sortBy(int type) {
-        Animation transUp = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.translate_up);
-        setMenuIcon(type);
-        ll.startAnimation(transUp);
-        ll.setVisibility(View.GONE);
         showToast(type);
         FragmentManager navHostManager = Objects.requireNonNull(hostFragment).getChildFragmentManager();
         MovieListFragment fragment = (MovieListFragment) navHostManager.getFragments().get(0);
         fragment.sortMovieListBy(type);
-        isMenuOpen = false;
-    }
-
-    private void setMenuIcon(int type) {
-        int resId = 0;
-        if(type == Constants.SORT_RESERVATION_RATE) {
-            resId = R.drawable.order11;
-        } else if(type == Constants.SORT_REVIEWER_RATING) {
-            resId = R.drawable.order22;
-        } else {
-            resId = R.drawable.order33;
-        }
-        menu.findItem(R.id.menu_order).setIcon(resId);
     }
 
     private void showToast(int type) {
@@ -190,12 +138,8 @@ public class MovieListActivity extends AppCompatActivity {
                 txt, Toast.LENGTH_SHORT).show();
     }
 
-    public void showMenu() {
-        menu.findItem(R.id.menu_order).setVisible(true);
-    }
-
-    public void hideMenu() {
-        menu.findItem(R.id.menu_order).setVisible(false);
-        ll.setVisibility(View.GONE);
+    public void showOptionMenu(boolean isShow) {
+        if(menu == null) return;
+        menu.setGroupVisible(R.id.menu_group, isShow);
     }
 }

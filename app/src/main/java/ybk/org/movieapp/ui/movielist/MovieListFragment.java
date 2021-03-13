@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import ybk.org.movieapp.MovieListActivity;
 import ybk.org.movieapp.data.local.entity.Movie;
 import ybk.org.movieapp.R;
 import ybk.org.movieapp.databinding.FragmentMovieListBinding;
@@ -54,6 +56,12 @@ public class MovieListFragment extends Fragment {
         });
         dataBinding(view);
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((MovieListActivity)requireActivity()).showOptionMenu(true);
     }
 
     /** ViewPager에 어뎁터를 설정함 */

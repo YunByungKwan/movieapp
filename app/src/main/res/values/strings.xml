@@ -2,6 +2,10 @@
 
     <string name="app_name">씨네마천국</string>
 
+    <string name="gallery_label">사진 보기</string>
+    <string name="comment_list_label">한줄평목록</string>
+    <string name="comment_write_label">한줄평작성</string>
+
     <string name="movie_title">군도</string>
     <string name="movie_story">…</string>
     <string name="release_date">2014.07.23</string>

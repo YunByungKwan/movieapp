@@ -48,7 +48,7 @@ public class MovieFragment extends Fragment {
         setMovieInfo();
 
         MovieListActivity activity = (MovieListActivity) getActivity();
-        activity.showMenu();
+        //activity.showMenu();
 
         return view;
     }

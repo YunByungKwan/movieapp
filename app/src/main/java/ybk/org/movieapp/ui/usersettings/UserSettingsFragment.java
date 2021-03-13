@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
+import ybk.org.movieapp.MovieListActivity;
 import ybk.org.movieapp.R;
 
 public class UserSettingsFragment extends Fragment {
@@ -34,5 +35,11 @@ public class UserSettingsFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((MovieListActivity)requireActivity()).showOptionMenu(false);
     }
 }
