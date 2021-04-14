@@ -59,10 +59,9 @@ public class MovieDetailFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         setBasicMovieInfoFromBundle();
 
-        MovieListActivity activity = (MovieListActivity) getActivity();
-        //activity.hideMenu();
+        binding = DataBindingUtil.inflate(inflater,
+                R.layout.fragment_movie_detail, container, false);
 
-        View view = inflater.inflate(R.layout.fragment_movie_detail, container, false);
         viewModel = new ViewModelProvider(this).get(MovieDetailViewModel.class);
         viewModel.movieId.setValue(id);
         viewModel.limit.setValue(numOfComment);
@@ -94,9 +93,7 @@ public class MovieDetailFragment extends Fragment {
             }
         });
 
-        dataBinding(view);
-
-        return view;
+        return binding.getRoot();
     }
 
     @Override
@@ -243,12 +240,12 @@ public class MovieDetailFragment extends Fragment {
         updateCommentList();
     }
 
-    private void dataBinding(View view) {
-        binding = DataBindingUtil.bind(view);
-        if(binding != null) {
-            binding.setFragment(this);
-        }
-    }
+//    private void dataBinding(View view) {
+//        binding = DataBindingUtil.bind(view);
+//        if(binding != null) {
+//            binding.setFragment(this);
+//        }
+//    }
 
     /** 좋아요 아이콘 클릭시 이벤트 */
     public void onClickLikeButton() {

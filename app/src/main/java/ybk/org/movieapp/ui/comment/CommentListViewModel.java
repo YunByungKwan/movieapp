@@ -4,23 +4,26 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import java.util.HashMap;
 import java.util.List;
-import ybk.org.movieapp.data.Repository;
+import ybk.org.movieapp.data.MovieRepository;
+import ybk.org.movieapp.data.local.LocalDataSource;
 import ybk.org.movieapp.data.local.entity.Comment;
 import ybk.org.movieapp.data.local.entity.DetailMovie;
+import ybk.org.movieapp.data.remote.RemoteDataSource;
 
 public class CommentListViewModel extends ViewModel {
 
     private MutableLiveData<List<DetailMovie>> item;
     public MutableLiveData<List<Comment>> commentList;
-    private Repository repo;
+    private MovieRepository repo;
     public MutableLiveData<Integer> movieId = new MutableLiveData<>();
 
     public void init() {
         if(repo != null) {
             return;
         }
-
-        repo = Repository.getInstance();
+        LocalDataSource localDataSource = new LocalDataSource();
+        RemoteDataSource remoteDataSource = new RemoteDataSource();
+        repo = new MovieRepository(localDataSource, remoteDataSource);
         item = repo.getDetailMovie(movieId.getValue());
         commentList = repo.getCommentList(movieId.getValue());
     }

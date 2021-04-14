@@ -5,16 +5,15 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import java.util.HashMap;
 import java.util.List;
-import ybk.org.movieapp.R;
+import ybk.org.movieapp.data.MovieRepository;
+import ybk.org.movieapp.data.local.LocalDataSource;
 import ybk.org.movieapp.data.local.entity.Comment;
 import ybk.org.movieapp.data.local.entity.DetailMovie;
-import ybk.org.movieapp.data.Repository;
-import ybk.org.movieapp.util.App;
-import ybk.org.movieapp.util.Utils;
+import ybk.org.movieapp.data.remote.RemoteDataSource;
 
 public class MovieDetailViewModel extends ViewModel {
 
-    private Repository repo;
+    private MovieRepository repo;
     private MutableLiveData<List<DetailMovie>> movieInfo;
     public MutableLiveData<List<Comment>> commentList = new MutableLiveData<>();
     public MutableLiveData<Integer> movieId = new MutableLiveData<>();
@@ -24,7 +23,9 @@ public class MovieDetailViewModel extends ViewModel {
         if(movieInfo != null) {
             return;
         }
-        repo = Repository.getInstance();
+        LocalDataSource localDataSource = new LocalDataSource();
+        RemoteDataSource remoteDataSource = new RemoteDataSource();
+        repo = new MovieRepository(localDataSource, remoteDataSource);
         movieInfo = repo.getDetailMovie(movieId.getValue());
         commentList = repo.getCommentList(movieId.getValue());
     }

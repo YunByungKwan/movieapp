@@ -4,24 +4,28 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+
 import com.bumptech.glide.Glide;
 import com.github.chrisbanes.photoview.PhotoView;
 import ybk.org.movieapp.R;
+import ybk.org.movieapp.databinding.ActivityMovieGalleryBinding;
 
 public class MovieGalleryActivity extends AppCompatActivity {
+
+    private ActivityMovieGalleryBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movie_gallery);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_gallery);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        PhotoView photoView = (PhotoView) findViewById(R.id.photoView);
 
         Intent getIntent = getIntent();
         if(getIntent != null) {
             String url = getIntent.getStringExtra(getString(R.string.gallery_url));
-            Glide.with(this).load(url).into(photoView);
+            Glide.with(this).load(url).into(binding.photoView);
         }
     }
 

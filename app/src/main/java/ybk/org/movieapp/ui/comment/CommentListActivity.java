@@ -38,7 +38,8 @@ public class CommentListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dataBinding();
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_comment_list);
+        binding.setActivity(this);
         setToolbar();
         initializeViewModelAndMovie();
 
@@ -49,11 +50,6 @@ public class CommentListActivity extends AppCompatActivity {
                 updateCommentList();
             }
         });
-    }
-
-    private void dataBinding() {
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_comment_list);
-        binding.setActivity(this);
     }
 
     private void setToolbar() {

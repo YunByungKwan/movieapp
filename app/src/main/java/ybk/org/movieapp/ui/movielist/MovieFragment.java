@@ -46,10 +46,6 @@ public class MovieFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_movie, container, false);
         dataBinding(view);
         setMovieInfo();
-
-        MovieListActivity activity = (MovieListActivity) getActivity();
-        //activity.showMenu();
-
         return view;
     }
 
@@ -85,8 +81,6 @@ public class MovieFragment extends Fragment {
 
     /** 상세보기 버튼 클릭시 이벤트 */
     public void onClickDetailSeeButton(View v) {
-
         Navigation.findNavController(v).navigate(R.id.act_nav_movie_list_to_detail, getArguments());
-
     }
 }

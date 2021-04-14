@@ -65,9 +65,19 @@ dependencies {
     // optional - Guava support for Room, including Optional and ListenableFuture
     implementation "androidx.room:room-guava:$room_version"
 
+    // Dagger
+    def daggerVersion = "2.34.1"
+
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    implementation "com.google.dagger:dagger-android:$daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$daggerVersion"
+
+    // Rx
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    implementation 'io.reactivex.rxjava3:rxjava:3.0.7'
+
     // Test helpers
     testImplementation "androidx.room:room-testing:$room_version"
 
-    //
     implementation 'com.github.chrisbanes:PhotoView:2.1.3'
 }
