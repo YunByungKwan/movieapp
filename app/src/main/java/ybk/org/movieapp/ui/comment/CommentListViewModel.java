@@ -5,38 +5,26 @@ import androidx.lifecycle.ViewModel;
 import java.util.HashMap;
 import java.util.List;
 import ybk.org.movieapp.data.MovieRepository;
-import ybk.org.movieapp.data.local.LocalDataSource;
 import ybk.org.movieapp.data.local.entity.Comment;
-import ybk.org.movieapp.data.local.entity.DetailMovie;
-import ybk.org.movieapp.data.remote.RemoteDataSource;
+import ybk.org.movieapp.util.Dlog;
 
 public class CommentListViewModel extends ViewModel {
 
-    private MutableLiveData<List<DetailMovie>> item;
-    public MutableLiveData<List<Comment>> commentList;
-    private MovieRepository repo;
-    public MutableLiveData<Integer> movieId = new MutableLiveData<>();
+    public MutableLiveData<List<Comment>> commentList = new MutableLiveData<>();
+    private MovieRepository repository;
 
-    public void init() {
-        if(repo != null) {
-            return;
-        }
-        LocalDataSource localDataSource = new LocalDataSource();
-        RemoteDataSource remoteDataSource = new RemoteDataSource();
-        repo = new MovieRepository(localDataSource, remoteDataSource);
-        item = repo.getDetailMovie(movieId.getValue());
-        commentList = repo.getCommentList(movieId.getValue());
-    }
-
-    public MutableLiveData<List<Comment>> getCommentAllList() {
-        return commentList;
+    public CommentListViewModel(MovieRepository repository, int id) {
+        this.repository = repository;
+        this.repository.getCommentList(commentList, id);
     }
 
     public void addComment(HashMap<String, Object> comment) {
-        repo.addComment(comment);
+        Dlog.d("=========> Call addComment()");
+        repository.addComment(comment);
     }
 
     public void recommendComment(HashMap<String, Object> param) {
-        repo.recommendComment(param);
+        Dlog.d("=========> Call recommendComment()");
+        repository.recommendComment(param);
     }
 }

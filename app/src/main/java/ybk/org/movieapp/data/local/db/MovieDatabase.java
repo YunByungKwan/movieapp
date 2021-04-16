@@ -16,24 +16,24 @@ import ybk.org.movieapp.util.App;
 @Database(entities = {Movie.class, DetailMovie.class, Comment.class}, version = 1)
 abstract public class MovieDatabase extends RoomDatabase {
 
+    private volatile static MovieDatabase instance;
+
     abstract public MovieDao movieDao();
     abstract public DetailMovieDao detailMovieDao();
     abstract public CommentDao commentDao();
-    private static MovieDatabase INSTANCE;
 
     public static MovieDatabase getInstance(Context context) {
-        if (INSTANCE == null) {
-            INSTANCE = Room.databaseBuilder(
-                    context,
-                    MovieDatabase.class,
-                    App.getInstance().getString(R.string.db_name)
-            ).build();
+        if (instance == null) {
+            synchronized (MovieDatabase.class) {
+                if(instance == null) {
+                    instance = Room.databaseBuilder(
+                            context,
+                            MovieDatabase.class,
+                            App.getInstance().getString(R.string.db_name)
+                    ).build();
+                }
+            }
         }
-
-        return INSTANCE;
-    }
-
-    public static void destroyInstance() {
-        INSTANCE = null;
+        return instance;
     }
 }

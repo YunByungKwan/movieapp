@@ -6,12 +6,6 @@
     <string name="comment_list_label">한줄평목록</string>
     <string name="comment_write_label">한줄평작성</string>
 
-    <string name="movie_title">군도</string>
-    <string name="movie_story">…</string>
-    <string name="release_date">2014.07.23</string>
-    <string name="genre">액션</string>
-    <string name="running_time">137</string>
-
     <string name="open">개봉</string>
     <string name="slash">/</string>
     <string name="minute">분</string>
@@ -126,13 +120,6 @@
     <string name="msg_req_net">인터넷이 연결되어 있지 않습니다\n인터넷 연결 후 작성해주세요.</string>
     <string name="msg_no_data">데이터가 존재하지 않습니다.</string>
     <string name="msg_service_not_ready">서비스 준비중입니다.</string>
-
-    <!-- Video -->
-    <string name="video_check_text">youtu.be</string>
-
-    <string name="comma">,</string>
-
-    <string name="time_pattern">yyyy-MM-dd HH:mm:ss</string>
 
     <!-- Gallery url text -->
     <string name="gallery_url">galleryUrl</string>

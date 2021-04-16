@@ -6,26 +6,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
 import ybk.org.movieapp.MovieListActivity;
+import ybk.org.movieapp.data.MovieRepository;
+import ybk.org.movieapp.data.local.LocalDataSource;
 import ybk.org.movieapp.data.local.entity.Movie;
 import ybk.org.movieapp.R;
+import ybk.org.movieapp.data.remote.RemoteDataSource;
 import ybk.org.movieapp.databinding.FragmentMovieListBinding;
 import ybk.org.movieapp.util.Constants;
+import ybk.org.movieapp.util.Dlog;
 import ybk.org.movieapp.util.Network;
-import ybk.org.movieapp.util.Utils;
 
 public class MovieListFragment extends Fragment {
 
@@ -35,27 +35,26 @@ public class MovieListFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_movie_list, container, false);
-        viewModel = new ViewModelProvider(this).get(MovieListViewModel.class);
-        viewModel.init();
-        viewModel.getMovieList().observe(getViewLifecycleOwner(), new Observer<List<Movie>>() {
-            @Override
-            public void onChanged(List<Movie> _movieList) {
-                Utils.loge("onChanged");
-                movieList = _movieList;
-                for(int i = 0; i < movieList.size(); i++) {
-                    Utils.loge(movieList.get(i).getTitle() + ", " + movieList.get(i).getReservationRate());
-                }
-                if(movieList.size() != 0) {
-                    setPagerAdapter();
-                    Network.showToast(getActivity());
-                } else {
-                    Toast.makeText(getActivity(), getString(R.string.msg_no_data), Toast.LENGTH_SHORT).show();
-                }
+        binding = DataBindingUtil.inflate(inflater,
+                R.layout.fragment_movie_list, container, false);
+        binding.setFragment(this);
+
+        MovieRepository repository = MovieRepository.getInstance();
+        MovieListViewModelFactory factory = new MovieListViewModelFactory(repository);
+        viewModel = new ViewModelProvider(this, factory).get(MovieListViewModel.class);
+        viewModel.movieList.observe(getViewLifecycleOwner(), _movieList -> {
+            movieList = _movieList;
+            if(_movieList == null) {
+                Dlog.d("_movieList is null");
+            }
+            if(movieList.size() != 0) {
+                setPagerAdapter();
+                Network.showToast(getActivity());
+            } else {
+                Toast.makeText(getActivity(), getString(R.string.msg_no_data), Toast.LENGTH_SHORT).show();
             }
         });
-        dataBinding(view);
-        return view;
+        return binding.getRoot();
     }
 
     @Override
@@ -86,13 +85,6 @@ public class MovieListFragment extends Fragment {
         }
     }
 
-    private void dataBinding(View view) {
-        binding = DataBindingUtil.bind(view);
-        if(binding != null) {
-            binding.setFragment(this);
-        }
-    }
-
     public void sortMovieListBy(final int type) {
         Collections.sort(movieList, new Comparator<Movie>() {
             @Override
@@ -108,9 +100,6 @@ public class MovieListFragment extends Fragment {
             }
         });
 
-        for(int i = 0; i < movieList.size(); i++) {
-            Utils.loge(movieList.get(i).getTitle() + ", " + movieList.get(i).getReservationRate());
-        }
 
         setPagerAdapter();
     }

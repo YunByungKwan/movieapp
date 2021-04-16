@@ -10,7 +10,7 @@ import ybk.org.movieapp.data.local.entity.Comment;
 @Dao
 public interface CommentDao {
 
-    @Query("SELECT * FROM comment WHERE movieId = (:id)")
+    @Query("SELECT * FROM comment WHERE movieId = (:id) ORDER BY timestamp DESC")
     List<Comment> getCommentList(int id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

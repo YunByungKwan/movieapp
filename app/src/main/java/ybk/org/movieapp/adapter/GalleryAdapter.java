@@ -75,7 +75,6 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Utils.logd("Call onClick in GalleryAdapter");
                     int position = getAdapterPosition();
                     if(listener != null) {
                          listener.OnItemClick(ViewHolder.this, view, position);
@@ -86,7 +85,6 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 
         /** 갤러리의 이미지를 설정함 */
         public void setItem(GalleryItem item) {
-            Utils.logd("Call setItem in GalleryAdapter");
             StringBuilder sb = new StringBuilder();
 
             if(Utils.isVideo(item.getUrl())) {

@@ -51,7 +51,6 @@
                             android:id="@+id/tv_movie_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/movie_title"
                             android:textSize="@dimen/title_text_size"
                             android:textColor="@color/colorThumbnailText"
                             android:textStyle="bold"
@@ -75,7 +74,6 @@
                             android:id="@+id/tv_release_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/release_date"
                             android:textColor="@color/colorThumbnailText"/>
 
                         <TextView
@@ -96,7 +94,6 @@
                             android:id="@+id/tv_genre"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/genre"
                             android:textColor="@color/colorThumbnailText"
                             android:layout_marginEnd="@dimen/base_half_padding_size"/>
 
@@ -111,7 +108,6 @@
                             android:id="@+id/tv_running_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/running_time"
                             android:textColor="@color/colorThumbnailText"
                             android:layout_marginEnd="@dimen/base_half_padding_size"/>
 
@@ -194,8 +190,7 @@
                         <TextView
                             android:id="@+id/tv_reservation_rate_ranking"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="5"/>
+                            android:layout_height="wrap_content"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -206,8 +201,7 @@
                         <TextView
                             android:id="@+id/tv_reservation_rate"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="1.8"/>
+                            android:layout_height="wrap_content"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -254,8 +248,7 @@
                         <TextView
                             android:id="@+id/tv_grade"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:text="8.2" />
+                            android:layout_height="match_parent" />
 
                     </LinearLayout>
 
@@ -286,8 +279,7 @@
                         <TextView
                             android:id="@+id/tv_cumulative_audience"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="839,399" />
+                            android:layout_height="wrap_content" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -323,8 +315,7 @@
                 <TextView
                     android:id="@+id/tv_story"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/movie_story" />
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 
@@ -361,8 +352,7 @@
                     <TextView
                         android:id="@+id/tv_director_name"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="윤종빈" />
+                        android:layout_height="wrap_content" />
 
                 </LinearLayout>
 
@@ -382,8 +372,7 @@
                     <TextView
                         android:id="@+id/tv_casting"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="하정우(도치), 강동원(조윤)" />
+                        android:layout_height="wrap_content" />
 
                 </LinearLayout>
 

@@ -1,5 +1,12 @@
 package ybk.org.movieapp.ui.comment;
 
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -7,21 +14,16 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import android.content.Intent;
-import android.graphics.Color;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import ybk.org.movieapp.R;
 import ybk.org.movieapp.adapter.CommentAdapter;
 import ybk.org.movieapp.adapter.CommentItem;
+import ybk.org.movieapp.data.MovieRepository;
 import ybk.org.movieapp.data.local.entity.Comment;
-import ybk.org.movieapp.util.Constants;
-import ybk.org.movieapp.R;
 import ybk.org.movieapp.databinding.ActivityCommentListBinding;
+import ybk.org.movieapp.util.Constants;
 import ybk.org.movieapp.util.Network;
 import ybk.org.movieapp.util.Utils;
 
@@ -43,7 +45,7 @@ public class CommentListActivity extends AppCompatActivity {
         setToolbar();
         initializeViewModelAndMovie();
 
-        viewModel.getCommentAllList().observe(this, new Observer<List<Comment>>() {
+        viewModel.commentList.observe(this, new Observer<List<Comment>>() {
             @Override
             public void onChanged(List<Comment> _commentList) {
                 commentList = _commentList;
@@ -68,10 +70,11 @@ public class CommentListActivity extends AppCompatActivity {
     }
 
     private void initializeViewModel(Intent intent) {
-        viewModel = new ViewModelProvider(this).get(CommentListViewModel.class);
         id = intent.getIntExtra(getString(R.string.mov_id), -1);
-        viewModel.movieId.setValue(id);
-        viewModel.init();
+        MovieRepository repository = MovieRepository.getInstance();
+        CommentListViewModelFactory factory = new CommentListViewModelFactory(repository, id);
+        viewModel = new ViewModelProvider(this, factory).get(CommentListViewModel.class);
+
     }
 
     private void initializeMovie(Intent intent) {

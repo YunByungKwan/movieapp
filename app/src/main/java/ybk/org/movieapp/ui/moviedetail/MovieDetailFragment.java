@@ -11,8 +11,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -26,14 +24,19 @@ import ybk.org.movieapp.adapter.CommentAdapter;
 import ybk.org.movieapp.adapter.CommentItem;
 import ybk.org.movieapp.adapter.GalleryAdapter;
 import ybk.org.movieapp.adapter.GalleryItem;
+import ybk.org.movieapp.data.MovieRepository;
+import ybk.org.movieapp.data.local.LocalDataSource;
 import ybk.org.movieapp.data.local.entity.Comment;
 import ybk.org.movieapp.data.local.entity.DetailMovie;
+import ybk.org.movieapp.data.local.entity.DetailMovieResult;
+import ybk.org.movieapp.data.remote.RemoteDataSource;
 import ybk.org.movieapp.ui.moviegallery.MovieGalleryActivity;
 import ybk.org.movieapp.util.Constants;
 import ybk.org.movieapp.databinding.FragmentMovieDetailBinding;
 import ybk.org.movieapp.ui.comment.CommentListActivity;
 import ybk.org.movieapp.ui.comment.CommentWriteActivity;
 import ybk.org.movieapp.R;
+import ybk.org.movieapp.util.Dlog;
 import ybk.org.movieapp.util.Network;
 import ybk.org.movieapp.util.Utils;
 
@@ -61,15 +64,16 @@ public class MovieDetailFragment extends Fragment {
 
         binding = DataBindingUtil.inflate(inflater,
                 R.layout.fragment_movie_detail, container, false);
+        binding.setFragment(this);
 
-        viewModel = new ViewModelProvider(this).get(MovieDetailViewModel.class);
-        viewModel.movieId.setValue(id);
-        viewModel.limit.setValue(numOfComment);
-        viewModel.init();
-        viewModel.getDetailMovie().observe(getViewLifecycleOwner(), new Observer<List<DetailMovie>>() {
+        MovieRepository repository = MovieRepository.getInstance();
+        MovieDetailViewModelFactory factory = new MovieDetailViewModelFactory(repository, id);
+        viewModel = new ViewModelProvider(this, factory).get(MovieDetailViewModel.class);
+        viewModel.detailMovie.observe(getViewLifecycleOwner(), new Observer<List<DetailMovie>>() {
             @Override
-            public void onChanged(List<DetailMovie> movieInfo) {
-                movieItem = movieInfo;
+            public void onChanged(List<DetailMovie> detailMovie) {
+                movieItem = detailMovie;
+                Dlog.d("movie info size:" + detailMovie.size());
                 if(movieItem.size() != 0) {
                     setMovieInfo();
                     Network.showToast(getActivity());
@@ -79,7 +83,7 @@ public class MovieDetailFragment extends Fragment {
                 }
             }
         });
-        viewModel.getCommentList().observe(getViewLifecycleOwner(), new Observer<List<Comment>>() {
+        viewModel.commentList.observe(getViewLifecycleOwner(), new Observer<List<Comment>>() {
             @Override
             public void onChanged(List<Comment> _commentList) {
                 commentList = _commentList;
@@ -239,13 +243,6 @@ public class MovieDetailFragment extends Fragment {
         commentList.get(position).setRecommend(++currentRecommendCnt);
         updateCommentList();
     }
-
-//    private void dataBinding(View view) {
-//        binding = DataBindingUtil.bind(view);
-//        if(binding != null) {
-//            binding.setFragment(this);
-//        }
-//    }
 
     /** 좋아요 아이콘 클릭시 이벤트 */
     public void onClickLikeButton() {

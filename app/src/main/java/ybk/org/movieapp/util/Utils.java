@@ -24,30 +24,20 @@ public class Utils {
 
     /** url이 비디오인지 판별 */
     public static Boolean isVideo(String url) {
-        return url.contains(App.getInstance().getString(R.string.video_check_text));
+        return url.contains("youtu.be");
     }
 
     /** 콤마로 구분된 문자열을 파싱함 */
     public static String[] parseStringInComma(String src) {
-        return src.split(App.getInstance().getString(R.string.comma));
+        return src.split(",");
     }
 
     /** 현재 시간을 구함 (형식: yyyy-MM-dd HH:mm:ss) */
     public static String getCurrentTime() {
         Calendar calendar = Calendar.getInstance();
         @SuppressLint("SimpleDateFormat")
-        SimpleDateFormat sdf = new SimpleDateFormat(App.getInstance().getString(R.string.time_pattern));
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdf.format(calendar.getTime());
-    }
-
-    /** Log Debug */
-    public static void logd(String msg) {
-        Log.d(App.getInstance().getString(R.string.tag), msg);
-    }
-
-    /** Log Error */
-    public static void loge(String msg) {
-        Log.e(App.getInstance().getString(R.string.tag), msg);
     }
 
 }

@@ -5,48 +5,46 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import java.util.HashMap;
 import java.util.List;
+
+import io.reactivex.SingleObserver;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import ybk.org.movieapp.data.MovieRepository;
-import ybk.org.movieapp.data.local.LocalDataSource;
 import ybk.org.movieapp.data.local.entity.Comment;
+import ybk.org.movieapp.data.local.entity.CommentResult;
 import ybk.org.movieapp.data.local.entity.DetailMovie;
-import ybk.org.movieapp.data.remote.RemoteDataSource;
+import ybk.org.movieapp.data.local.entity.DetailMovieResult;
+import ybk.org.movieapp.data.local.entity.Response;
+import ybk.org.movieapp.util.Dlog;
 
 public class MovieDetailViewModel extends ViewModel {
 
-    private MovieRepository repo;
-    private MutableLiveData<List<DetailMovie>> movieInfo;
+    private MutableLiveData<List<DetailMovie>> _detailMovie = new MutableLiveData<>();
+    public LiveData<List<DetailMovie>> detailMovie = _detailMovie;
+
     public MutableLiveData<List<Comment>> commentList = new MutableLiveData<>();
-    public MutableLiveData<Integer> movieId = new MutableLiveData<>();
-    public MutableLiveData<Integer> limit = new MutableLiveData<>();
 
-    public void init() {
-        if(movieInfo != null) {
-            return;
-        }
-        LocalDataSource localDataSource = new LocalDataSource();
-        RemoteDataSource remoteDataSource = new RemoteDataSource();
-        repo = new MovieRepository(localDataSource, remoteDataSource);
-        movieInfo = repo.getDetailMovie(movieId.getValue());
-        commentList = repo.getCommentList(movieId.getValue());
-    }
+    private MovieRepository repository;
 
-    public LiveData<List<DetailMovie>> getDetailMovie() {
-        return movieInfo;
-    }
-
-    public MutableLiveData<List<Comment>> getCommentList() {
-        return commentList;
+    public MovieDetailViewModel(MovieRepository repository, int movieId) {
+        this.repository = repository;
+        this.repository.getDetailMovie(_detailMovie, movieId);
+        this.repository.getCommentList(commentList, movieId);
     }
 
     public void addComment(HashMap<String, Object> comment) {
-        repo.addComment(comment);
+        Dlog.d("=========> Call addComment()");
+        repository.addComment(comment);
     }
 
     public void recommendComment(HashMap<String, Object> param) {
-        repo.recommendComment(param);
+        Dlog.d("=========> Call recommendComment()");
+        repository.recommendComment(param);
     }
 
     public void addLikeDisLike(HashMap<String, Object> param) {
-        repo.addLikeDisLike(param);
+        Dlog.d("=========> Call addLikeDisLike()");
+        repository.addLikeDisLike(param);
     }
 }

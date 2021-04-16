@@ -18,16 +18,10 @@ public class CommentWriteActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dataBinding();
-        initializeMovie();
-    }
-
-    private void dataBinding() {
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_comment_write);
+        binding = DataBindingUtil.setContentView(
+                this, R.layout.activity_comment_write);
         binding.setActivity(this);
-    }
 
-    private void initializeMovie() {
         Intent intent = getIntent();
         if(intent != null) {
             id = intent.getIntExtra(getString(R.string.mov_id), 0);
@@ -47,8 +41,10 @@ public class CommentWriteActivity extends AppCompatActivity {
 
     /** 저장 버튼 클릭시 이벤트 */
     public void onClickSaveButton() {
-        if(isEmptyContents()) {
-            Toast.makeText(this, getString(R.string.msg_empty), Toast.LENGTH_SHORT).show();
+        String contents = binding.etContents.getText().toString();
+        if("".equals(contents)) {
+            Toast.makeText(this,
+                    getString(R.string.msg_empty), Toast.LENGTH_SHORT).show();
         } else {
             Intent intent = new Intent();
             intent.putExtra(getString(R.string.comm_id), id);
@@ -59,12 +55,6 @@ public class CommentWriteActivity extends AppCompatActivity {
             setResult(RESULT_OK, intent);
             finish();
         }
-    }
-
-    /** 본문이 비어있는지 판별 */
-    private boolean isEmptyContents() {
-        String contents = binding.etContents.getText().toString();
-        return "".equals(contents);
     }
 
     /** 취소 버튼 클릭시 이벤트 */

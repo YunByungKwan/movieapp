@@ -5,28 +5,19 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.List;
+
 import ybk.org.movieapp.data.MovieRepository;
-import ybk.org.movieapp.data.local.LocalDataSource;
 import ybk.org.movieapp.data.local.entity.Movie;
-import ybk.org.movieapp.data.remote.RemoteDataSource;
 
 public class MovieListViewModel extends ViewModel {
 
-    private MutableLiveData<List<Movie>> movieList;
-    private MovieRepository repo;
+    private MutableLiveData<List<Movie>> _movieList = new MutableLiveData<>();
+    public LiveData<List<Movie>> movieList = _movieList;
 
-    public void init() {
-        LocalDataSource localDataSource = new LocalDataSource();
-        RemoteDataSource remoteDataSource = new RemoteDataSource();
-        repo = new MovieRepository(localDataSource, remoteDataSource);
+    private final MovieRepository repository;
 
-        if(movieList == null) {
-            movieList = repo.getMovieList();
-        }
+    public MovieListViewModel(MovieRepository repository) {
+        this.repository = repository;
+        this.repository.getMovieList(_movieList);
     }
-
-    public LiveData<List<Movie>> getMovieList() {
-        return movieList;
-    }
-
 }
