@@ -206,7 +206,7 @@ public class MovieDetailFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false);
         binding.rvComment.setLayoutManager(layoutManager);
-        commentAdapter = new CommentAdapter(getActivity());
+        commentAdapter = new CommentAdapter();
         for(int i = 0; i < numOfComment; i++) {
             commentAdapter.addItem(new CommentItem(
                             commentList.get(i).getId(),

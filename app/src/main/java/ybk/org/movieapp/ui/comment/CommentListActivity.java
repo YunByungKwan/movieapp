@@ -92,7 +92,7 @@ public class CommentListActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false);
         binding.rvComment.setLayoutManager(layoutManager);
-        adapter = new CommentAdapter(this);
+        adapter = new CommentAdapter();
         for(Comment comment : commentList) {
             adapter.addItem(new CommentItem(
                     comment.getId(),
