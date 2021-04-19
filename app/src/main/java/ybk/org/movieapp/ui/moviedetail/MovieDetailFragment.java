@@ -145,7 +145,7 @@ public class MovieDetailFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),
                 LinearLayoutManager.HORIZONTAL, false);
         binding.rvGallery.setLayoutManager(layoutManager);
-        galleryAdapter = new GalleryAdapter(getActivity());
+        galleryAdapter = new GalleryAdapter();
 
         String moviePhotos = movieItem.get(0).getPhotos();
         if(moviePhotos != null) {

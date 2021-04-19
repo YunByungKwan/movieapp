@@ -6,25 +6,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import ybk.org.movieapp.R;
+import ybk.org.movieapp.databinding.GalleryItemBinding;
 import ybk.org.movieapp.util.App;
 import ybk.org.movieapp.util.Utils;
 
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHolder> {
 
-    private Context context;
     private ArrayList<GalleryItem> items = new ArrayList<>();
     private OnItemClickListener listener;
 
     public interface OnItemClickListener {
         void OnItemClick(ViewHolder holder, View view, int position);
-    }
-
-    public GalleryAdapter(Context context) {
-        this.context = context;
     }
 
     @Override
@@ -35,11 +32,11 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(
+        LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
-        View itemView = inflater.inflate(R.layout.gallery_item, parent, false);
-
-        return new ViewHolder(itemView);
+        GalleryItemBinding binding = DataBindingUtil.inflate(inflater,
+                R.layout.gallery_item, parent, false);
+        return new ViewHolder(binding);
     }
 
     @Override
@@ -63,22 +60,17 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView imageView;
-        private ImageView playIcon;
         private OnItemClickListener listener;
+        private GalleryItemBinding binding;
 
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
+        public ViewHolder(@NonNull GalleryItemBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
 
-            imageView = (ImageView) itemView.findViewById(R.id.iv_gallery_item);
-            playIcon = (ImageView) itemView.findViewById(R.id.iv_play);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int position = getAdapterPosition();
-                    if(listener != null) {
-                         listener.OnItemClick(ViewHolder.this, view, position);
-                    }
+            this.binding.getRoot().setOnClickListener(view -> {
+                int position = getAdapterPosition();
+                if(listener != null) {
+                     listener.OnItemClick(ViewHolder.this, view, position);
                 }
             });
         }
@@ -93,13 +85,13 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
                 sb.append(id);
                 sb.append("/0.jpg");
 
-                playIcon.setVisibility(View.VISIBLE);
-                playIcon.bringToFront();
+                binding.ivPlay.setVisibility(View.VISIBLE);
+                binding.ivPlay.bringToFront();
             } else {
                 sb.append(item.getUrl());
             }
 
-            Glide.with(App.getInstance()).load(sb.toString()).into(imageView);
+            Glide.with(App.getInstance()).load(sb.toString()).into(binding.ivGalleryItem);
 
         }
 
