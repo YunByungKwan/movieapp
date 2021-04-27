@@ -45,12 +45,9 @@ public class CommentListActivity extends AppCompatActivity {
         setToolbar();
         initializeViewModelAndMovie();
 
-        viewModel.commentList.observe(this, new Observer<List<Comment>>() {
-            @Override
-            public void onChanged(List<Comment> _commentList) {
-                commentList = _commentList;
-                updateCommentList();
-            }
+        viewModel.commentList.observe(this, _commentList -> {
+            commentList = _commentList;
+            updateCommentList();
         });
     }
 
@@ -105,12 +102,9 @@ public class CommentListActivity extends AppCompatActivity {
         binding.rvComment.setAdapter(adapter);
 
         // 댓글 리스트 아이템 클릭 이벤트
-        adapter.setOnItemClickListener(new CommentAdapter.OnItemClickListener() {
-            @Override
-            public void OnItemClick(CommentAdapter.ViewHolder holder, View view, int position) {
-                addRecommendCountToServer(position);
-                addRecommendCountToUI(position);
-            }
+        adapter.setOnItemClickListener((holder, view, position) -> {
+            addRecommendCountToServer(position);
+            addRecommendCountToUI(position);
         });
     }
 

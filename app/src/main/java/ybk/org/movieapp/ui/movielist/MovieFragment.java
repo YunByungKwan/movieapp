@@ -11,11 +11,9 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import com.bumptech.glide.Glide;
 
-import ybk.org.movieapp.MovieListActivity;
 import ybk.org.movieapp.R;
 import ybk.org.movieapp.databinding.FragmentMovieBinding;
 import ybk.org.movieapp.util.App;
-import ybk.org.movieapp.util.Constants;
 
 public class MovieFragment extends Fragment {
 

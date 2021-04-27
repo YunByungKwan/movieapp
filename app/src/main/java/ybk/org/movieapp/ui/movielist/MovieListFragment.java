@@ -16,12 +16,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import ybk.org.movieapp.MovieListActivity;
+import ybk.org.movieapp.ui.main.MovieListActivity;
 import ybk.org.movieapp.data.MovieRepository;
-import ybk.org.movieapp.data.local.LocalDataSource;
 import ybk.org.movieapp.data.local.entity.Movie;
 import ybk.org.movieapp.R;
-import ybk.org.movieapp.data.remote.RemoteDataSource;
 import ybk.org.movieapp.databinding.FragmentMovieListBinding;
 import ybk.org.movieapp.util.Constants;
 import ybk.org.movieapp.util.Dlog;
@@ -86,21 +84,16 @@ public class MovieListFragment extends Fragment {
     }
 
     public void sortMovieListBy(final int type) {
-        Collections.sort(movieList, new Comparator<Movie>() {
-            @Override
-            public int compare(Movie movie, Movie t1) {
-                if(type == Constants.SORT_RESERVATION_RATE) {
-                    return compareAwithB(movie.getReservationRate(), t1.getReservationRate());
-                } else if(type == Constants.SORT_REVIEWER_RATING) {
-                    return compareAwithB(movie.getReviewerRating(), t1.getReviewerRating());
-                } else {
-                    return compareAwithB(movie.getDate(), t1.getDate());
-                }
-
+        Collections.sort(movieList, (movie, t1) -> {
+            if(type == Constants.SORT_RESERVATION_RATE) {
+                return compareAwithB(movie.getReservationRate(), t1.getReservationRate());
+            } else if(type == Constants.SORT_REVIEWER_RATING) {
+                return compareAwithB(movie.getReviewerRating(), t1.getReviewerRating());
+            } else {
+                return compareAwithB(movie.getDate(), t1.getDate());
             }
+
         });
-
-
         setPagerAdapter();
     }
 

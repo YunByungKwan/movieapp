@@ -1,4 +1,4 @@
-package ybk.org.movieapp;
+package ybk.org.movieapp.ui.main;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
+import ybk.org.movieapp.R;
 import ybk.org.movieapp.ui.moviedetail.MovieDetailFragment;
 import ybk.org.movieapp.ui.movielist.MovieListFragment;
 import ybk.org.movieapp.util.Constants;
@@ -69,7 +70,7 @@ public class MovieListActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        //NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }

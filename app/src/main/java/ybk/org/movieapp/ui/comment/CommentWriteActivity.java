@@ -21,30 +21,29 @@ public class CommentWriteActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(
                 this, R.layout.activity_comment_write);
         binding.setActivity(this);
-
         Intent intent = getIntent();
         if(intent != null) {
             id = intent.getIntExtra(getString(R.string.mov_id), 0);
-            setTitle(intent.getStringExtra(getString(R.string.mov_title)));
-            setGrade(intent.getIntExtra(getString(R.string.mov_grade), 0));
+            // Set title
+            binding.tvMovieName.setText(intent.getStringExtra(
+                    getString(R.string.mov_title)));
+
+            // Set grade
+            int grade = intent.getIntExtra(getString(
+                    R.string.mov_grade), 0);
+            int resId = Utils.convertGradeToResId(grade);
+            binding.ivMovieRating.setImageResource(resId);
         }
     }
 
-    private void setTitle(String title) {
-        binding.tvMovieName.setText(title);
-    }
-
-    private void setGrade(int grade) {
-        int resId = Utils.convertGradeToResId(grade);
-        binding.ivMovieRating.setImageResource(resId);
-    }
-
-    /** 저장 버튼 클릭시 이벤트 */
+    /**
+     * 저장 버튼 클릭시 이벤트
+     */
     public void onClickSaveButton() {
         String contents = binding.etContents.getText().toString();
         if("".equals(contents)) {
-            Toast.makeText(this,
-                    getString(R.string.msg_empty), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.msg_empty),
+                    Toast.LENGTH_SHORT).show();
         } else {
             Intent intent = new Intent();
             intent.putExtra(getString(R.string.comm_id), id);
@@ -57,7 +56,9 @@ public class CommentWriteActivity extends AppCompatActivity {
         }
     }
 
-    /** 취소 버튼 클릭시 이벤트 */
+    /**
+     * 취소 버튼 클릭시 이벤트
+     */
     public void onClickCancelButton() {
         Intent intent = new Intent();
         setResult(RESULT_CANCELED, intent);

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -19,17 +18,14 @@ import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 
-import ybk.org.movieapp.MovieListActivity;
+import ybk.org.movieapp.ui.main.MovieListActivity;
 import ybk.org.movieapp.adapter.CommentAdapter;
 import ybk.org.movieapp.adapter.CommentItem;
 import ybk.org.movieapp.adapter.GalleryAdapter;
 import ybk.org.movieapp.adapter.GalleryItem;
 import ybk.org.movieapp.data.MovieRepository;
-import ybk.org.movieapp.data.local.LocalDataSource;
 import ybk.org.movieapp.data.local.entity.Comment;
 import ybk.org.movieapp.data.local.entity.DetailMovie;
-import ybk.org.movieapp.data.local.entity.DetailMovieResult;
-import ybk.org.movieapp.data.remote.RemoteDataSource;
 import ybk.org.movieapp.ui.moviegallery.MovieGalleryActivity;
 import ybk.org.movieapp.util.Constants;
 import ybk.org.movieapp.databinding.FragmentMovieDetailBinding;
@@ -69,31 +65,25 @@ public class MovieDetailFragment extends Fragment {
         MovieRepository repository = MovieRepository.getInstance();
         MovieDetailViewModelFactory factory = new MovieDetailViewModelFactory(repository, id);
         viewModel = new ViewModelProvider(this, factory).get(MovieDetailViewModel.class);
-        viewModel.detailMovie.observe(getViewLifecycleOwner(), new Observer<List<DetailMovie>>() {
-            @Override
-            public void onChanged(List<DetailMovie> detailMovie) {
-                movieItem = detailMovie;
-                Dlog.d("movie info size:" + detailMovie.size());
-                if(movieItem.size() != 0) {
-                    setMovieInfo();
-                    Network.showToast(getActivity());
-                } else {
-                    Toast.makeText(getActivity(), getString(R.string.msg_no_data),
-                            Toast.LENGTH_SHORT).show();
-                }
+        viewModel.detailMovie.observe(getViewLifecycleOwner(), detailMovie -> {
+            movieItem = detailMovie;
+            Dlog.d("movie info size:" + detailMovie.size());
+            if(movieItem.size() != 0) {
+                setMovieInfo();
+                Network.showToast(getActivity());
+            } else {
+                Toast.makeText(getActivity(), getString(R.string.msg_no_data),
+                        Toast.LENGTH_SHORT).show();
             }
         });
-        viewModel.commentList.observe(getViewLifecycleOwner(), new Observer<List<Comment>>() {
-            @Override
-            public void onChanged(List<Comment> _commentList) {
-                commentList = _commentList;
-                if(commentList.size() != 0) {
-                    updateCommentList();
-                    Network.showToast(getActivity());
-                } else {
-                    Toast.makeText(getActivity(), getString(R.string.msg_no_data),
-                            Toast.LENGTH_SHORT).show();
-                }
+        viewModel.commentList.observe(getViewLifecycleOwner(), _commentList -> {
+            commentList = _commentList;
+            if(commentList.size() != 0) {
+                updateCommentList();
+                Network.showToast(getActivity());
+            } else {
+                Toast.makeText(getActivity(), getString(R.string.msg_no_data),
+                        Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -166,19 +156,16 @@ public class MovieDetailFragment extends Fragment {
         }
 
         binding.rvGallery.setAdapter(galleryAdapter);
-        galleryAdapter.setOnItemClickListener(new GalleryAdapter.OnItemClickListener() {
-            @Override
-            public void OnItemClick(GalleryAdapter.ViewHolder holder, View view, int position) {
-                String url = galleryAdapter.getItem(position).getUrl();
+        galleryAdapter.setOnItemClickListener((holder, view, position) -> {
+            String url = galleryAdapter.getItem(position).getUrl();
 
-                if(Utils.isVideo(url)) { // 동영상일 경우
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                    startActivity(intent);
-                } else { // 이미지일 경우
-                    Intent intent = new Intent(getActivity(), MovieGalleryActivity.class);
-                    intent.putExtra(getString(R.string.gallery_url), url);
-                    startActivity(intent);
-                }
+            if(Utils.isVideo(url)) { // 동영상일 경우
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(intent);
+            } else { // 이미지일 경우
+                Intent intent = new Intent(getActivity(), MovieGalleryActivity.class);
+                intent.putExtra(getString(R.string.gallery_url), url);
+                startActivity(intent);
             }
         });
     }
@@ -219,13 +206,9 @@ public class MovieDetailFragment extends Fragment {
         }
         binding.rvComment.setAdapter(commentAdapter);
         // 댓글 리스트 아이템 클릭 이벤트
-        commentAdapter.setOnItemClickListener(new CommentAdapter.OnItemClickListener() {
-
-            @Override
-            public void OnItemClick(CommentAdapter.ViewHolder holder, View view, int position) {
-                addRecommendCountToServer(position);
-                addRecommendCountToUI(position);
-            }
+        commentAdapter.setOnItemClickListener((holder, view, position) -> {
+            addRecommendCountToServer(position);
+            addRecommendCountToUI(position);
         });
     }
 

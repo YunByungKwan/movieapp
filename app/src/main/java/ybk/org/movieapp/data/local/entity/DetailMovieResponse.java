@@ -2,13 +2,10 @@ package ybk.org.movieapp.data.local.entity;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
-import ybk.org.movieapp.data.local.entity.Movie;
+public class DetailMovieResponse {
 
-public class MovieResult
-{
     @SerializedName("message")
     @Expose
     private String message;
@@ -23,7 +20,7 @@ public class MovieResult
 
     @SerializedName("result")
     @Expose
-    private List<Movie> result = null;
+    private List<DetailMovie> result = null;
 
     public String getMessage() {
         return message;
@@ -49,11 +46,12 @@ public class MovieResult
         this.resultType = resultType;
     }
 
-    public List<Movie> getResult() {
+    public List<DetailMovie> getResult() {
         return result;
     }
 
-    public void setResult(List<Movie> result) {
+    public void setResult(List<DetailMovie> result) {
         this.result = result;
     }
 }
+
