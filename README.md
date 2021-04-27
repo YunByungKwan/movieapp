@@ -1,4 +1,4 @@
-# movieapp
+# 영화 소개 Android 앱
 
 ### Preview
 
