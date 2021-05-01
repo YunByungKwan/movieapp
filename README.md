@@ -1,4 +1,7 @@
-# 영화 소개 Android 앱
+# boostcourse 안드로이드 앱 프로그래밍
+
+> 단계별 프로젝트를 통해서 안드로이드 영화 앱을 개발했습니다.<br>
+> 현업개발자인 코드 리뷰어의 코드 리뷰를 통과해서 수료했습니다.
 
 ### Preview
 
@@ -15,6 +18,6 @@
   - Android Jetpack(ViewModel, LiveData, DataBinding, Room, Navigation)
   - Retrofit, RxJava
 - <B>Features:</B>
-  - 안드로이드 권장 앱 아키텍처, 클린 아키텍처 기반으로 앱 구조 설계
+  - Android Jetpack을 사용하여 MVVM 패턴으로 설계
   - Retrofit, RxJava를 통한 비동기 API 통신
   - Room을 통한 네트워크 캐시
