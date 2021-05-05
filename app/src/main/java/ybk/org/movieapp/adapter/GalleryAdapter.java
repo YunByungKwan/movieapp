@@ -77,28 +77,8 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 
         /** 갤러리의 이미지를 설정함 */
         public void setItem(GalleryItem item) {
-            StringBuilder sb = new StringBuilder();
-
-            if(Utils.isVideo(item.getUrl())) {
-                String id = getVideoId(item.getUrl());
-                sb.append("https://img.youtube.com/vi/");
-                sb.append(id);
-                sb.append("/0.jpg");
-
-                binding.ivPlay.setVisibility(View.VISIBLE);
-                binding.ivPlay.bringToFront();
-            } else {
-                sb.append(item.getUrl());
-            }
-
-            Glide.with(App.getInstance()).load(sb.toString()).into(binding.ivGalleryItem);
-
-        }
-
-        /** Url에서 id를 추출 */
-        private String getVideoId(String src) {
-            String[] array = src.split("/");
-            return array[3];
+            binding.setGalleryItem(item);
+            binding.executePendingBindings();
         }
 
         public void setOnItemClickListener(OnItemClickListener listener) {

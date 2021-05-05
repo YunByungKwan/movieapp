@@ -72,11 +72,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         }
 
         public void setItem(CommentItem comment) {
-            binding.tvUserId.setText(comment.getWriter());
-            binding.tvRegisterTime.setText(comment.getRegisterTime());
-            binding.rating.setRating(comment.getRating());
-            binding.tvComment.setText(comment.getComment());
-            binding.tvRecommendCount.setText(String.valueOf(comment.getRecommendCount()));
+            binding.setCommentItem(comment);
+            binding.executePendingBindings();
         }
 
         public void setOnItemClickListener(OnItemClickListener listener) {
