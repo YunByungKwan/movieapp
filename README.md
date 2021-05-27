@@ -5,6 +5,10 @@
 > 단계별 프로젝트를 통해서 안드로이드 영화 앱을 개발했습니다.<br>
 > 현업개발자인 코드 리뷰어의 코드 리뷰를 통과해서 수료했습니다.
 
+### :fire: TroubleShooting 
+
+- [[1~8단계] 코드 리뷰를 통해 배운 점들](https://github.com/YunByungKwan/movieapp/wiki/%5B1~8%EB%8B%A8%EA%B3%84%5D-%EC%BD%94%EB%93%9C-%EB%A6%AC%EB%B7%B0%EB%A5%BC-%ED%86%B5%ED%95%B4-%EB%B0%B0%EC%9A%B4-%EC%A0%90%EB%93%A4)
+
 ### :point_right: Preview
 
 <img src="https://user-images.githubusercontent.com/51109517/114910019-58db2680-9e58-11eb-89d4-2d0bb74286fd.gif" width=200 height=400/> <img src="https://user-images.githubusercontent.com/51109517/114910046-62fd2500-9e58-11eb-98ac-8948f5db6e2c.gif" width=200 height=400/>
