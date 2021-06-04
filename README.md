@@ -1,5 +1,5 @@
 # boostcourse 안드로이드 앱 프로그래밍
-[boostcourse 안드로이드 앱 프로그래밍](https://www.boostcourse.org/mo316)을 듣고 수행한 프로젝트입니다. (수료증)<br>
+[boostcourse 안드로이드 앱 프로그래밍](https://www.boostcourse.org/mo316)을 듣고 수행한 프로젝트입니다. ([수료증](https://github.com/YunByungKwan/movieapp/wiki/Certificaton-of-boostcourse))<br>
 수료 이후에도 Java언어를 잊지 않기 위해 리팩토링 중입니다.<br>
 <br>
 
