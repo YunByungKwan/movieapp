@@ -1,13 +1,11 @@
 package ybk.org.movieapp.ui.movieapi;
 
-import androidx.lifecycle.ViewModel;
-
 import javax.inject.Inject;
 
-public class MovieApiViewModel extends ViewModel {
+import ybk.org.movieapp.base.BaseViewModel;
+
+public class MovieApiViewModel extends BaseViewModel {
 
     @Inject
-    public MovieApiViewModel() {
-
-    }
+    public MovieApiViewModel() { }
 }

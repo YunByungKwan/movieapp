@@ -14,6 +14,7 @@ import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.SingleObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import ybk.org.movieapp.base.BaseViewModel;
 import ybk.org.movieapp.data.MovieRepositoryImpl;
 import ybk.org.movieapp.data.local.entity.Comment;
 import ybk.org.movieapp.data.local.entity.CommentResponse;
@@ -23,7 +24,7 @@ import ybk.org.movieapp.data.local.entity.Response;
 import ybk.org.movieapp.util.App;
 import ybk.org.movieapp.util.Dlog;
 
-public class MovieDetailViewModel extends ViewModel {
+public class MovieDetailViewModel extends BaseViewModel {
 
     private MutableLiveData<List<DetailMovie>> _detailMovie = new MutableLiveData<>();
     public LiveData<List<DetailMovie>> detailMovie = _detailMovie;

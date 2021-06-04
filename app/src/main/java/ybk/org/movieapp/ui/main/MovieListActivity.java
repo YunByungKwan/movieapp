@@ -40,9 +40,9 @@ import ybk.org.movieapp.util.Utils;
 public class MovieListActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-    public Menu menu;
     private NavController navController;
     private NavHostFragment hostFragment;
+    public Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -18,6 +18,7 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 
+import dagger.android.support.DaggerAppCompatActivity;
 import ybk.org.movieapp.R;
 import ybk.org.movieapp.adapter.CommentAdapter;
 import ybk.org.movieapp.adapter.CommentItem;
@@ -26,22 +27,22 @@ import ybk.org.movieapp.databinding.ActivityCommentListBinding;
 import ybk.org.movieapp.ui.commentwrite.CommentWriteActivity;
 import ybk.org.movieapp.util.App;
 import ybk.org.movieapp.util.Constants;
+import ybk.org.movieapp.util.Dlog;
 import ybk.org.movieapp.util.Network;
 import ybk.org.movieapp.util.Utils;
 
-public class CommentListActivity extends AppCompatActivity {
+public class CommentListActivity extends DaggerAppCompatActivity {
 
     @Inject
     public ViewModelProvider.Factory viewModelFactory;
-
     private CommentListViewModel viewModel;
 
     private ActivityCommentListBinding binding;
     private CommentAdapter adapter;
+    private List<Comment> commentList;
     private int id;
     private String title;
     private int grade;
-    private List<Comment> commentList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,47 +50,30 @@ public class CommentListActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this, viewModelFactory).get(CommentListViewModel.class);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_comment_list);
         binding.setActivity(this);
-        setToolbar();
-        initializeViewModelAndMovie();
 
-        viewModel.commentList.observe(this, _commentList -> {
-            commentList = _commentList;
-            updateCommentList();
-        });
-    }
-
-    private void setToolbar() {
         Toolbar mToolbar = findViewById(R.id.tb_back);
         mToolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(mToolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-    }
 
-    private void initializeViewModelAndMovie() {
         Intent intent = getIntent();
         if(intent != null) {
-            initializeViewModel(intent);
-            initializeMovie(intent);
+            // id = intent.getIntExtra(getString(R.string.mov_id), -1);
+            id = App.getInstance().movieId;
+            grade = intent.getIntExtra(getString(R.string.mov_grade), 0);
+            title = intent.getStringExtra(getString(R.string.mov_title));
+            binding.ivMovieRating.setImageResource(Utils.convertGradeToResId(grade));
         }
-    }
 
-    private void initializeViewModel(Intent intent) {
-        // id = intent.getIntExtra(getString(R.string.mov_id), -1);
-        id = App.getInstance().movieId;
-    }
-
-    private void initializeMovie(Intent intent) {
-        title = intent.getStringExtra(getString(R.string.mov_title));
-        grade = intent.getIntExtra(getString(R.string.mov_grade), 0);
-        float rating = intent.getFloatExtra(getString(R.string.mov_rating), 0);
-
-        binding.tvMovieName.setText(title);
-        binding.rating.setRating(rating / 2);
-        binding.tvRating.setText(String.valueOf(rating));
-        binding.ivMovieRating.setImageResource(Utils.convertGradeToResId(grade));
+        viewModel.commentList.observe(this, _commentList -> {
+            commentList = _commentList;
+            Dlog.d("commentList size=" + commentList.size());
+            updateCommentList();
+        });
     }
 
     private void updateCommentList() {
+        Dlog.d("updateCommentList()");
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false);
         binding.rvComment.setLayoutManager(layoutManager);

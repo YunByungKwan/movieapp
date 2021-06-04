@@ -13,12 +13,13 @@ import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.SingleObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import ybk.org.movieapp.base.BaseViewModel;
 import ybk.org.movieapp.data.MovieRepositoryImpl;
 import ybk.org.movieapp.data.local.entity.Movie;
 import ybk.org.movieapp.data.local.entity.MovieResponse;
 import ybk.org.movieapp.util.Dlog;
 
-public class MovieListViewModel extends ViewModel {
+public class MovieListViewModel extends BaseViewModel {
 
     private MutableLiveData<List<Movie>> _movieList = new MutableLiveData<>();
     public LiveData<List<Movie>> movieList = _movieList;

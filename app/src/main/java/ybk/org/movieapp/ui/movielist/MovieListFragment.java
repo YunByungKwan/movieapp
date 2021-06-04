@@ -39,9 +39,8 @@ public class MovieListFragment extends DaggerFragment {
     public MovieListViewModel viewModel;
     private List<Movie> movieList = new ArrayList<>();
 
-    public View onCreateView(
-            @NonNull LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
         viewModel = new ViewModelProvider(this, viewModelFactory).get(MovieListViewModel.class);
         binding = DataBindingUtil.inflate(inflater,
                 R.layout.fragment_movie_list, container, false);

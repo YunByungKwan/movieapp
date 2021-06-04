@@ -8,6 +8,9 @@
             name="activity"
             type="ybk.org.movieapp.ui.comment.CommentListActivity" />
 
+        <variable
+            name="utils"
+            type="ybk.org.movieapp.util.Utils" />
     </data>
 
     <LinearLayout android:layout_width="match_parent"
@@ -31,7 +34,7 @@
                 android:id="@+id/tv_movie_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="군도"
+                android:text="@{activity.intent.getStringExtra(@string/mov_title)}"
                 android:textSize="@dimen/title_text_size"
                 android:layout_marginEnd="@dimen/base_padding_size" />
 
@@ -56,6 +59,7 @@
                 android:id="@+id/rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:rating="@{activity.intent.getFloatExtra(@string/mov_rating, 0F) / 2}"
                 android:numStars="5"
                 android:stepSize="0.1"
                 style="?android:ratingBarStyleSmall"
@@ -65,6 +69,7 @@
                 android:id="@+id/tv_rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@{String.valueOf(activity.intent.getFloatExtra(@string/mov_rating, 0F))}"
                 android:layout_marginEnd="@dimen/base_half_padding_size"/>
 
             <TextView
@@ -134,7 +139,6 @@
                 android:id="@+id/rv_comment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toTopOf="@+id/btn_load_all"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout" />

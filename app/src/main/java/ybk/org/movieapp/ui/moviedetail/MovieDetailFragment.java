@@ -98,7 +98,7 @@ public class MovieDetailFragment extends DaggerFragment {
     @Override
     public void onResume() {
         super.onResume();
-        //((MovieListActivity)requireActivity()).showOptionMenu(false);
+        ((MovieListActivity)requireActivity()).showOptionMenu(false);
     }
 
     private void setBasicMovieInfoFromBundle() {
@@ -297,8 +297,7 @@ public class MovieDetailFragment extends DaggerFragment {
     public void onClickWriteCommentButton() {
         if(getActivity() != null && Network.isConnected()) {
             Intent intent = new Intent(getActivity(), CommentWriteActivity.class);
-            App.getInstance().commentId = id;
-            intent.putExtra(getString(R.string.mov_id), id);
+            intent.putExtra(getString(R.string.mov_id), App.getInstance().movieId);
             intent.putExtra(getString(R.string.mov_title), title);
             intent.putExtra(getString(R.string.mov_grade), grade);
             getActivity().startActivityForResult(intent, Constants.REQUEST_COMMENT_WRITE_CODE);
@@ -310,8 +309,7 @@ public class MovieDetailFragment extends DaggerFragment {
 
     public void onClickLoadAllButton() {
         Intent intent = new Intent(getActivity(), CommentListActivity.class);
-        App.getInstance().commentId = id;
-        intent.putExtra(getString(R.string.mov_id), id);
+        intent.putExtra(getString(R.string.mov_id), App.getInstance().movieId);
         intent.putExtra(getString(R.string.mov_title), title);
         intent.putExtra(getString(R.string.mov_rating), movieItem.get(0).getReviewerRating());
         intent.putExtra(getString(R.string.mov_grade), grade);

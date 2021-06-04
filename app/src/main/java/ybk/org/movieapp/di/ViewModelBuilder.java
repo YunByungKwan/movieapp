@@ -1,6 +1,5 @@
 package ybk.org.movieapp.di;
 
-import androidx.lifecycle.SavedStateViewModelFactory;
 import androidx.lifecycle.ViewModelProvider;
 
 import dagger.Binds;
@@ -12,6 +11,4 @@ public abstract class ViewModelBuilder {
     abstract ViewModelProvider.Factory bindViewModelFactory(
             ViewModelFactory factory
     );
-
-
 }
