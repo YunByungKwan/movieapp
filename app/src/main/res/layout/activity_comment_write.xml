@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
-
         <variable
             name="activity"
-            type="ybk.org.movieapp.ui.comment.CommentWriteActivity" />
-
+            type="ybk.org.movieapp.ui.commentwrite.CommentWriteActivity" />
+        <variable
+            name="utils"
+            type="ybk.org.movieapp.util.Utils" />
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -25,15 +26,14 @@
                 android:id="@+id/tv_movie_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="군도"
+                android:text="@{activity.intent.getStringExtra(@string/mov_title)}"
                 android:textSize="@dimen/title_text_size"
                 android:layout_marginEnd="@dimen/base_padding_size" />
 
             <ImageView
                 android:id="@+id/iv_movie_rating"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_15"/>
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 

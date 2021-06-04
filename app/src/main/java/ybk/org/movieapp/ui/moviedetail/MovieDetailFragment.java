@@ -6,38 +6,42 @@ import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-import com.bumptech.glide.Glide;
+
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import dagger.android.support.DaggerFragment;
 import ybk.org.movieapp.ui.main.MovieListActivity;
 import ybk.org.movieapp.adapter.CommentAdapter;
 import ybk.org.movieapp.adapter.CommentItem;
 import ybk.org.movieapp.adapter.GalleryAdapter;
 import ybk.org.movieapp.adapter.GalleryItem;
-import ybk.org.movieapp.data.MovieRepository;
 import ybk.org.movieapp.data.local.entity.Comment;
 import ybk.org.movieapp.data.local.entity.DetailMovie;
 import ybk.org.movieapp.ui.moviegallery.MovieGalleryActivity;
+import ybk.org.movieapp.util.App;
 import ybk.org.movieapp.util.Constants;
 import ybk.org.movieapp.databinding.FragmentMovieDetailBinding;
 import ybk.org.movieapp.ui.comment.CommentListActivity;
-import ybk.org.movieapp.ui.comment.CommentWriteActivity;
+import ybk.org.movieapp.ui.commentwrite.CommentWriteActivity;
 import ybk.org.movieapp.R;
 import ybk.org.movieapp.util.Dlog;
 import ybk.org.movieapp.util.Network;
 import ybk.org.movieapp.util.Utils;
 
-public class MovieDetailFragment extends Fragment {
+public class MovieDetailFragment extends DaggerFragment {
 
+    @Inject
+    public ViewModelProvider.Factory viewModelFactory;
     private FragmentMovieDetailBinding binding;
     private MovieDetailViewModel viewModel;
     private List<DetailMovie> movieItem;
@@ -50,21 +54,22 @@ public class MovieDetailFragment extends Fragment {
     private int numOfComment = 2;
     private boolean isPressedLike = false;
     private boolean isPressedDisLike = false;
-    private int likeCount;
-    private int dislikeCount;
+    public int likeCount;
+    public int dislikeCount;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+    public View onCreateView(
+            @NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState) {
         setBasicMovieInfoFromBundle();
-
+        viewModel = new ViewModelProvider(
+                this,viewModelFactory).get(MovieDetailViewModel.class);
         binding = DataBindingUtil.inflate(inflater,
                 R.layout.fragment_movie_detail, container, false);
         binding.setFragment(this);
+        binding.setViewmodel(viewModel);
+        binding.setLifecycleOwner(getViewLifecycleOwner());
 
-        MovieRepository repository = MovieRepository.getInstance();
-        MovieDetailViewModelFactory factory = new MovieDetailViewModelFactory(repository, id);
-        viewModel = new ViewModelProvider(this, factory).get(MovieDetailViewModel.class);
         viewModel.detailMovie.observe(getViewLifecycleOwner(), detailMovie -> {
             movieItem = detailMovie;
             Dlog.d("movie info size:" + detailMovie.size());
@@ -93,12 +98,14 @@ public class MovieDetailFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        ((MovieListActivity)requireActivity()).showOptionMenu(false);
+        //((MovieListActivity)requireActivity()).showOptionMenu(false);
     }
 
     private void setBasicMovieInfoFromBundle() {
         if(getArguments() != null) {
-            id = getArguments().getInt(getString(R.string.bun_id));
+            //id = getArguments().getInt(getString(R.string.bun_id));
+            App.getInstance().movieId = getArguments().getInt(getString(R.string.bun_id));
+            id = App.getInstance().movieId;
             title = getArguments().getString(getString(R.string.bun_title));
             grade = getArguments().getInt(getString(R.string.bun_grade));
         }
@@ -106,37 +113,23 @@ public class MovieDetailFragment extends Fragment {
 
     private void setMovieInfo() {
         if(getArguments() != null) {
-            Glide.with(getContext()).load(movieItem.get(0).getImage()).into(binding.ivMoviePoster);
-            binding.tvMovieTitle.setText(movieItem.get(0).getTitle());
+            // Glide.with(getContext()).load(movieItem.get(0).getImage()).into(binding.ivMoviePoster);
             binding.ivMovieRating.setImageResource(Utils.convertGradeToResId(movieItem.get(0).getGrade()));
-            binding.tvReleaseDate.setText( movieItem.get(0).getDate());
-            binding.tvGenre.setText(movieItem.get(0).getGenre());
-            binding.tvRunningTime.setText(String.valueOf(movieItem.get(0).getDuration()));
             likeCount = movieItem.get(0).getLike();
             dislikeCount = movieItem.get(0).getDislike();
             binding.tvLikeCount.setText(String.valueOf(likeCount));
             binding.tvDislikeCount.setText(String.valueOf(dislikeCount));
-            binding.tvReservationRateRanking.setText(String.valueOf(movieItem.get(0).getReservationGrade()));
-            binding.tvReservationRate.setText(String.valueOf(movieItem.get(0).getAudienceRating()));
             binding.rating.setRating(movieItem.get(0).getReviewerRating() / 2);
-            binding.tvGrade.setText(String.valueOf(movieItem.get(0).getReviewerRating()));
 
             DecimalFormat df = new DecimalFormat("###,###");
             binding.tvCumulativeAudience.setText(String.valueOf(df.format(movieItem.get(0).getAudience())));
-            binding.tvStory.setText(movieItem.get(0).getSynopsis());
-            binding.tvDirectorName.setText(movieItem.get(0).getDirector());
-            binding.tvCasting.setText(movieItem.get(0).getActor());
 
             setGalleryAdapter();
         }
     }
 
     private void setGalleryAdapter() {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),
-                LinearLayoutManager.HORIZONTAL, false);
-        binding.rvGallery.setLayoutManager(layoutManager);
         galleryAdapter = new GalleryAdapter();
-
         String moviePhotos = movieItem.get(0).getPhotos();
         if(moviePhotos != null) {
             String[] photos = Utils.parseStringInComma(moviePhotos);
@@ -145,7 +138,6 @@ public class MovieDetailFragment extends Fragment {
                 galleryAdapter.addItem(new GalleryItem(photoUrl));
             }
         }
-
         String movieVideos = movieItem.get(0).getVideos();
         if(movieVideos != null) {
             String[] videos = Utils.parseStringInComma(movieVideos);
@@ -156,6 +148,7 @@ public class MovieDetailFragment extends Fragment {
         }
 
         binding.rvGallery.setAdapter(galleryAdapter);
+
         galleryAdapter.setOnItemClickListener((holder, view, position) -> {
             String url = galleryAdapter.getItem(position).getUrl();
 
@@ -301,10 +294,10 @@ public class MovieDetailFragment extends Fragment {
         binding.btnDislike.setBackgroundResource(R.drawable.thumbs_down_selector);
     }
 
-    /** 작성하기 버튼 클릭시 이벤트 */
     public void onClickWriteCommentButton() {
         if(getActivity() != null && Network.isConnected()) {
             Intent intent = new Intent(getActivity(), CommentWriteActivity.class);
+            App.getInstance().commentId = id;
             intent.putExtra(getString(R.string.mov_id), id);
             intent.putExtra(getString(R.string.mov_title), title);
             intent.putExtra(getString(R.string.mov_grade), grade);
@@ -315,9 +308,9 @@ public class MovieDetailFragment extends Fragment {
         }
     }
 
-    /** 모두보기 버튼 클릭시 이벤트 */
     public void onClickLoadAllButton() {
         Intent intent = new Intent(getActivity(), CommentListActivity.class);
+        App.getInstance().commentId = id;
         intent.putExtra(getString(R.string.mov_id), id);
         intent.putExtra(getString(R.string.mov_title), title);
         intent.putExtra(getString(R.string.mov_rating), movieItem.get(0).getReviewerRating());

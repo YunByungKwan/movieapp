@@ -20,12 +20,6 @@ public class MovieGalleryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_gallery);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        Intent getIntent = getIntent();
-        if(getIntent != null) {
-            String url = getIntent.getStringExtra(getString(R.string.gallery_url));
-            Glide.with(this).load(url).into(binding.photoView);
-        }
     }
 
     @Override

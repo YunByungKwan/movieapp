@@ -1,16 +1,20 @@
 package ybk.org.movieapp.ui.comment;
 
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModel;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import dagger.assisted.AssistedInject;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.SingleObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
-import ybk.org.movieapp.data.MovieRepository;
+import ybk.org.movieapp.data.MovieRepositoryImpl;
 import ybk.org.movieapp.data.local.entity.Comment;
 import ybk.org.movieapp.data.local.entity.CommentResponse;
 import ybk.org.movieapp.data.local.entity.Response;
@@ -19,10 +23,13 @@ import ybk.org.movieapp.util.Dlog;
 public class CommentListViewModel extends ViewModel {
 
     public MutableLiveData<List<Comment>> commentList = new MutableLiveData<>();
-    private MovieRepository repository;
+    private MovieRepositoryImpl repository;
+    private int id;
 
-    public CommentListViewModel(MovieRepository repository, int id) {
+    @Inject
+    public CommentListViewModel(MovieRepositoryImpl repository) {
         this.repository = repository;
+        id = 0;
         getCommentList(id);
     }
 

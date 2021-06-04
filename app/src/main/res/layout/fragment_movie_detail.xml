@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <data>
-
         <variable
             name="fragment"
             type="ybk.org.movieapp.ui.moviedetail.MovieDetailFragment" />
-
+        <variable
+            name="viewmodel"
+            type="ybk.org.movieapp.ui.moviedetail.MovieDetailViewModel" />
     </data>
 
     <ScrollView
@@ -31,7 +32,8 @@
                     android:id="@+id/iv_movie_poster"
                     android:layout_width="140dp"
                     android:layout_height="200dp"
-                    android:layout_marginEnd="@dimen/base_padding_size"/>
+                    android:layout_marginEnd="@dimen/base_padding_size"
+                    app:url="@{viewmodel.detailMovie.get(0).image}"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -51,6 +53,7 @@
                             android:id="@+id/tv_movie_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="@{viewmodel.detailMovie.get(0).title}"
                             android:textSize="@dimen/title_text_size"
                             android:textColor="@color/colorThumbnailText"
                             android:textStyle="bold"
@@ -74,6 +77,7 @@
                             android:id="@+id/tv_release_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="@{viewmodel.detailMovie.get(0).date}"
                             android:textColor="@color/colorThumbnailText"/>
 
                         <TextView
@@ -94,6 +98,7 @@
                             android:id="@+id/tv_genre"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="@{viewmodel.detailMovie.get(0).genre}"
                             android:textColor="@color/colorThumbnailText"
                             android:layout_marginEnd="@dimen/base_half_padding_size"/>
 
@@ -108,6 +113,7 @@
                             android:id="@+id/tv_running_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="@{String.valueOf(viewmodel.detailMovie.get(0).duration)}"
                             android:textColor="@color/colorThumbnailText"
                             android:layout_marginEnd="@dimen/base_half_padding_size"/>
 
@@ -190,7 +196,8 @@
                         <TextView
                             android:id="@+id/tv_reservation_rate_ranking"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content"
+                            android:text="@{String.valueOf(viewmodel.detailMovie.get(0).reservationGrade)}"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -201,7 +208,8 @@
                         <TextView
                             android:id="@+id/tv_reservation_rate"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content"
+                            android:text="@{String.valueOf(viewmodel.detailMovie.get(0).audienceRating)}"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -242,13 +250,13 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/base_padding_size"
                             android:numStars="5"
-                            android:rating="4.1"
                             android:stepSize="0.01" />
 
                         <TextView
                             android:id="@+id/tv_grade"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent" />
+                            android:layout_height="match_parent"
+                            android:text="@{String.valueOf(viewmodel.detailMovie.get(0).reviewerRating)}"/>
 
                     </LinearLayout>
 
@@ -315,7 +323,8 @@
                 <TextView
                     android:id="@+id/tv_story"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="@{viewmodel.detailMovie.get(0).synopsis}"/>
 
             </LinearLayout>
 
@@ -352,7 +361,8 @@
                     <TextView
                         android:id="@+id/tv_director_name"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:text="@{viewmodel.detailMovie.get(0).director}"/>
 
                 </LinearLayout>
 
@@ -372,7 +382,8 @@
                     <TextView
                         android:id="@+id/tv_casting"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:text="@{viewmodel.detailMovie.get(0).actor}"/>
 
                 </LinearLayout>
 
@@ -397,7 +408,10 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_gallery"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/gallery_item"/>
 
             </LinearLayout>
 

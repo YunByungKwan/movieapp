@@ -4,33 +4,39 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+
+import javax.inject.Inject;
+
 import ybk.org.movieapp.R;
 import ybk.org.movieapp.adapter.CommentAdapter;
 import ybk.org.movieapp.adapter.CommentItem;
-import ybk.org.movieapp.data.MovieRepository;
 import ybk.org.movieapp.data.local.entity.Comment;
 import ybk.org.movieapp.databinding.ActivityCommentListBinding;
+import ybk.org.movieapp.ui.commentwrite.CommentWriteActivity;
+import ybk.org.movieapp.util.App;
 import ybk.org.movieapp.util.Constants;
 import ybk.org.movieapp.util.Network;
 import ybk.org.movieapp.util.Utils;
 
 public class CommentListActivity extends AppCompatActivity {
 
-    private ActivityCommentListBinding binding;
+    @Inject
+    public ViewModelProvider.Factory viewModelFactory;
+
     private CommentListViewModel viewModel;
+
+    private ActivityCommentListBinding binding;
     private CommentAdapter adapter;
     private int id;
     private String title;
@@ -40,6 +46,7 @@ public class CommentListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        viewModel = new ViewModelProvider(this, viewModelFactory).get(CommentListViewModel.class);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_comment_list);
         binding.setActivity(this);
         setToolbar();
@@ -67,11 +74,8 @@ public class CommentListActivity extends AppCompatActivity {
     }
 
     private void initializeViewModel(Intent intent) {
-        id = intent.getIntExtra(getString(R.string.mov_id), -1);
-        MovieRepository repository = MovieRepository.getInstance();
-        CommentListViewModelFactory factory = new CommentListViewModelFactory(repository, id);
-        viewModel = new ViewModelProvider(this, factory).get(CommentListViewModel.class);
-
+        // id = intent.getIntExtra(getString(R.string.mov_id), -1);
+        id = App.getInstance().movieId;
     }
 
     private void initializeMovie(Intent intent) {
@@ -123,7 +127,6 @@ public class CommentListActivity extends AppCompatActivity {
         updateCommentList();
     }
 
-    /** 작성하기 버튼 클릭시 이벤트 */
     public void onClickWriteCommentButton() {
         if(Network.isConnected()) {
             Intent intent = new Intent(this, CommentWriteActivity.class);
@@ -175,7 +178,6 @@ public class CommentListActivity extends AppCompatActivity {
         viewModel.commentList.setValue(commentList);
     }
 
-    /** 뒤로 가기 버튼 클릭시 이벤트 */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {

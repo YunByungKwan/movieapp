@@ -14,32 +14,40 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
+
+import javax.inject.Inject;
+
+import dagger.android.support.DaggerFragment;
+import ybk.org.movieapp.adapter.MoviePagerAdapter;
 import ybk.org.movieapp.ui.main.MovieListActivity;
-import ybk.org.movieapp.data.MovieRepository;
+import ybk.org.movieapp.data.MovieRepositoryImpl;
 import ybk.org.movieapp.data.local.entity.Movie;
 import ybk.org.movieapp.R;
 import ybk.org.movieapp.databinding.FragmentMovieListBinding;
 import ybk.org.movieapp.util.Constants;
 import ybk.org.movieapp.util.Dlog;
 import ybk.org.movieapp.util.Network;
+import ybk.org.movieapp.util.Utils;
 
-public class MovieListFragment extends Fragment {
+public class MovieListFragment extends DaggerFragment {
+
+    @Inject
+    public ViewModelProvider.Factory viewModelFactory;
 
     private FragmentMovieListBinding binding;
     public MovieListViewModel viewModel;
     private List<Movie> movieList = new ArrayList<>();
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(
+            @NonNull LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
+        viewModel = new ViewModelProvider(this, viewModelFactory).get(MovieListViewModel.class);
         binding = DataBindingUtil.inflate(inflater,
                 R.layout.fragment_movie_list, container, false);
         binding.setFragment(this);
+        binding.setViewmodel(viewModel);
 
-        MovieRepository repository = MovieRepository.getInstance();
-        MovieListViewModelFactory factory = new MovieListViewModelFactory(repository);
-        viewModel = new ViewModelProvider(this, factory).get(MovieListViewModel.class);
         viewModel.movieList.observe(getViewLifecycleOwner(), _movieList -> {
             movieList = _movieList;
             if(_movieList == null) {
@@ -86,47 +94,14 @@ public class MovieListFragment extends Fragment {
     public void sortMovieListBy(final int type) {
         Collections.sort(movieList, (movie, t1) -> {
             if(type == Constants.SORT_RESERVATION_RATE) {
-                return compareAwithB(movie.getReservationRate(), t1.getReservationRate());
+                return Utils.compareAwithB(movie.getReservationRate(), t1.getReservationRate());
             } else if(type == Constants.SORT_REVIEWER_RATING) {
-                return compareAwithB(movie.getReviewerRating(), t1.getReviewerRating());
+                return Utils.compareAwithB(movie.getReviewerRating(), t1.getReviewerRating());
             } else {
-                return compareAwithB(movie.getDate(), t1.getDate());
+                return Utils.compareAwithB(movie.getDate(), t1.getDate());
             }
 
         });
         setPagerAdapter();
-    }
-
-    private int compareAwithB(Double a, Double b) {
-        return b.compareTo(a);
-    }
-
-    private int compareAwithB(String a, String b) {
-        return b.compareTo(a);
-    }
-
-    private static class MoviePagerAdapter extends FragmentStateAdapter {
-
-        private List<MovieFragment> items = new ArrayList<>();
-
-        MoviePagerAdapter(@NonNull FragmentManager fragmentManager,
-                                 @NonNull Lifecycle lifecycle) {
-            super(fragmentManager, lifecycle);
-        }
-
-        void addItem(MovieFragment item) {
-            items.add(item);
-        }
-
-        @NonNull
-        @Override
-        public Fragment createFragment(int position) {
-            return items.get(position);
-        }
-
-        @Override
-        public int getItemCount() {
-            return items.size();
-        }
     }
 }

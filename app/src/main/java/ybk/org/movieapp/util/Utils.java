@@ -40,4 +40,12 @@ public class Utils {
         return sdf.format(calendar.getTime());
     }
 
+    public static int compareAwithB(Double a, Double b) {
+        return b.compareTo(a);
+    }
+
+    public static int compareAwithB(String a, String b) {
+        return b.compareTo(a);
+    }
+
 }

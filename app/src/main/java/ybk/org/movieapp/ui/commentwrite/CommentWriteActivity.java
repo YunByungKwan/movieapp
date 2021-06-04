@@ -1,4 +1,4 @@
-package ybk.org.movieapp.ui.comment;
+package ybk.org.movieapp.ui.commentwrite;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -21,12 +21,10 @@ public class CommentWriteActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(
                 this, R.layout.activity_comment_write);
         binding.setActivity(this);
+
         Intent intent = getIntent();
         if(intent != null) {
             id = intent.getIntExtra(getString(R.string.mov_id), 0);
-            // Set title
-            binding.tvMovieName.setText(intent.getStringExtra(
-                    getString(R.string.mov_title)));
 
             // Set grade
             int grade = intent.getIntExtra(getString(
@@ -36,9 +34,6 @@ public class CommentWriteActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * 저장 버튼 클릭시 이벤트
-     */
     public void onClickSaveButton() {
         String contents = binding.etContents.getText().toString();
         if("".equals(contents)) {
@@ -56,9 +51,6 @@ public class CommentWriteActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * 취소 버튼 클릭시 이벤트
-     */
     public void onClickCancelButton() {
         Intent intent = new Intent();
         setResult(RESULT_CANCELED, intent);

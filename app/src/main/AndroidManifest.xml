@@ -34,7 +34,7 @@
             android:label="@string/comment_list_label"
             android:theme="@style/AppNoActionBarTheme" />
         <activity
-            android:name=".ui.comment.CommentWriteActivity"
+            android:name=".ui.commentwrite.CommentWriteActivity"
             android:label="@string/comment_write_label" />
     </application>
 

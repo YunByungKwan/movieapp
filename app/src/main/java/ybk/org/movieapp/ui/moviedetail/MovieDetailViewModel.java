@@ -2,21 +2,25 @@ package ybk.org.movieapp.ui.moviedetail;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModel;
 import java.util.HashMap;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.SingleObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
-import ybk.org.movieapp.data.MovieRepository;
+import ybk.org.movieapp.data.MovieRepositoryImpl;
 import ybk.org.movieapp.data.local.entity.Comment;
 import ybk.org.movieapp.data.local.entity.CommentResponse;
 import ybk.org.movieapp.data.local.entity.DetailMovie;
 import ybk.org.movieapp.data.local.entity.DetailMovieResponse;
 import ybk.org.movieapp.data.local.entity.Response;
+import ybk.org.movieapp.util.App;
 import ybk.org.movieapp.util.Dlog;
 
 public class MovieDetailViewModel extends ViewModel {
@@ -25,10 +29,15 @@ public class MovieDetailViewModel extends ViewModel {
     public LiveData<List<DetailMovie>> detailMovie = _detailMovie;
 
     public MutableLiveData<List<Comment>> commentList = new MutableLiveData<>();
-    private MovieRepository repository;
+    private MovieRepositoryImpl repository;
+    private int movieId;
 
-    public MovieDetailViewModel(MovieRepository repository, int movieId) {
+    @Inject
+    public MovieDetailViewModel(
+            MovieRepositoryImpl repository
+    ) {
         this.repository = repository;
+        this.movieId = App.getInstance().movieId;
         getDetailMovie(movieId);
         getCommentList(movieId);
     }

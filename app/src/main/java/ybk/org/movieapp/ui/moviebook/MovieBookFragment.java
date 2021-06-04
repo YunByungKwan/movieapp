@@ -7,11 +7,13 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+
+import dagger.android.support.DaggerFragment;
 import ybk.org.movieapp.ui.main.MovieListActivity;
 import ybk.org.movieapp.R;
 import ybk.org.movieapp.databinding.FragmentMovieBookBinding;
 
-public class MovieBookFragment extends Fragment {
+public class MovieBookFragment extends DaggerFragment {
 
     private FragmentMovieBookBinding binding;
 

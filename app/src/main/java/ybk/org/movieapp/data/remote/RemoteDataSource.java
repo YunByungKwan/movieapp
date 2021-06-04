@@ -2,32 +2,23 @@ package ybk.org.movieapp.data.remote;
 
 import java.util.HashMap;
 
+import javax.inject.Inject;
+
 import io.reactivex.rxjava3.core.Single;
+import ybk.org.movieapp.data.local.DataSource;
 import ybk.org.movieapp.data.local.entity.CommentResponse;
 import ybk.org.movieapp.data.local.entity.DetailMovieResponse;
 import ybk.org.movieapp.data.local.entity.MovieResponse;
 import ybk.org.movieapp.data.local.entity.Response;
 import ybk.org.movieapp.util.Dlog;
 
-public class RemoteDataSource {
-
-    private volatile static RemoteDataSource instance;
-
-    private RemoteDataSource() {}
-
-    public static RemoteDataSource getInstance() {
-        if(instance == null) {
-            synchronized (RemoteDataSource.class) {
-                if(instance == null) {
-                    instance = new RemoteDataSource();
-                }
-            }
-        }
-        return instance;
-    }
+public class RemoteDataSource implements DataSource {
 
     private final String CLASS_NAME = this.getClass().getName();
     private ApiService apiService = RetrofitClient.cteateService(ApiService.class);
+
+    @Inject
+    public RemoteDataSource() {}
 
     public Single<MovieResponse> getMovieList() {
         Dlog.d("=========> [" + CLASS_NAME + "] Call getMovieList()");
