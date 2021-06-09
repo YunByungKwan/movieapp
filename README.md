@@ -28,4 +28,6 @@
 ### :point_right: Main Class Diagram
 <img src="https://user-images.githubusercontent.com/51109517/119027411-4026d900-b9e1-11eb-92e2-d01a7c324545.png" width=700 height=400/>
 
+### Dagger Graph
+<img src="https://user-images.githubusercontent.com/51109517/121364649-f17eb600-c972-11eb-9ab8-ed6991c93dcb.png" width=700 height=400/>
 
