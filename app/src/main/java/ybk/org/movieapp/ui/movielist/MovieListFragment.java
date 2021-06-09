@@ -50,7 +50,6 @@ public class MovieListFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        //viewModel = new ViewModelProvider(this, viewModelFactory).get(MovieListViewModel.class);
         binding = DataBindingUtil.inflate(inflater,
                 R.layout.fragment_movie_list, container, false);
         binding.setFragment(this);

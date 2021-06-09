@@ -7,7 +7,7 @@ import ybk.org.movieapp.ui.movieapi.MovieApiFragment;
 public interface MovieApiComponent {
     @Subcomponent.Factory
     interface Factory {
-        public MovieApiComponent create();
+        MovieApiComponent create();
     }
 
     MovieApiFragment inject(MovieApiFragment fragment);

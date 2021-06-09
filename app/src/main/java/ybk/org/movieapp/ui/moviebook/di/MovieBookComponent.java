@@ -7,7 +7,7 @@ import ybk.org.movieapp.ui.moviebook.MovieBookFragment;
 public interface MovieBookComponent {
     @Subcomponent.Factory
     interface Factory {
-        public MovieBookComponent create();
+        MovieBookComponent create();
     }
 
     MovieBookFragment inject(MovieBookFragment fragment);

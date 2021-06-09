@@ -10,15 +10,15 @@ import ybk.org.movieapp.data.local.entity.Response;
 import ybk.org.movieapp.util.Dlog;
 
 public interface RemoteDataSource {
-    public Single<MovieResponse> getMovieList();
+    Single<MovieResponse> getMovieList();
 
-    public Single<DetailMovieResponse> getDetailMovie(final int id);
+    Single<DetailMovieResponse> getDetailMovie(final int id);
 
-    public Single<CommentResponse> getCommentList(final int id);
+    Single<CommentResponse> getCommentList(final int id);
 
-    public Single<Response> addComment(HashMap<String, Object> comment);
+    Single<Response> addComment(HashMap<String, Object> comment);
 
-    public Single<Response> addLikeDisLike(HashMap<String, Object> count);
+    Single<Response> addLikeDisLike(HashMap<String, Object> count);
 
-    public Single<Response> recommendComment(HashMap<String, Object> recommend);
+    Single<Response> recommendComment(HashMap<String, Object> recommend);
 }

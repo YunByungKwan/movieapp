@@ -7,7 +7,7 @@ import ybk.org.movieapp.ui.movielist.MovieListFragment;
 public interface MovieListComponent {
     @Subcomponent.Factory
     interface Factory {
-        public MovieListComponent create();
+        MovieListComponent create();
     }
 
     MovieListFragment inject(MovieListFragment fragment);

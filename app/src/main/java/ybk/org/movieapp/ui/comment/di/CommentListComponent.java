@@ -7,7 +7,7 @@ import ybk.org.movieapp.ui.comment.CommentListActivity;
 public interface CommentListComponent {
     @Subcomponent.Factory
     interface Factory {
-        public CommentListComponent create();
+        CommentListComponent create();
     }
 
     CommentListActivity inject(CommentListActivity activity);

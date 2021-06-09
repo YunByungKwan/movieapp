@@ -14,6 +14,8 @@ import ybk.org.movieapp.ui.movieapi.di.MovieApiComponent;
 import ybk.org.movieapp.ui.moviebook.di.MovieBookComponent;
 import ybk.org.movieapp.ui.moviedetail.di.MovieDetailComponent;
 import ybk.org.movieapp.ui.movielist.di.MovieListComponent;
+import ybk.org.movieapp.ui.usersettings.di.UserSettingsComponent;
+import ybk.org.movieapp.ui.usersettings.di.UserSettingsModule;
 import ybk.org.movieapp.util.App;
 
 @Singleton
@@ -37,6 +39,7 @@ public interface AppComponent extends AndroidInjector<App> {
     MovieListComponent.Factory movieListComponent();
     MovieApiComponent.Factory movieApiComponent();
     MovieBookComponent.Factory movieBookComponent();
+    UserSettingsComponent.Factory userSettingsComponent();
 }
 
 @Module(subcomponents = {
@@ -44,7 +47,8 @@ public interface AppComponent extends AndroidInjector<App> {
         MovieDetailComponent.class,
         MovieListComponent.class,
         MovieApiComponent.class,
-        MovieBookComponent.class
+        MovieBookComponent.class,
+        UserSettingsComponent.class
 })
 class SubcomponentsModule{}
 

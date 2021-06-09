@@ -25,7 +25,6 @@ public interface ApiService {
     Single<CommentResponse> getCommentList(@Query("id") int id);
 
     @FormUrlEncoded
-
     @POST("/movie/createComment")
     Single<Response> addComment(@FieldMap HashMap<String, Object> param);
 

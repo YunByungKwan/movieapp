@@ -76,13 +76,14 @@ public class MovieDetailFragment extends Fragment {
             @NonNull LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
         setBasicMovieInfoFromBundle();
-//        viewModel = new ViewModelProvider(
-//                this,viewModelFactory).get(MovieDetailViewModel.class);
         binding = DataBindingUtil.inflate(inflater,
                 R.layout.fragment_movie_detail, container, false);
         binding.setFragment(this);
         binding.setViewmodel(viewModel);
         binding.setLifecycleOwner(getViewLifecycleOwner());
+
+        viewModel.getDetailMovie(id);
+        viewModel.getCommentList(id);
 
         viewModel.detailMovie.observe(getViewLifecycleOwner(), detailMovie -> {
             movieItem = detailMovie;

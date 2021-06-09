@@ -31,14 +31,10 @@ public class MovieDetailViewModel extends BaseViewModel {
 
     public MutableLiveData<List<Comment>> commentList = new MutableLiveData<>();
     private MovieRepositoryImpl repository;
-    private int movieId;
 
     @Inject
     public MovieDetailViewModel(MovieRepositoryImpl repository) {
         this.repository = repository;
-        this.movieId = App.getInstance().movieId;
-        getDetailMovie(movieId);
-        getCommentList(movieId);
     }
 
     public void getDetailMovie(int movieId) {
