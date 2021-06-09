@@ -1,11 +1,14 @@
 package ybk.org.movieapp.ui.moviedetail;
 
 import androidx.databinding.DataBindingUtil;
+
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -38,12 +41,15 @@ import ybk.org.movieapp.util.Dlog;
 import ybk.org.movieapp.util.Network;
 import ybk.org.movieapp.util.Utils;
 
-public class MovieDetailFragment extends DaggerFragment {
+public class MovieDetailFragment extends Fragment {
 
     @Inject
     public ViewModelProvider.Factory viewModelFactory;
+
+    @Inject
+    public MovieDetailViewModel viewModel;
+
     private FragmentMovieDetailBinding binding;
-    private MovieDetailViewModel viewModel;
     private List<DetailMovie> movieItem;
     private List<Comment> commentList;
     private GalleryAdapter galleryAdapter;
@@ -58,12 +64,20 @@ public class MovieDetailFragment extends DaggerFragment {
     public int dislikeCount;
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        App.getInstance().appComponent()
+                .movieDetailComponent().create().inject(this);
+    }
+
+    @Override
     public View onCreateView(
             @NonNull LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
         setBasicMovieInfoFromBundle();
-        viewModel = new ViewModelProvider(
-                this,viewModelFactory).get(MovieDetailViewModel.class);
+//        viewModel = new ViewModelProvider(
+//                this,viewModelFactory).get(MovieDetailViewModel.class);
         binding = DataBindingUtil.inflate(inflater,
                 R.layout.fragment_movie_detail, container, false);
         binding.setFragment(this);

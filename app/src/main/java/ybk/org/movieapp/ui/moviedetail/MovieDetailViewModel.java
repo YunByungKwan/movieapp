@@ -34,9 +34,7 @@ public class MovieDetailViewModel extends BaseViewModel {
     private int movieId;
 
     @Inject
-    public MovieDetailViewModel(
-            MovieRepositoryImpl repository
-    ) {
+    public MovieDetailViewModel(MovieRepositoryImpl repository) {
         this.repository = repository;
         this.movieId = App.getInstance().movieId;
         getDetailMovie(movieId);

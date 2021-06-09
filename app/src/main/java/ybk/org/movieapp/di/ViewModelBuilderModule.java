@@ -6,7 +6,7 @@ import dagger.Binds;
 import dagger.Module;
 
 @Module
-public abstract class ViewModelBuilder {
+public abstract class ViewModelBuilderModule {
     @Binds
     abstract ViewModelProvider.Factory bindViewModelFactory(
             ViewModelFactory factory

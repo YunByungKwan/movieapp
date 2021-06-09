@@ -1,47 +1,56 @@
 package ybk.org.movieapp.ui.movielist;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import dagger.android.support.DaggerFragment;
-import ybk.org.movieapp.adapter.MoviePagerAdapter;
-import ybk.org.movieapp.ui.main.MovieListActivity;
-import ybk.org.movieapp.data.MovieRepositoryImpl;
-import ybk.org.movieapp.data.local.entity.Movie;
 import ybk.org.movieapp.R;
+import ybk.org.movieapp.adapter.MoviePagerAdapter;
+import ybk.org.movieapp.data.local.entity.Movie;
 import ybk.org.movieapp.databinding.FragmentMovieListBinding;
+import ybk.org.movieapp.ui.main.MovieListActivity;
+import ybk.org.movieapp.util.App;
 import ybk.org.movieapp.util.Constants;
 import ybk.org.movieapp.util.Dlog;
 import ybk.org.movieapp.util.Network;
 import ybk.org.movieapp.util.Utils;
 
-public class MovieListFragment extends DaggerFragment {
+public class MovieListFragment extends Fragment {
 
     @Inject
     public ViewModelProvider.Factory viewModelFactory;
 
-    private FragmentMovieListBinding binding;
+    @Inject
     public MovieListViewModel viewModel;
+
+    private FragmentMovieListBinding binding;
     private List<Movie> movieList = new ArrayList<>();
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        App.getInstance().appComponent()
+                .movieListComponent().create().inject(this);
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        viewModel = new ViewModelProvider(this, viewModelFactory).get(MovieListViewModel.class);
+        //viewModel = new ViewModelProvider(this, viewModelFactory).get(MovieListViewModel.class);
         binding = DataBindingUtil.inflate(inflater,
                 R.layout.fragment_movie_list, container, false);
         binding.setFragment(this);

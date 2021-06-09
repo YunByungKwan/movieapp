@@ -1,4 +1,4 @@
-package ybk.org.movieapp.di.module;
+package ybk.org.movieapp.di;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -6,15 +6,15 @@ import java.lang.annotation.RetentionPolicy;
 import javax.inject.Qualifier;
 import javax.inject.Singleton;
 
+import dagger.Binds;
 import dagger.Module;
-import dagger.Provides;
-import ybk.org.movieapp.data.local.DataSource;
 import ybk.org.movieapp.data.local.LocalDataSource;
+import ybk.org.movieapp.data.local.LocalDataSourceImpl;
 import ybk.org.movieapp.data.remote.RemoteDataSource;
-import ybk.org.movieapp.di.ApplicationModuleBinds;
+import ybk.org.movieapp.data.remote.RemoteDataSourceImpl;
 
-@Module(includes = {ApplicationModuleBinds.class})
-public class ApplicationModule {
+@Module
+public abstract class ApplicationModule {
     @Qualifier
     @Retention(RetentionPolicy.RUNTIME)
     public @interface MovieRemoteDataSource {}
@@ -25,15 +25,15 @@ public class ApplicationModule {
 
     @Singleton
     @MovieRemoteDataSource
-    @Provides
-    public DataSource provideTasksRemoteDataSource() {
-        return new RemoteDataSource();
-    }
+    @Binds
+    abstract public RemoteDataSource bindMovieRemoteDataSource(
+            RemoteDataSourceImpl remoteDataSource
+    );
 
     @Singleton
     @MovieLocalDataSource
-    @Provides
-    public DataSource provideTasksLocalDataSource() {
-        return new LocalDataSource();
-    }
+    @Binds
+    abstract public LocalDataSource bindMovieLocalDataSource(
+            LocalDataSourceImpl localDataSource
+    );
 }

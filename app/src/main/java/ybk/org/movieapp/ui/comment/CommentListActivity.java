@@ -31,11 +31,13 @@ import ybk.org.movieapp.util.Dlog;
 import ybk.org.movieapp.util.Network;
 import ybk.org.movieapp.util.Utils;
 
-public class CommentListActivity extends DaggerAppCompatActivity {
+public class CommentListActivity extends AppCompatActivity {
 
     @Inject
     public ViewModelProvider.Factory viewModelFactory;
-    private CommentListViewModel viewModel;
+
+    @Inject
+    public CommentListViewModel viewModel;
 
     private ActivityCommentListBinding binding;
     private CommentAdapter adapter;
@@ -46,8 +48,10 @@ public class CommentListActivity extends DaggerAppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        App.getInstance().appComponent()
+                .commentListComponent().create().inject(this);
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(this, viewModelFactory).get(CommentListViewModel.class);
+        // viewModel = new ViewModelProvider(this, viewModelFactory).get(CommentListViewModel.class);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_comment_list);
         binding.setActivity(this);
 

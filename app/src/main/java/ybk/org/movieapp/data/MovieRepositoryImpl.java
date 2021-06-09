@@ -15,6 +15,7 @@ import ybk.org.movieapp.data.local.entity.Movie;
 import ybk.org.movieapp.data.local.entity.MovieResponse;
 import ybk.org.movieapp.data.local.entity.Response;
 import ybk.org.movieapp.data.remote.RemoteDataSource;
+import ybk.org.movieapp.di.ApplicationModule;
 import ybk.org.movieapp.util.Dlog;
 import ybk.org.movieapp.util.Network;
 
@@ -26,12 +27,13 @@ public class MovieRepositoryImpl implements MovieRepository {
 
     @Inject
     public MovieRepositoryImpl(
-            LocalDataSource localDataSource,
-            RemoteDataSource remoteDataSource) {
+            @ApplicationModule.MovieLocalDataSource LocalDataSource localDataSource,
+            @ApplicationModule.MovieRemoteDataSource RemoteDataSource remoteDataSource) {
         this.localDataSource = localDataSource;
         this.remoteDataSource = remoteDataSource;
     }
 
+    @Override
     public Single<MovieResponse> getMovieList() {
         Dlog.d("=========> [" + CLASS_NAME + "] Call getMovieList()");
         if(Network.isConnected()) {
@@ -41,6 +43,7 @@ public class MovieRepositoryImpl implements MovieRepository {
         }
     }
 
+    @Override
     public Single<DetailMovieResponse> getDetailMovie(final int id) {
         Dlog.d("=========> [" + CLASS_NAME + "] Call getMovieList()");
         if(Network.isConnected()) {
@@ -50,6 +53,7 @@ public class MovieRepositoryImpl implements MovieRepository {
         }
     }
 
+    @Override
     public Single<CommentResponse> getCommentList(int id) {
         Dlog.d("=========> [" + CLASS_NAME + "] Call getCommentList()");
         if(Network.isConnected()) {
@@ -59,21 +63,25 @@ public class MovieRepositoryImpl implements MovieRepository {
         }
     }
 
+    @Override
     public void insertMovieListToRoom(List<Movie> movieList) {
         Dlog.d("=========> [" + CLASS_NAME + "] Call insertMovieListToRoom()");
         localDataSource.insertMovieList(movieList);
     }
 
+    @Override
     public void insertDetailMovieToRoom(List<DetailMovie> detailMovieList) {
         Dlog.d("=========> [" + CLASS_NAME + "] Call insertDetailMovieToRoom()");
         localDataSource.insertDetailMovie(detailMovieList);
     }
 
+    @Override
     public void insertCommentListToRoom(List<Comment> commentList) {
         Dlog.d("=========> [" + CLASS_NAME + "] Call insertDetailMovieToRoom()");
         localDataSource.insertCommentList(commentList);
     }
 
+    @Override
     public Single<Response> addComment(HashMap<String, Object> comment) {
         Dlog.d("=========> [" + CLASS_NAME + "] Call addComment()");
         if(Network.isConnected()) {
@@ -88,6 +96,7 @@ public class MovieRepositoryImpl implements MovieRepository {
         }
     }
 
+    @Override
     public Single<Response> addLikeDisLike(HashMap<String, Object> count) {
         Dlog.d("=========> [" + CLASS_NAME + "] Call addLikeDisLike()");
         if(Network.isConnected()) {
@@ -102,6 +111,7 @@ public class MovieRepositoryImpl implements MovieRepository {
         }
     }
 
+    @Override
     public Single<Response> recommendComment(HashMap<String, Object> recommend) {
         Dlog.d("=========> [" + CLASS_NAME + "] Call recommendComment()");
         if(Network.isConnected()) {
