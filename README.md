@@ -18,8 +18,7 @@
  <img src="https://user-images.githubusercontent.com/51109517/114910106-77412200-9e58-11eb-86b3-f78ec8b03ea8.gif" width=200 height=400/> <img src="https://user-images.githubusercontent.com/51109517/114910698-2aaa1680-9e59-11eb-9f7d-7e0237ff6a50.gif" width=200 height=400/>
   
 ### Architecture
-<img src="https://user-images.githubusercontent.com/51109517/119027411-4026d900-b9e1-11eb-92e2-d01a7c324545.png" width=700 height=400/>
+<img src="https://user-images.githubusercontent.com/51109517/121562864-d71d0900-ca54-11eb-9359-5bc34a63659c.png" width=700 height=400/>
 
 ### Dagger Graph
-<img src="https://user-images.githubusercontent.com/51109517/121364649-f17eb600-c972-11eb-9ab8-ed6991c93dcb.png" width=700 height=400/>
-
+<img src="https://user-images.githubusercontent.com/51109517/121562859-d5ebdc00-ca54-11eb-8345-ac52c640e80a.png" width=700 height=400/>
