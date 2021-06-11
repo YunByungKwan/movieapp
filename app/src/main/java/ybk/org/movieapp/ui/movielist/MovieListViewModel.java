@@ -29,7 +29,7 @@ public class MovieListViewModel extends BaseViewModel {
     @Inject
     public MovieListViewModel(MovieRepository repository) {
         this.repository = repository;
-        getMovieList();
+        //getMovieList();
     }
 
     public void getMovieList() {
@@ -39,20 +39,20 @@ public class MovieListViewModel extends BaseViewModel {
                 .subscribe(new SingleObserver<MovieResponse>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        Dlog.d("=========> onSubscribe()");
+                        //Dlog.d("=========> onSubscribe()");
                     }
 
                     @Override
                     public void onSuccess(@NonNull MovieResponse movieResponse) {
-                        Dlog.d("=========> onSuccess()");
+                        //Dlog.d("=========> onSuccess()");
                         _movieList.postValue(movieResponse.getResult());
                         repository.insertMovieListToRoom(movieResponse.getResult());
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Dlog.e("=========> onError()");
-                        Dlog.e("=========> " + e.getMessage());
+                        //Dlog.e("=========> onError()");
+                        //Dlog.e("=========> " + e.getMessage());
                     }
                 });
     }

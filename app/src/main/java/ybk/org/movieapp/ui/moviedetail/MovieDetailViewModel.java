@@ -45,20 +45,16 @@ public class MovieDetailViewModel extends BaseViewModel {
                 new SingleObserver<DetailMovieResponse>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        Dlog.d("=========> onSubscribe()");
                     }
 
                     @Override
                     public void onSuccess(@NonNull DetailMovieResponse detailMovieResponse) {
-                        Dlog.d("=========> onSuccess()");
                         _detailMovie.postValue(detailMovieResponse.getResult());
                         repository.insertDetailMovieToRoom(detailMovieResponse.getResult());
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Dlog.e("=========> onError()");
-                        Dlog.e("=========> " + e.getMessage());
                     }
                 }
         );
@@ -72,12 +68,10 @@ public class MovieDetailViewModel extends BaseViewModel {
                         new SingleObserver<CommentResponse>() {
                             @Override
                             public void onSubscribe(@NonNull Disposable d) {
-                                Dlog.d("=========> onSubscribe()");
                             }
 
                             @Override
                             public void onSuccess(@NonNull CommentResponse commentResponse) {
-                                Dlog.d("=========> onSuccess()");
                                 List<Comment> _commentList = commentResponse.getResult();
                                 commentList.postValue(_commentList);
                                 repository.insertCommentListToRoom(_commentList);
@@ -85,8 +79,6 @@ public class MovieDetailViewModel extends BaseViewModel {
 
                             @Override
                             public void onError(@NonNull Throwable e) {
-                                Dlog.e("=========> onError()");
-                                Dlog.e("=========> " + e.getMessage());
                             }
                         }
                 );
@@ -100,19 +92,14 @@ public class MovieDetailViewModel extends BaseViewModel {
                         new SingleObserver<Response>() {
                             @Override
                             public void onSubscribe(@NonNull Disposable d) {
-                                Dlog.d("=========> onSubscribe()");
                             }
 
                             @Override
                             public void onSuccess(@NonNull Response response) {
-                                Dlog.d("=========> onSuccess()");
-                                Dlog.d("=========> Response: " + response.toString());
                             }
 
                             @Override
                             public void onError(@NonNull Throwable e) {
-                                Dlog.e("=========> onError()");
-                                Dlog.e("=========> " + e.getMessage());
                             }
                         }
                 );
@@ -126,19 +113,14 @@ public class MovieDetailViewModel extends BaseViewModel {
                         new SingleObserver<Response>() {
                             @Override
                             public void onSubscribe(@NonNull Disposable d) {
-                                Dlog.d("=========> onSubscribe()");
                             }
 
                             @Override
                             public void onSuccess(@NonNull Response response) {
-                                Dlog.d("=========> onSuccess()");
-                                Dlog.d("=========> Response:  " + response.toString());
                             }
 
                             @Override
                             public void onError(@NonNull Throwable e) {
-                                Dlog.e("=========> onError()");
-                                Dlog.e("=========> " + e.getMessage());
                             }
                         }
                 );
@@ -152,19 +134,14 @@ public class MovieDetailViewModel extends BaseViewModel {
                         new SingleObserver<Response>() {
                             @Override
                             public void onSubscribe(@NonNull Disposable d) {
-                                Dlog.d("=========> onSubscribe()");
                             }
 
                             @Override
                             public void onSuccess(@NonNull Response response) {
-                                Dlog.d("=========> onSuccess()");
-                                Dlog.d("=========> Response:  " + response.toString());
                             }
 
                             @Override
                             public void onError(@NonNull Throwable e) {
-                                Dlog.e("=========> onError()");
-                                Dlog.e("=========> " + e.getMessage());
                             }
                         }
                 );
