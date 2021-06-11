@@ -8,6 +8,7 @@
 <br>
   
 ### :fire: TroubleShooting
+- [[21.06.11] Unit Test 추가](https://github.com/YunByungKwan/movieapp/wiki/%5B21.06.11%5D-Unit-Test-%EC%B6%94%EA%B0%80)
 - [[21.06.09] Dagger 적용](https://github.com/YunByungKwan/movieapp/wiki/%5B21.06.09%5D-Dagger-%EC%A0%81%EC%9A%A9)
 - [[1~8단계] 코드 리뷰를 통해 배운 점들](https://github.com/YunByungKwan/movieapp/wiki/%5B1~8%EB%8B%A8%EA%B3%84%5D-%EC%BD%94%EB%93%9C-%EB%A6%AC%EB%B7%B0%EB%A5%BC-%ED%86%B5%ED%95%B4-%EB%B0%B0%EC%9A%B4-%EC%A0%90%EB%93%A4)
 <br>
