@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import javax.inject.Inject;
 
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import ybk.org.movieapp.data.local.entity.CommentResponse;
 import ybk.org.movieapp.data.local.entity.DetailMovieResponse;
@@ -40,19 +41,19 @@ public class RemoteDataSourceImpl implements RemoteDataSource {
     }
 
     @Override
-    public Single<Response> addComment(HashMap<String, Object> comment) {
+    public Completable addComment(HashMap<String, Object> comment) {
         Dlog.d("=========> [" + CLASS_NAME + "] Call addComment()");
         return apiService.addComment(comment);
     }
 
     @Override
-    public Single<Response> addLikeDisLike(HashMap<String, Object> count) {
+    public Completable addLikeDisLike(HashMap<String, Object> count) {
         Dlog.d("=========> [" + CLASS_NAME + "] Call addLikeDisLike()");
         return apiService.addLikeDisLike(count);
     }
 
     @Override
-    public Single<Response> recommendComment(HashMap<String, Object> recommend) {
+    public Completable recommendComment(HashMap<String, Object> recommend) {
         Dlog.d("=========> [" + CLASS_NAME + "] Call recommendComment()");
         return apiService.recommendComment(recommend);
     }

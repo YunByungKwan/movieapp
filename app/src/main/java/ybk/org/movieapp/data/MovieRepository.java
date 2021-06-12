@@ -3,6 +3,7 @@ package ybk.org.movieapp.data;
 import java.util.HashMap;
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import ybk.org.movieapp.data.local.entity.Comment;
 import ybk.org.movieapp.data.local.entity.CommentResponse;
@@ -19,15 +20,15 @@ public interface MovieRepository {
 
     Single<CommentResponse> getCommentList(int id);
 
-    void insertMovieListToRoom(List<Movie> movieList);
+    Completable insertMovieListToRoom(List<Movie> movieList);
 
-    void insertDetailMovieToRoom(List<DetailMovie> detailMovieList);
+    Completable insertDetailMovieToRoom(List<DetailMovie> detailMovieList);
 
-    void insertCommentListToRoom(List<Comment> commentList);
+    Completable insertCommentListToRoom(List<Comment> commentList);
 
-    Single<Response> addComment(HashMap<String, Object> comment);
+    Completable addComment(HashMap<String, Object> comment);
 
-    Single<Response> addLikeDisLike(HashMap<String, Object> count);
+    Completable addLikeDisLike(HashMap<String, Object> count);
 
-    Single<Response> recommendComment(HashMap<String, Object> recommend);
+    Completable recommendComment(HashMap<String, Object> recommend);
 }

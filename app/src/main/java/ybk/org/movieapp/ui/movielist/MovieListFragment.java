@@ -54,6 +54,7 @@ public class MovieListFragment extends Fragment {
                 R.layout.fragment_movie_list, container, false);
         binding.setFragment(this);
         binding.setViewmodel(viewModel);
+        viewModel.getMovieList();
 
         viewModel.movieList.observe(getViewLifecycleOwner(), _movieList -> {
             movieList = _movieList;

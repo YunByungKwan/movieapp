@@ -7,6 +7,8 @@ import java.util.concurrent.Executors;
 
 import javax.inject.Inject;
 
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Maybe;
 import io.reactivex.rxjava3.core.Single;
 import ybk.org.movieapp.data.local.db.MovieDatabase;
 import ybk.org.movieapp.data.local.entity.Comment;
@@ -53,17 +55,17 @@ public class LocalDataSourceImpl implements LocalDataSource {
     }
 
     @Override
-    public Single<Response> addComment(HashMap<String, Object> comment) {
+    public Maybe addComment(HashMap<String, Object> comment) {
         return null;
     }
 
     @Override
-    public Single<Response> addLikeDisLike(HashMap<String, Object> count) {
+    public Maybe addLikeDisLike(HashMap<String, Object> count) {
         return null;
     }
 
     @Override
-    public Single<Response> recommendComment(HashMap<String, Object> recommend) {
+    public Maybe recommendComment(HashMap<String, Object> recommend) {
         return null;
     }
 

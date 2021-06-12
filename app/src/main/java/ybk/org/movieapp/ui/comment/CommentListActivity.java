@@ -55,6 +55,8 @@ public class CommentListActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_comment_list);
         binding.setActivity(this);
 
+        viewModel.getCommentList(App.getInstance().movieId);
+
         Toolbar mToolbar = findViewById(R.id.tb_back);
         mToolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(mToolbar);

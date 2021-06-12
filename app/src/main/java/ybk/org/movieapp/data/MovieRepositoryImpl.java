@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import ybk.org.movieapp.data.local.LocalDataSource;
 import ybk.org.movieapp.data.local.entity.Comment;
@@ -64,65 +65,53 @@ public class MovieRepositoryImpl implements MovieRepository {
     }
 
     @Override
-    public void insertMovieListToRoom(List<Movie> movieList) {
+    public Completable insertMovieListToRoom(List<Movie> movieList) {
         Dlog.d("=========> [" + CLASS_NAME + "] Call insertMovieListToRoom()");
         localDataSource.insertMovieList(movieList);
+        return Completable.complete();
     }
 
     @Override
-    public void insertDetailMovieToRoom(List<DetailMovie> detailMovieList) {
+    public Completable insertDetailMovieToRoom(List<DetailMovie> detailMovieList) {
         Dlog.d("=========> [" + CLASS_NAME + "] Call insertDetailMovieToRoom()");
         localDataSource.insertDetailMovie(detailMovieList);
+        return Completable.complete();
     }
 
     @Override
-    public void insertCommentListToRoom(List<Comment> commentList) {
+    public Completable insertCommentListToRoom(List<Comment> commentList) {
         Dlog.d("=========> [" + CLASS_NAME + "] Call insertDetailMovieToRoom()");
         localDataSource.insertCommentList(commentList);
+        return Completable.complete();
     }
 
     @Override
-    public Single<Response> addComment(HashMap<String, Object> comment) {
+    public Completable addComment(HashMap<String, Object> comment) {
         Dlog.d("=========> [" + CLASS_NAME + "] Call addComment()");
         if(Network.isConnected()) {
             return remoteDataSource.addComment(comment);
         } else {
-            Response result = new Response();
-            result.setMessage("movie createComment 실패");
-            result.setCode(400);
-            result.setResultType("string");
-            result.setResult("네트워크 연결이 필요합니다.");
-            return Single.just(result);
+            return Completable.error(Throwable::new);
         }
     }
 
     @Override
-    public Single<Response> addLikeDisLike(HashMap<String, Object> count) {
+    public Completable addLikeDisLike(HashMap<String, Object> count) {
         Dlog.d("=========> [" + CLASS_NAME + "] Call addLikeDisLike()");
         if(Network.isConnected()) {
             return remoteDataSource.addLikeDisLike(count);
         } else {
-            Response result = new Response();
-            result.setMessage("movie addLikeDisLike 실패");
-            result.setCode(400);
-            result.setResultType("string");
-            result.setResult("네트워크 연결이 필요합니다.");
-            return Single.just(result);
+            return Completable.error(Throwable::new);
         }
     }
 
     @Override
-    public Single<Response> recommendComment(HashMap<String, Object> recommend) {
+    public Completable recommendComment(HashMap<String, Object> recommend) {
         Dlog.d("=========> [" + CLASS_NAME + "] Call recommendComment()");
         if(Network.isConnected()) {
             return remoteDataSource.recommendComment(recommend);
         } else {
-            Response result = new Response();
-            result.setMessage("movie recommendComment 실패");
-            result.setCode(400);
-            result.setResultType("string");
-            result.setResult("네트워크 연결이 필요합니다.");
-            return Single.just(result);
+            return Completable.error(Throwable::new);
         }
     }
 }

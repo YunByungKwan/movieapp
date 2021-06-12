@@ -3,6 +3,8 @@ package ybk.org.movieapp.data.local;
 import java.util.HashMap;
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Maybe;
 import io.reactivex.rxjava3.core.Single;
 import ybk.org.movieapp.data.local.entity.Comment;
 import ybk.org.movieapp.data.local.entity.CommentResponse;
@@ -21,11 +23,11 @@ public interface LocalDataSource {
 
     Single<CommentResponse> getCommentList(int id);
 
-    Single<Response> addComment(HashMap<String, Object> comment);
+    Maybe addComment(HashMap<String, Object> comment);
 
-    Single<Response> addLikeDisLike(HashMap<String, Object> count);
+    Maybe addLikeDisLike(HashMap<String, Object> count);
 
-    Single<Response> recommendComment(HashMap<String, Object> recommend);
+    Maybe recommendComment(HashMap<String, Object> recommend);
 
     void insertMovieList(List<Movie> movieList);
 

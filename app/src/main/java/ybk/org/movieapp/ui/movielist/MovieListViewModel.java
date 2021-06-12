@@ -29,7 +29,6 @@ public class MovieListViewModel extends BaseViewModel {
     @Inject
     public MovieListViewModel(MovieRepository repository) {
         this.repository = repository;
-        //getMovieList();
     }
 
     public void getMovieList() {
@@ -45,7 +44,7 @@ public class MovieListViewModel extends BaseViewModel {
                     @Override
                     public void onSuccess(@NonNull MovieResponse movieResponse) {
                         //Dlog.d("=========> onSuccess()");
-                        _movieList.postValue(movieResponse.getResult());
+                        _movieList.setValue(movieResponse.getResult());
                         repository.insertMovieListToRoom(movieResponse.getResult());
                     }
 

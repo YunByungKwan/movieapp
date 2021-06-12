@@ -26,13 +26,13 @@ public class CommentListViewModel extends BaseViewModel {
 
     public MutableLiveData<List<Comment>> commentList = new MutableLiveData<>();
     private MovieRepositoryImpl repository;
-    private int id;
+    // private int id;
 
     @Inject
     public CommentListViewModel(MovieRepositoryImpl repository) {
         this.repository = repository;
-        id = App.getInstance().movieId;
-        getCommentList(id);
+        //id = App.getInstance().movieId;
+        //getCommentList(id);
     }
 
     public void getCommentList(int id) {
@@ -43,12 +43,12 @@ public class CommentListViewModel extends BaseViewModel {
                         new SingleObserver<CommentResponse>() {
                             @Override
                             public void onSubscribe(@NonNull Disposable d) {
-                                Dlog.d("=========> onSubscribe()");
+                                //Dlog.d("=========> onSubscribe()");
                             }
 
                             @Override
                             public void onSuccess(@NonNull CommentResponse commentResponse) {
-                                Dlog.d("=========> onSuccess()");
+                                //Dlog.d("=========> onSuccess()");
                                 List<Comment> _commentList = commentResponse.getResult();
                                 commentList.postValue(_commentList);
                                 repository.insertCommentListToRoom(_commentList);
@@ -56,8 +56,8 @@ public class CommentListViewModel extends BaseViewModel {
 
                             @Override
                             public void onError(@NonNull Throwable e) {
-                                Dlog.e("=========> onError()");
-                                Dlog.e("=========> " + e.getMessage());
+                                //Dlog.e("=========> onError()");
+                                //Dlog.e("=========> " + e.getMessage());
                             }
                         }
                 );
@@ -67,51 +67,13 @@ public class CommentListViewModel extends BaseViewModel {
         repository.addComment(comment)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(
-                new SingleObserver<Response>() {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
-                        Dlog.d("=========> onSubscribe()");
-                    }
-
-                    @Override
-                    public void onSuccess(@NonNull Response response) {
-                        Dlog.d("=========> onSuccess()");
-                        Dlog.d("=========> Response:  " + response.toString());
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        Dlog.e("=========> onError()");
-                        Dlog.e("=========> " + e.getMessage());
-                    }
-                }
-        );
+        .subscribe();
     }
 
     public void recommendComment(HashMap<String, Object> param) {
         repository.recommendComment(param)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        new SingleObserver<Response>() {
-                            @Override
-                            public void onSubscribe(@NonNull Disposable d) {
-                                Dlog.d("=========> onSubscribe()");
-                            }
-
-                            @Override
-                            public void onSuccess(@NonNull Response response) {
-                                Dlog.d("=========> onSuccess()");
-                                Dlog.d("=========> Response:  " + response.toString());
-                            }
-
-                            @Override
-                            public void onError(@NonNull Throwable e) {
-                                Dlog.e("=========> onError()");
-                                Dlog.e("=========> " + e.getMessage());
-                            }
-                        }
-                );
+                .subscribe();
     }
 }

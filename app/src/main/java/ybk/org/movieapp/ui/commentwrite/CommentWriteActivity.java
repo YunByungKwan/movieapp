@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 import ybk.org.movieapp.R;
 import ybk.org.movieapp.databinding.ActivityCommentWriteBinding;
+import ybk.org.movieapp.util.App;
 import ybk.org.movieapp.util.Constants;
 import ybk.org.movieapp.util.Utils;
 

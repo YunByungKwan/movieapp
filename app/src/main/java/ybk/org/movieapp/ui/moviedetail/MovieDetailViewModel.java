@@ -88,62 +88,20 @@ public class MovieDetailViewModel extends BaseViewModel {
         repository.addComment(comment)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        new SingleObserver<Response>() {
-                            @Override
-                            public void onSubscribe(@NonNull Disposable d) {
-                            }
-
-                            @Override
-                            public void onSuccess(@NonNull Response response) {
-                            }
-
-                            @Override
-                            public void onError(@NonNull Throwable e) {
-                            }
-                        }
-                );
+                .subscribe();
     }
 
     public void recommendComment(HashMap<String, Object> param) {
         repository.recommendComment(param)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        new SingleObserver<Response>() {
-                            @Override
-                            public void onSubscribe(@NonNull Disposable d) {
-                            }
-
-                            @Override
-                            public void onSuccess(@NonNull Response response) {
-                            }
-
-                            @Override
-                            public void onError(@NonNull Throwable e) {
-                            }
-                        }
-                );
+                .subscribe();
     }
 
     public void addLikeDisLike(HashMap<String, Object> param) {
         repository.addLikeDisLike(param)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        new SingleObserver<Response>() {
-                            @Override
-                            public void onSubscribe(@NonNull Disposable d) {
-                            }
-
-                            @Override
-                            public void onSuccess(@NonNull Response response) {
-                            }
-
-                            @Override
-                            public void onError(@NonNull Throwable e) {
-                            }
-                        }
-                );
+                .subscribe();
     }
 }

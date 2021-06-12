@@ -2,6 +2,7 @@ package ybk.org.movieapp.data.remote;
 
 import java.util.HashMap;
 
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
@@ -26,13 +27,13 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("/movie/createComment")
-    Single<Response> addComment(@FieldMap HashMap<String, Object> param);
+    Completable addComment(@FieldMap HashMap<String, Object> param);
 
     @FormUrlEncoded
     @POST("/movie/increaseLikeDisLike")
-    Single<Response> addLikeDisLike(@FieldMap HashMap<String, Object> param);
+    Completable addLikeDisLike(@FieldMap HashMap<String, Object> param);
 
     @FormUrlEncoded
     @POST("/movie/increaseRecommend")
-    Single<Response> recommendComment(@FieldMap HashMap<String, Object> param);
+    Completable recommendComment(@FieldMap HashMap<String, Object> param);
 }

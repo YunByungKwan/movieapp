@@ -10,6 +10,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.HashMap;
 
 import io.reactivex.rxjava3.android.plugins.RxAndroidPlugins;
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import ybk.org.movieapp.data.MovieRepositoryImpl;
@@ -50,11 +51,11 @@ public class MovieDetailViewModelTest {
         Mockito.when(repository.getCommentList(id))
                 .thenReturn(Single.just(commentRes));
         Mockito.when(repository.addComment(hashMap))
-                .thenReturn(Single.just(res));
+                .thenReturn(Completable.complete());
         Mockito.when(repository.recommendComment(hashMap))
-                .thenReturn(Single.just(res));
+                .thenReturn(Completable.complete());
         Mockito.when(repository.addLikeDisLike(hashMap))
-                .thenReturn(Single.just(res));
+                .thenReturn(Completable.complete());
     }
 
     @Test
@@ -127,7 +128,6 @@ public class MovieDetailViewModelTest {
         repository
                 .recommendComment(hashMap)
                 .test()
-                .assertValue(res)
                 .assertComplete()
                 .assertNoErrors();
     }
@@ -137,7 +137,6 @@ public class MovieDetailViewModelTest {
         repository
                 .addLikeDisLike(hashMap)
                 .test()
-                .assertValue(res)
                 .assertComplete()
                 .assertNoErrors();
     }
