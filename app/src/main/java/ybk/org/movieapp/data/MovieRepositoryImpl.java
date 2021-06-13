@@ -22,7 +22,6 @@ import ybk.org.movieapp.util.Network;
 
 public class MovieRepositoryImpl implements MovieRepository {
 
-    private final String CLASS_NAME = this.getClass().getName();
     private LocalDataSource localDataSource;
     private RemoteDataSource remoteDataSource;
 
@@ -36,7 +35,6 @@ public class MovieRepositoryImpl implements MovieRepository {
 
     @Override
     public Single<MovieResponse> getMovieList() {
-        Dlog.d("=========> [" + CLASS_NAME + "] Call getMovieList()");
         if(Network.isConnected()) {
             return remoteDataSource.getMovieList();
         } else {
@@ -46,7 +44,6 @@ public class MovieRepositoryImpl implements MovieRepository {
 
     @Override
     public Single<DetailMovieResponse> getDetailMovie(final int id) {
-        Dlog.d("=========> [" + CLASS_NAME + "] Call getMovieList()");
         if(Network.isConnected()) {
             return remoteDataSource.getDetailMovie(id);
         } else {
@@ -56,7 +53,6 @@ public class MovieRepositoryImpl implements MovieRepository {
 
     @Override
     public Single<CommentResponse> getCommentList(int id) {
-        Dlog.d("=========> [" + CLASS_NAME + "] Call getCommentList()");
         if(Network.isConnected()) {
             return remoteDataSource.getCommentList(id);
         } else {
@@ -66,52 +62,46 @@ public class MovieRepositoryImpl implements MovieRepository {
 
     @Override
     public Completable insertMovieListToRoom(List<Movie> movieList) {
-        Dlog.d("=========> [" + CLASS_NAME + "] Call insertMovieListToRoom()");
         localDataSource.insertMovieList(movieList);
         return Completable.complete();
     }
 
     @Override
     public Completable insertDetailMovieToRoom(List<DetailMovie> detailMovieList) {
-        Dlog.d("=========> [" + CLASS_NAME + "] Call insertDetailMovieToRoom()");
         localDataSource.insertDetailMovie(detailMovieList);
         return Completable.complete();
     }
 
     @Override
     public Completable insertCommentListToRoom(List<Comment> commentList) {
-        Dlog.d("=========> [" + CLASS_NAME + "] Call insertDetailMovieToRoom()");
         localDataSource.insertCommentList(commentList);
         return Completable.complete();
     }
 
     @Override
     public Completable addComment(HashMap<String, Object> comment) {
-        Dlog.d("=========> [" + CLASS_NAME + "] Call addComment()");
         if(Network.isConnected()) {
             return remoteDataSource.addComment(comment);
         } else {
-            return Completable.error(Throwable::new);
+            return Completable.error(RuntimeException::new);
         }
     }
 
     @Override
     public Completable addLikeDisLike(HashMap<String, Object> count) {
-        Dlog.d("=========> [" + CLASS_NAME + "] Call addLikeDisLike()");
         if(Network.isConnected()) {
             return remoteDataSource.addLikeDisLike(count);
         } else {
-            return Completable.error(Throwable::new);
+            return Completable.error(RuntimeException::new);
         }
     }
 
     @Override
     public Completable recommendComment(HashMap<String, Object> recommend) {
-        Dlog.d("=========> [" + CLASS_NAME + "] Call recommendComment()");
         if(Network.isConnected()) {
             return remoteDataSource.recommendComment(recommend);
         } else {
-            return Completable.error(Throwable::new);
+            return Completable.error(RuntimeException::new);
         }
     }
 }

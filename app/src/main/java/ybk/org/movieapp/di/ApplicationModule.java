@@ -8,8 +8,11 @@ import javax.inject.Singleton;
 
 import dagger.Binds;
 import dagger.Module;
+import dagger.Provides;
 import ybk.org.movieapp.data.local.LocalDataSource;
 import ybk.org.movieapp.data.local.LocalDataSourceImpl;
+import ybk.org.movieapp.data.local.dao.MovieDao;
+import ybk.org.movieapp.data.local.db.MovieDatabase;
 import ybk.org.movieapp.data.remote.RemoteDataSource;
 import ybk.org.movieapp.data.remote.RemoteDataSourceImpl;
 

@@ -24,6 +24,7 @@ import ybk.org.movieapp.util.App;
         ApplicationModuleBinds.class,
         ViewModelBuilderModule.class,
         NetworkModule.class,
+        DatabaseModule.class,
         AndroidSupportInjectionModule.class,
         SubcomponentsModule.class
 })

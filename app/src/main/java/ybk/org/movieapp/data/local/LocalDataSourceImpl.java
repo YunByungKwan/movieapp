@@ -26,29 +26,30 @@ import ybk.org.movieapp.util.Dlog;
  */
 public class LocalDataSourceImpl implements LocalDataSource {
 
-    private final String CLASS_NAME = this.getClass().getName();
-    private MovieDatabase database = MovieDatabase.getInstance(App.getInstance());
-    private ExecutorService executor = Executors.newFixedThreadPool(4);
+    private MovieDatabase database;
+    private ExecutorService executor;
 
     @Inject
-    public LocalDataSourceImpl() {}
+    public LocalDataSourceImpl(
+            MovieDatabase database,
+            ExecutorService executor) {
+        this.database = database;
+        this.executor = executor;
+    }
 
     public Single<MovieResponse> getMovieList() {
-        Dlog.d("=========> [" + CLASS_NAME + "] Call getMovieList()");
         MovieResponse res = new MovieResponse();
         res.setResult(database.movieDao().getMovieList());
         return Single.just(res);
     }
 
     public Single<DetailMovieResponse> getDetailMovie(int id) {
-        Dlog.d("=========> [" + CLASS_NAME + "] Call getDetailMovie()");
         DetailMovieResponse res = new DetailMovieResponse();
         res.setResult(database.detailMovieDao().getMovieInfo(id));
         return Single.just(res);
     }
 
     public Single<CommentResponse> getCommentList(int id) {
-        Dlog.d("=========> [" + CLASS_NAME + "] Call getCommentList()");
         CommentResponse res = new CommentResponse();
         res.setResult(database.commentDao().getCommentList(id));
         return Single.just(res);
@@ -70,7 +71,6 @@ public class LocalDataSourceImpl implements LocalDataSource {
     }
 
     public void insertMovieList(List<Movie> movieList) {
-        Dlog.d("=========> [" + CLASS_NAME + "] Call insertMovieList()");
         executor.execute(
                 () -> {
                     for(Movie movie : movieList) {
@@ -81,13 +81,11 @@ public class LocalDataSourceImpl implements LocalDataSource {
     }
 
     public void insertDetailMovie(List<DetailMovie> detailMovie) {
-        Dlog.d("=========> [" + CLASS_NAME + "] Call insertDetailMovie()");
         executor.execute(() -> database.detailMovieDao().insert(detailMovie)
         );
     }
 
     public void insertCommentList(List<Comment> commentList) {
-        Dlog.d("=========> [" + CLASS_NAME + "] Call insertMovieList()");
         executor.execute(() -> {
                     for(Comment comment: commentList) {
                         database.commentDao().insert(comment);

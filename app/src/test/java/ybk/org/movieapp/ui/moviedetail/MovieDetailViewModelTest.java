@@ -1,7 +1,11 @@
 package ybk.org.movieapp.ui.moviedetail;
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
+
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -21,82 +25,74 @@ import ybk.org.movieapp.data.local.entity.Response;
 @RunWith(MockitoJUnitRunner.class)
 public class MovieDetailViewModelTest {
 
+    @Rule
+    public TestRule rule = new InstantTaskExecutorRule();
+
     @Mock
-    public MovieRepositoryImpl repository;
+    private MovieRepositoryImpl repo;
 
-    public MovieDetailViewModel viewModel;
+    private MovieDetailViewModel vm;
 
-    public final int id = 0;
-    public DetailMovieResponse detailMovieRes;
-    public CommentResponse commentRes;
-    public Response res;
-    public HashMap<String, Object> hashMap;
+    private DetailMovieResponse detailMovieRes;
+    private CommentResponse commentRes;
+    private Response res;
+
+    private final int id = 0;
+    private HashMap<String, Object> param;
 
     @Before
     public void setUp() {
-        viewModel = new MovieDetailViewModel(repository);
-        RxAndroidPlugins.setInitMainThreadSchedulerHandler(__-> Schedulers.trampoline());
-
+        RxAndroidPlugins.setInitMainThreadSchedulerHandler(
+                __-> Schedulers.trampoline());
+        vm = new MovieDetailViewModel(repo);
         detailMovieRes = new DetailMovieResponse();
         commentRes = new CommentResponse();
         res = new Response();
-        hashMap = new HashMap<>();
-
+        param = new HashMap<>();
         mocking();
     }
 
     private void mocking() {
-        Mockito.when(repository.getDetailMovie(id))
-                .thenReturn(Single.just(detailMovieRes));
-        Mockito.when(repository.getCommentList(id))
-                .thenReturn(Single.just(commentRes));
-        Mockito.when(repository.addComment(hashMap))
-                .thenReturn(Completable.complete());
-        Mockito.when(repository.recommendComment(hashMap))
-                .thenReturn(Completable.complete());
-        Mockito.when(repository.addLikeDisLike(hashMap))
-                .thenReturn(Completable.complete());
+        Mockito.when(repo.getDetailMovie(id)).thenReturn(Single.just(detailMovieRes));
+        Mockito.when(repo.getCommentList(id)).thenReturn(Single.just(commentRes));
+        Mockito.when(repo.addComment(param)).thenReturn(Completable.complete());
+        Mockito.when(repo.recommendComment(param)).thenReturn(Completable.complete());
+        Mockito.when(repo.addLikeDisLike(param)).thenReturn(Completable.complete());
     }
 
     @Test
     public void testIfRepoGetDetailMovieIsCalled() {
-        viewModel.getDetailMovie(id);
-
-        Mockito.verify(repository).getDetailMovie(id);
+        vm.getDetailMovie(id);
+        Mockito.verify(repo).getDetailMovie(id);
     }
 
     @Test
     public void testIfRepoGetCommentListIsCalled() {
-        viewModel.getCommentList(id);
-
-        Mockito.verify(repository).getCommentList(id);
+        vm.getCommentList(id);
+        Mockito.verify(repo).getCommentList(id);
     }
 
     @Test
     public void testIfRepoAddCommentIsCalled() {
-        viewModel.addComment(hashMap);
-
-        Mockito.verify(repository).addComment(hashMap);
+        vm.addComment(param);
+        Mockito.verify(repo).addComment(param);
     }
 
     @Test
     public void testIfRepoRecommendCommentIsCalled() {
-        viewModel.recommendComment(hashMap);
-
-        Mockito.verify(repository).recommendComment(hashMap);
+        vm.recommendComment(param);
+        Mockito.verify(repo).recommendComment(param);
     }
 
     @Test
     public void testIfRepoAddLikeDisLikeIsCalled() {
-        viewModel.addLikeDisLike(hashMap);
-
-        Mockito.verify(repository).addLikeDisLike(hashMap);
+        vm.addLikeDisLike(param);
+        Mockito.verify(repo).addLikeDisLike(param);
     }
 
     @Test
     public void testRepoGetDetailMovie() {
-        repository
-                .getDetailMovie(id)
+        repo.getDetailMovie(id)
                 .test()
                 .assertValue(detailMovieRes)
                 .assertComplete()
@@ -105,8 +101,7 @@ public class MovieDetailViewModelTest {
 
     @Test
     public void testRepoGetCommentList() {
-        repository
-                .getCommentList(id)
+        repo.getCommentList(id)
                 .test()
                 .assertValue(commentRes)
                 .assertComplete()
@@ -115,18 +110,15 @@ public class MovieDetailViewModelTest {
 
     @Test
     public void testRepoAddComment() {
-        repository
-                .addComment(hashMap)
+        repo.addComment(param)
                 .test()
-                //.assertValue()
                 .assertComplete()
                 .assertNoErrors();
     }
 
     @Test
     public void testRepoRecommendComment() {
-        repository
-                .recommendComment(hashMap)
+        repo.recommendComment(param)
                 .test()
                 .assertComplete()
                 .assertNoErrors();
@@ -134,8 +126,7 @@ public class MovieDetailViewModelTest {
 
     @Test
     public void testRepoAddLikeDisLike() {
-        repository
-                .addLikeDisLike(hashMap)
+        repo.addLikeDisLike(param)
                 .test()
                 .assertComplete()
                 .assertNoErrors();

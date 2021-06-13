@@ -33,66 +33,56 @@ public class MovieListViewModelTest {
     public TestRule rule = new InstantTaskExecutorRule();
 
     @Mock
-    public MovieRepositoryImpl repository;
+    private MovieRepositoryImpl repo;
 
-    public MovieListViewModel viewModel;
+    private MovieListViewModel vm;
 
-    public MovieResponse response;
-    public List<Movie> movieList;
+    private MovieResponse movieRes;
+    private List<Movie> movieList;
 
     @Before
     public void setUp() {
-        viewModel = new MovieListViewModel(repository);
-        RxAndroidPlugins.setInitMainThreadSchedulerHandler(__->Schedulers.trampoline());
-
-        response = new MovieResponse();
+        RxAndroidPlugins.setInitMainThreadSchedulerHandler(
+                __->Schedulers.trampoline());
+        vm = new MovieListViewModel(repo);
+        movieRes = new MovieResponse();
         movieList = new ArrayList<>();
-        response.setResult(movieList);
-
+        movieRes.setResult(movieList);
         mocking();
     }
 
     private void mocking() {
-        Mockito.when(repository.getMovieList())
-                .thenReturn(Single.just(response));
+        Mockito.when(repo.getMovieList()).thenReturn(Single.just(movieRes));
     }
 
     @Test
     public void testIfLiveDataHasValue() throws InterruptedException {
-        viewModel.getMovieList();
-        TestUtil.getOrAwaitValue(viewModel.movieList);
-        assertThat(viewModel.movieList.getValue(), is(response.getResult()));
+        vm.getMovieList();
+        TestUtil.getOrAwaitValue(vm.movieList);
+        assertThat(vm.movieList.getValue(), is(movieRes.getResult()));
     }
 
     @Test
     public void testIfRepoGetMovieListIsCalled() {
-        viewModel.getMovieList();
-        Mockito.verify(repository).getMovieList();
+        vm.getMovieList();
+        Mockito.verify(repo).getMovieList();
     }
 
     @Test
     public void testIfRepoInsertMovieListToRoomIsCalled() throws InterruptedException {
-        Mockito.when(repository.insertMovieListToRoom(movieList))
+        Mockito.when(repo.insertMovieListToRoom(movieList))
                 .thenReturn(Completable.complete());
-        viewModel.getMovieList();
-        TestUtil.getOrAwaitValue(viewModel.movieList);
-        Mockito.verify(repository).insertMovieListToRoom(movieList);
+        vm.getMovieList();
+        TestUtil.getOrAwaitValue(vm.movieList);
+        Mockito.verify(repo).insertMovieListToRoom(movieList);
     }
 
     @Test
     public void testRepoGetMovieList() {
-        repository
-                .getMovieList()
+        repo.getMovieList()
                 .test()
-                .assertValue(response)
+                .assertValue(movieRes)
                 .assertComplete()
                 .assertNoErrors();
-    }
-
-    @Test(expected = RuntimeException.class)
-    public void testRuntimeExOccursWhenGetMovieListIsCalled() {
-        Mockito.when(repository.getMovieList())
-                .thenThrow(RuntimeException.class);
-        viewModel.getMovieList();
     }
 }

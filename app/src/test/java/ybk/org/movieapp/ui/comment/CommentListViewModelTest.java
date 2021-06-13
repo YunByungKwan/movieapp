@@ -34,87 +34,82 @@ public class CommentListViewModelTest {
     public TestRule rule = new InstantTaskExecutorRule();
 
     @Mock
-    public MovieRepositoryImpl repository;
+    private MovieRepositoryImpl repo;
 
-    public CommentListViewModel viewModel;
+    private CommentListViewModel vm;
 
-    public int id = 0;
-    public CommentResponse response;
-    public List<Comment> commentList;
-    public HashMap<String, Object> hashMap;
+    private final int id = 0;
+    private CommentResponse commentRes;
+    private List<Comment> commentList;
+    private HashMap<String, Object> hashMap;
 
     @Before
     public void setUp() {
-        viewModel = new CommentListViewModel(repository);
-        RxAndroidPlugins.setInitMainThreadSchedulerHandler(__-> Schedulers.trampoline());
-
-        response = new CommentResponse();
+        RxAndroidPlugins.setInitMainThreadSchedulerHandler(
+                __-> Schedulers.trampoline());
+        vm = new CommentListViewModel(repo);
+        commentRes = new CommentResponse();
         commentList = new ArrayList();
-        response.setResult(commentList);
+        commentRes.setResult(commentList);
         hashMap = new HashMap();
         mocking();
     }
 
     private void mocking() {
-        Mockito.when(repository.getCommentList(id))
-                .thenReturn(Single.just(response));
-        Mockito.when(repository.addComment(hashMap))
-                .thenReturn(Completable.complete());
-        Mockito.when(repository.recommendComment(hashMap))
-                .thenReturn(Completable.complete());
+        Mockito.when(repo.getCommentList(id)).thenReturn(Single.just(commentRes));
+        Mockito.when(repo.addComment(hashMap)).thenReturn(Completable.complete());
+        Mockito.when(repo.recommendComment(hashMap)).thenReturn(Completable.complete());
     }
 
     @Test
     public void testIfLiveDataHasValue() throws InterruptedException {
-        viewModel.getCommentList(id);
-        TestUtil.getOrAwaitValue(viewModel.commentList);
-        assertThat(viewModel.commentList.getValue(), is(response.getResult()));
+        vm.getCommentList(id);
+        TestUtil.getOrAwaitValue(vm.commentList);
+        assertThat(vm.commentList.getValue(), is(commentRes.getResult()));
     }
 
     @Test
     public void testIfRepoGetCommentListIsCalled() {
-        viewModel.getCommentList(id);
-        Mockito.verify(repository).getCommentList(id);
+        vm.getCommentList(id);
+        Mockito.verify(repo).getCommentList(id);
     }
 
     @Test
     public void testIfRepoAddCommentIsCalled() {
-        viewModel.addComment(hashMap);
-        Mockito.verify(repository).addComment(hashMap);
+        vm.addComment(hashMap);
+        Mockito.verify(repo).addComment(hashMap);
     }
 
     @Test
     public void testIfRepoRecommendCommentIsCalled() {
-        viewModel.recommendComment(hashMap);
-        Mockito.verify(repository).recommendComment(hashMap);
+        vm.recommendComment(hashMap);
+        Mockito.verify(repo).recommendComment(hashMap);
     }
 
     @Test
     public void testIfRepoInsertMovieListToRoomIsCalled() throws InterruptedException {
-        Mockito.when(repository.insertCommentListToRoom(commentList))
+        Mockito.when(repo.insertCommentListToRoom(commentList))
                 .thenReturn(Completable.complete());
 
-        viewModel.getCommentList(id);
-        TestUtil.getOrAwaitValue(viewModel.commentList);
-        Mockito.verify(repository).insertCommentListToRoom(commentList);
+        vm.getCommentList(id);
+        TestUtil.getOrAwaitValue(vm.commentList);
+        Mockito.verify(repo).insertCommentListToRoom(commentList);
     }
 
     @Test
     public void testRepoGetCommentList() {
-        viewModel.getCommentList(id);
-
-        repository.getCommentList(id)
+        vm.getCommentList(id);
+        repo.getCommentList(id)
                 .test()
-                .assertValue(response)
+                .assertValue(commentRes)
                 .assertComplete()
                 .assertNoErrors();
     }
 
     @Test
     public void testRepoAddComment() {
-        viewModel.addComment(hashMap);
-
-        repository.addComment(hashMap)
+        vm.addComment(hashMap);
+        repo.addComment(hashMap)
                 .test()
                 .assertComplete()
                 .assertNoErrors();
@@ -122,9 +117,8 @@ public class CommentListViewModelTest {
 
     @Test
     public void testRepoRecommendComment() {
-        viewModel.recommendComment(hashMap);
-
-        repository.recommendComment(hashMap)
+        vm.recommendComment(hashMap);
+        repo.recommendComment(hashMap)
                 .test()
                 .assertComplete()
                 .assertNoErrors();
