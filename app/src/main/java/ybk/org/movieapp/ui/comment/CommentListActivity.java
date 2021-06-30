@@ -51,7 +51,6 @@ public class CommentListActivity extends AppCompatActivity {
         App.getInstance().appComponent()
                 .commentListComponent().create().inject(this);
         super.onCreate(savedInstanceState);
-        // viewModel = new ViewModelProvider(this, viewModelFactory).get(CommentListViewModel.class);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_comment_list);
         binding.setActivity(this);
 
@@ -64,7 +63,6 @@ public class CommentListActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         if(intent != null) {
-            // id = intent.getIntExtra(getString(R.string.mov_id), -1);
             id = App.getInstance().movieId;
             grade = intent.getIntExtra(getString(R.string.mov_grade), 0);
             title = intent.getStringExtra(getString(R.string.mov_title));

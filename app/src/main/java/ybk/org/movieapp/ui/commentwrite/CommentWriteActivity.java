@@ -38,7 +38,9 @@ public class CommentWriteActivity extends AppCompatActivity {
     public void onClickSaveButton() {
         String contents = binding.etContents.getText().toString();
         if("".equals(contents)) {
-            Toast.makeText(this, getString(R.string.msg_empty),
+            Toast.makeText(
+                    this,
+                    getString(R.string.msg_empty),
                     Toast.LENGTH_SHORT).show();
         } else {
             Intent intent = new Intent();

@@ -3,15 +3,14 @@ package ybk.org.movieapp.data;
 import java.util.HashMap;
 import java.util.List;
 
-import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.Single;
+import io.reactivex.Completable;
+import io.reactivex.Single;
 import ybk.org.movieapp.data.local.entity.Comment;
 import ybk.org.movieapp.data.local.entity.CommentResponse;
 import ybk.org.movieapp.data.local.entity.DetailMovie;
 import ybk.org.movieapp.data.local.entity.DetailMovieResponse;
 import ybk.org.movieapp.data.local.entity.Movie;
 import ybk.org.movieapp.data.local.entity.MovieResponse;
-import ybk.org.movieapp.data.local.entity.Response;
 
 public interface MovieRepository {
     Single<MovieResponse> getMovieList();

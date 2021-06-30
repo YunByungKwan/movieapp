@@ -87,12 +87,13 @@ public class MovieDetailFragment extends Fragment {
 
         viewModel.detailMovie.observe(getViewLifecycleOwner(), detailMovie -> {
             movieItem = detailMovie;
-            Dlog.d("movie info size:" + detailMovie.size());
+
             if(movieItem.size() != 0) {
                 setMovieInfo();
                 Network.showToast(getActivity());
             } else {
-                Toast.makeText(getActivity(), getString(R.string.msg_no_data),
+                Toast.makeText(getActivity(),
+                        getString(R.string.msg_no_data),
                         Toast.LENGTH_SHORT).show();
             }
         });
@@ -118,7 +119,6 @@ public class MovieDetailFragment extends Fragment {
 
     private void setBasicMovieInfoFromBundle() {
         if(getArguments() != null) {
-            //id = getArguments().getInt(getString(R.string.bun_id));
             App.getInstance().movieId = getArguments().getInt(getString(R.string.bun_id));
             id = App.getInstance().movieId;
             title = getArguments().getString(getString(R.string.bun_title));
@@ -128,13 +128,9 @@ public class MovieDetailFragment extends Fragment {
 
     private void setMovieInfo() {
         if(getArguments() != null) {
-            // Glide.with(getContext()).load(movieItem.get(0).getImage()).into(binding.ivMoviePoster);
             binding.ivMovieRating.setImageResource(Utils.convertGradeToResId(movieItem.get(0).getGrade()));
             likeCount = movieItem.get(0).getLike();
             dislikeCount = movieItem.get(0).getDislike();
-            binding.tvLikeCount.setText(String.valueOf(likeCount));
-            binding.tvDislikeCount.setText(String.valueOf(dislikeCount));
-            binding.rating.setRating(movieItem.get(0).getReviewerRating() / 2);
 
             DecimalFormat df = new DecimalFormat("###,###");
             binding.tvCumulativeAudience.setText(String.valueOf(df.format(movieItem.get(0).getAudience())));

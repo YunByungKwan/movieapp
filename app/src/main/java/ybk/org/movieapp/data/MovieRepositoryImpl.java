@@ -5,8 +5,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.Single;
+import io.reactivex.Completable;
+import io.reactivex.Single;
 import ybk.org.movieapp.data.local.LocalDataSource;
 import ybk.org.movieapp.data.local.entity.Comment;
 import ybk.org.movieapp.data.local.entity.CommentResponse;
@@ -14,10 +14,8 @@ import ybk.org.movieapp.data.local.entity.DetailMovie;
 import ybk.org.movieapp.data.local.entity.DetailMovieResponse;
 import ybk.org.movieapp.data.local.entity.Movie;
 import ybk.org.movieapp.data.local.entity.MovieResponse;
-import ybk.org.movieapp.data.local.entity.Response;
 import ybk.org.movieapp.data.remote.RemoteDataSource;
 import ybk.org.movieapp.di.ApplicationModule;
-import ybk.org.movieapp.util.Dlog;
 import ybk.org.movieapp.util.Network;
 
 public class MovieRepositoryImpl implements MovieRepository {

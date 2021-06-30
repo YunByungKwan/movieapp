@@ -143,6 +143,7 @@
                             android:id="@+id/tv_like_count"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="@{String.valueOf(viewmodel.detailMovie.get(0).like)}"
                             android:textColor="@color/colorThumbnailText"
                             android:layout_marginEnd="@dimen/base_half_padding_size"/>
 
@@ -159,7 +160,8 @@
                             android:id="@+id/tv_dislike_count"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/colorThumbnailText" />
+                            android:textColor="@color/colorThumbnailText"
+                            android:text="@{String.valueOf(viewmodel.detailMovie.get(0).dislike)}"/>
 
                     </LinearLayout>
 
@@ -250,7 +252,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/base_padding_size"
                             android:numStars="5"
-                            android:stepSize="0.01" />
+                            android:stepSize="0.01"
+                            android:rating="@{viewmodel.detailMovie.get(0).reviewerRating/2F}"/>
 
                         <TextView
                             android:id="@+id/tv_grade"
@@ -287,7 +290,7 @@
                         <TextView
                             android:id="@+id/tv_cumulative_audience"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"/>
 
                         <TextView
                             android:layout_width="wrap_content"

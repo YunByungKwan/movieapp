@@ -2,8 +2,8 @@ package ybk.org.movieapp.data.remote;
 
 import java.util.HashMap;
 
-import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.Single;
+import io.reactivex.Single;
+import io.reactivex.Completable;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -12,7 +12,6 @@ import retrofit2.http.Query;
 import ybk.org.movieapp.data.local.entity.CommentResponse;
 import ybk.org.movieapp.data.local.entity.DetailMovieResponse;
 import ybk.org.movieapp.data.local.entity.MovieResponse;
-import ybk.org.movieapp.data.local.entity.Response;
 
 public interface ApiService {
 

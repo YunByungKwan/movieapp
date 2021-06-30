@@ -2,27 +2,23 @@ package ybk.org.movieapp.ui.moviedetail;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.SavedStateHandle;
-import androidx.lifecycle.ViewModel;
+
 import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.core.SingleObserver;
-import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
+import io.reactivex.SingleObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import ybk.org.movieapp.base.BaseViewModel;
 import ybk.org.movieapp.data.MovieRepositoryImpl;
 import ybk.org.movieapp.data.local.entity.Comment;
 import ybk.org.movieapp.data.local.entity.CommentResponse;
 import ybk.org.movieapp.data.local.entity.DetailMovie;
 import ybk.org.movieapp.data.local.entity.DetailMovieResponse;
-import ybk.org.movieapp.data.local.entity.Response;
-import ybk.org.movieapp.util.App;
-import ybk.org.movieapp.util.Dlog;
 
 public class MovieDetailViewModel extends BaseViewModel {
 
